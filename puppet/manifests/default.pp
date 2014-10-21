@@ -46,6 +46,15 @@ file { "/etc/apache2/mods-enabled/php5.load":
   ]
 }
 
+file { "/etc/apache2/mods-enabled/php5.conf":
+  ensure  => link,
+  target  => "/etc/apache2/mods-available/php5.conf",
+  require => [
+      Package["apache2"],
+      Package["libapache2-mod-php5"],
+  ]
+}
+
 file { "/etc/apache2/sites-available/default":
   ensure  => present,
   source  => "puppet:///librarian/apache/vhost",
@@ -58,6 +67,7 @@ service { "apache2":
   subscribe => [
     File["/etc/apache2/sites-available/default"],
     File["/etc/apache2/mods-enabled/php5.load"],
+    File["/etc/apache2/mods-enabled/php5.conf"],
   ]
 }
 
