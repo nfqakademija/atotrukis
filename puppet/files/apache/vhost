@@ -1,0 +1,11 @@
+<VirtualHost *:80>
+  ServerName atotrukis.dev
+  ServerAlias *.atotrukis.dev
+  DocumentRoot /var/www/web
+  <Directory /var/www/web>
+    DirectoryIndex index.php
+    AllowOverride All
+    Order allow,deny
+    Allow from all
+  </Directory>
+</VirtualHost>

@@ -1,3 +1,14 @@
+Vagrant notes
+=============
+
+Fire up the box by running `vagrant up`. Connect to it with `vagrant ssh` (from Vagrantfile dir)
+
+Vagrant file directory is synchronised with `/var/www`, your webroot is `/var/www/web`, server address is `192.168.10.42`.
+Install `vagrant-hostupdater` plugin for automatic hosts file management.
+
+Configure appropriate [synchronisation method](https://docs.vagrantup.com/v2/synced-folders/index.html)
+for your OS as virtualbox shared folders are suboptimal
+
 Symfony Standard Edition
 ========================
 
