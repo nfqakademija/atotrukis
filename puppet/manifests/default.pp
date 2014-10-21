@@ -37,6 +37,15 @@ file { "/etc/apache2/mods-enabled/rewrite.load":
   require => Package["apache2"]
 }
 
+file { "/etc/apache2/mods-enabled/php5.load":
+  ensure  => link,
+  target  => "/etc/apache2/mods-available/php5.load",
+  require => [
+      Package["apache2"],
+      Package["libapache2-mod-php5"],
+  ]
+}
+
 file { "/etc/apache2/sites-available/default":
   ensure  => present,
   source  => "puppet:///librarian/apache/vhost",
@@ -47,8 +56,9 @@ service { "apache2":
   ensure    => running,
   require   => Package["apache2"],
   subscribe => [
-    File["/etc/apache2/sites-available/default"]
-  ],
+    File["/etc/apache2/sites-available/default"],
+    File["/etc/apache2/mods-enabled/php5.load"],
+  ]
 }
 
 package { "mysql-server":
