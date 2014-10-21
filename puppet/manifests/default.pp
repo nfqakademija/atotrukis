@@ -3,31 +3,9 @@ Exec {
 }
 
 class bootstrap {
-  apt::source { 'debian_backports':
-    location          => 'http://ftp.litnet.lt/debian/',
-    release           => 'wheezy-backports',
-    repos             => 'main contrib non-free',
-    required_packages => 'debian-keyring debian-archive-keyring',
-    key               => '46925553',
-    key_server        => 'subkeys.pgp.net',
-    pin               => '700',
-    include_src       => true
-  }
-
-  apt::source { 'debian_sid':
-    location          => 'http://ftp.lt.debian.org/debian/',
-    release           => 'sid',
-    repos             => 'main contrib non-free',
-    required_packages => 'debian-keyring debian-archive-keyring',
-    key               => '46925553',
-    key_server        => 'subkeys.pgp.net',
-    pin               => '1',
-    include_src       => true
-  }
-
   apt::source { 'packages.dotdeb.org-php':
     location          => 'http://packages.dotdeb.org',
-    release           => 'wheezy',
+    release           => 'wheezy-php56',
     repos             => 'all',
     required_packages => 'debian-keyring debian-archive-keyring',
     key               => '89DF5277',
@@ -88,7 +66,6 @@ $php_required = [
   "libapache2-mod-php5",
   "php5-curl",
   "php5-intl",
-  "php5-memcached",
 ]
 
 $php_purge = [
