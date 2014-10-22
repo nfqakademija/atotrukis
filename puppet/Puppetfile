@@ -1,0 +1,7 @@
+forge "http://forge.puppetlabs.com"
+mod 'tPl0ch/composer'
+mod 'example42/apache'
+mod 'thias/php'
+mod 'puppetlabs/apt'
+mod 'actionjack/mailcatcher'
+mod 'puppetlabs/nodejs'

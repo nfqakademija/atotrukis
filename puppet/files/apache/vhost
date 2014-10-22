@@ -1,0 +1,11 @@
+<VirtualHost *:80>
+  ServerName akademija.dev
+  ServerAlias *.akademija.dev
+  DocumentRoot /var/www/web
+  <Directory /var/www/web>
+    DirectoryIndex index.php
+    AllowOverride All
+    Order allow,deny
+    Allow from all
+  </Directory>
+</VirtualHost>
