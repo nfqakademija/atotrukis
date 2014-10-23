@@ -225,6 +225,12 @@ class conf {
       "set /files/etc/php5/cli/php.ini/PHP/date.timezone Europe/Vilnius",
     ],
   }
+
+  exec { "composer-vendor-path":
+    command => "echo 'export PATH=\$PATH:/home/vagrant/.composer/vendor/bin' >> /home/vagrant/.bashrc; touch /home/vagrant/.composer-path",
+    creates => "/home/vagrant/.composer-path",
+    user    => "vagrant"
+  }
 }
 
 class {"conf":

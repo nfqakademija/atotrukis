@@ -12,7 +12,7 @@ Vagrant.configure("2") do |config|
     if [ -z $(which git) ]; then
       apt-get install -y git
     fi
-    if [ -z $(which librarian-puppet) ]; then
+    if [[ -z $(which librarian-puppet) || $(librarian-puppet version &> /dev/null) == 1 ]]; then
       gem install librarian-puppet
     fi
     mkdir /tmp/librarian/ 2>/dev/null
