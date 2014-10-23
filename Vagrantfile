@@ -9,9 +9,13 @@ Vagrant.configure("2") do |config|
 
   $librarian = <<BASH
     apt-get update
-    apt-get install -y git
-    gem install librarian-puppet
-    mkdir /tmp/librarian/ >/dev/null
+    if [ -z $(which git) ]; then
+      apt-get install -y git
+    fi
+    if [ -z $(which librarian-puppet) ]; then
+      gem install librarian-puppet
+    fi
+    mkdir /tmp/librarian/ 2>/dev/null
     cp /vagrant/puppet/Puppetfile /tmp/librarian/
     cd /tmp/librarian/
     librarian-puppet install --clean
