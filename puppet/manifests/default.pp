@@ -202,3 +202,31 @@ class {"nodejs": } ->
 package { "nodejs-legacy":
   ensure => present,
 }
+
+package { "augeas-tools":
+  ensure => present,
+}
+
+package { "libaugeas-ruby":
+  ensure => present,
+}
+
+class conf {
+  augeas { "php-errors":
+    changes => [
+      "set /files/etc/php5/apache2/php.ini/PHP/display_errors On",
+      "set /files/etc/php5/cli/php.ini/PHP/display_errors On",
+    ],
+  }
+
+  augeas { "php-time":
+    changes => [
+      "set /files/etc/php5/apache2/php.ini/PHP/date.timezone Europe/Vilnius",
+      "set /files/etc/php5/cli/php.ini/PHP/date.timezone Europe/Vilnius",
+    ],
+  }
+}
+
+class {"conf":
+  stage => post
+}
