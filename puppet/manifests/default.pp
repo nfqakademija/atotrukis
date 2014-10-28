@@ -224,7 +224,6 @@ class conf {
       "set /files/etc/php5/apache2/php.ini/PHP/date.timezone Europe/Vilnius",
       "set /files/etc/php5/cli/php.ini/PHP/date.timezone Europe/Vilnius",
     ],
-    require => Package["augeas-tools"]
   }
 
   exec { "composer-vendor-path":

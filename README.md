@@ -37,4 +37,4 @@ Katalogas kuriame yra `Vagrantfile` yra sinchorinizuojamas su vm'u ir apache yra
 [nodejs]:http://nodejs.org/
 [compass gem]:http://compass-style.org/
 [psysh]:http://psysh.org/
-[composer]:https://getcomposer.org
+[composer]:https://getcomposer.org/

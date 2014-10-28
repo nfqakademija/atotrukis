@@ -1,26 +1,34 @@
 Vagrant.require_version ">= 1.5.1"
 Vagrant.configure("2") do |config|
 
+  mount = "smb"
+  mount = "nfs" if RUBY_PLATFORM =~ /linux/
+  mount = nil if RUBY_PLATFORM =~ /darwin/
+
   config.vm.box = "nfq/wheezy"
 
   $librarian = <<BASH
     apt-get update
-    apt-get install -y git build-essential ruby-dev
-    gem install librarian-puppet
-    mkdir /tmp/librarian/ >/dev/null
+    if [ -z $(which git) ]; then
+      apt-get install -y git
+    fi
+    if [[ -z $(which librarian-puppet) || $(librarian-puppet version &> /dev/null) == 1 ]]; then
+      gem install librarian-puppet
+    fi
+    mkdir /tmp/librarian/ 2>/dev/null
     cp /vagrant/puppet/Puppetfile /tmp/librarian/
     cd /tmp/librarian/
     librarian-puppet install --clean
     rsync -rut /vagrant/puppet/* /tmp/librarian
 BASH
 
-  config.vm.define 'atotrukis', primary: true do |atotrukis|
-    atotrukis.vm.network "private_network", ip: "192.168.10.42"
-    atotrukis.vm.hostname = "atotrukis.dev"
+  config.vm.define 'akademija', primary: true do |akademija|
+    akademija.vm.network "private_network", ip: "192.168.10.42"
+    akademija.vm.hostname = "akademija.dev"
 
-    atotrukis.vm.provision "shell", inline: $librarian
+    akademija.vm.provision "shell", inline: $librarian
 
-    atotrukis.vm.provision :puppet do |puppet|
+    akademija.vm.provision :puppet do |puppet|
       puppet.manifests_path = ["vm", "/tmp/librarian/manifests"]
       puppet.working_directory = "/tmp/librarian"
 
@@ -31,12 +39,12 @@ BASH
       ]
     end
 
-    atotrukis.vm.provider :virtualbox do |vb|
+    akademija.vm.provider :virtualbox do |vb|
       vb.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
       vb.customize ["modifyvm", :id, "--memory", 512, "--cpus", 2]
-      vb.name = "atotrukis.dev"
+      vb.name = "akademija.dev"
     end
-    atotrukis.vm.synced_folder ".", "/var/www"
+    akademija.vm.synced_folder ".", "/var/www", type: mount
   end
 
 end
