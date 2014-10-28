@@ -2,7 +2,3 @@ atotrukis_main:
     resource: "@AtotrukisMainBundle/Resources/config/routing.yml"
     prefix:   /
 
-atotrukis_frontend:
-    resource: "@AtotrukisFrontendBundle/Resources/config/routing.yml"
-    prefix:   /
-
