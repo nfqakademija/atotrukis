@@ -1,5 +1,7 @@
-Hello World!
+{% extends '::base.html.twig' %}
 
+{% block body %}
 
-<a href="{{ path('fos_user_registration_register') }}">registration</a>
-<a href="{{ path('fos_user_security_login') }}">login</a>
+    Hello World!
+
+{% endblock %}
