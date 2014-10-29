@@ -2,12 +2,13 @@
 namespace Atotrukis\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
 
 /**
 * @ORM\Entity
 * @ORM\Table(name="users")
 */
-class User
+class User extends BaseUser
 {
     /**
      * @ORM\Column(type="integer")
