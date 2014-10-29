@@ -76,3 +76,11 @@ fos_user:
     db_driver: orm # other valid values are 'mongodb', 'couchdb' and 'propel'
     firewall_name: main
     user_class: Atotrukis\MainBundle\Entity\User
+    registration:
+      confirmation:
+        from_email:
+            address:        info@atotrukis.dev
+            sender_name:    Sender name
+        enabled: false
+      form:
+        type: atotrukis_user_registration

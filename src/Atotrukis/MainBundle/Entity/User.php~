@@ -2,12 +2,14 @@
 namespace Atotrukis\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use FOS\UserBundle\Model\User as BaseUser;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
 * @ORM\Entity
 * @ORM\Table(name="users")
 */
-class User
+class User extends BaseUser
 {
     /**
      * @ORM\Column(type="integer")
@@ -15,6 +17,20 @@ class User
      * @ORM\GeneratedValue(strategy="AUTO")
      */
     protected $id;
+
+    /**
+     * @ORM\Column(type="string", length=255)
+     *
+     * @Assert\NotBlank(message="Please enter your name.", groups={"Registration", "Profile"})
+     * @Assert\Length(
+     *     min=3,
+     *     max="255",
+     *     minMessage="The name is too short.",
+     *     maxMessage="The name is too long.",
+     *     groups={"Registration", "Profile"}
+     * )
+     */
+    protected $name;
 
     /**
      * @ORM\OneToMany(targetEntity="Event", mappedBy="createdBy")
@@ -110,5 +126,45 @@ class User
     public function getInterests()
     {
         return $this->interests;
+    }
+
+    /**
+     * Add attendingTo
+     *
+     * @param \Atotrukis\MainBundle\Entity\UserAttending $attendingTo
+     * @return User
+     */
+    public function addAttendingTo(\Atotrukis\MainBundle\Entity\UserAttending $attendingTo)
+    {
+        $this->attendingTo[] = $attendingTo;
+
+        return $this;
+    }
+
+    /**
+     * Remove attendingTo
+     *
+     * @param \Atotrukis\MainBundle\Entity\UserAttending $attendingTo
+     */
+    public function removeAttendingTo(\Atotrukis\MainBundle\Entity\UserAttending $attendingTo)
+    {
+        $this->attendingTo->removeElement($attendingTo);
+    }
+
+    /**
+     * Get attendingTo
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAttendingTo()
+    {
+        return $this->attendingTo;
+    }
+
+    public function setEmail($email)
+    {
+        $email = is_null($email) ? '' : $email;
+        parent::setEmail($email);
+        $this->setUsername($email);
     }
 }
