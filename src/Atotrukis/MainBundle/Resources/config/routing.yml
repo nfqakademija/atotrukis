@@ -1,0 +1,3 @@
+atotrukis_hello_world:
+    path:     /
+    defaults: { _controller: AtotrukisMainBundle:Default:index }

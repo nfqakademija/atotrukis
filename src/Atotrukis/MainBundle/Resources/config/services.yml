@@ -1,0 +1,5 @@
+services:
+    atotrukis_user.registration.form.type:
+        class: Atotrukis\MainBundle\Form\Type\RegistrationFormType
+        tags:
+            - { name: form.type, alias: atotrukis_user_registration }
