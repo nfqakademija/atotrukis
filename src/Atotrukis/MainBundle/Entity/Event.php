@@ -58,6 +58,11 @@ class Event
     protected $photos;
 
     /**
+     * @ORM\OneToMany(targetEntity="UserAttending", mappedBy="eventId")
+     */
+    protected $usersAttending;
+
+    /**
      * @ORM\OneToOne(targetEntity="City", inversedBy="eventId")
      * @ORM\JoinColumn(name="city", referencedColumnName="id")
      */
@@ -295,5 +300,38 @@ class Event
     public function getCity()
     {
         return $this->city;
+    }
+
+    /**
+     * Add usersAttending
+     *
+     * @param \Atotrukis\MainBundle\Entity\UserAttending $usersAttending
+     * @return Event
+     */
+    public function addUsersAttending(\Atotrukis\MainBundle\Entity\UserAttending $usersAttending)
+    {
+        $this->usersAttending[] = $usersAttending;
+
+        return $this;
+    }
+
+    /**
+     * Remove usersAttending
+     *
+     * @param \Atotrukis\MainBundle\Entity\UserAttending $usersAttending
+     */
+    public function removeUsersAttending(\Atotrukis\MainBundle\Entity\UserAttending $usersAttending)
+    {
+        $this->usersAttending->removeElement($usersAttending);
+    }
+
+    /**
+     * Get usersAttending
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getUsersAttending()
+    {
+        return $this->usersAttending;
     }
 }

@@ -58,6 +58,11 @@ class Event
     protected $photos;
 
     /**
+     * @ORM\OneToMany(targetEntity="UserAttending", mappedBy="eventId")
+     */
+    protected $usersAttending;
+
+    /**
      * @ORM\OneToOne(targetEntity="City", inversedBy="eventId")
      * @ORM\JoinColumn(name="city", referencedColumnName="id")
      */

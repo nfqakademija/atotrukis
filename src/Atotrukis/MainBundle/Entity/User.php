@@ -21,6 +21,16 @@ class User
      */
     protected $events;
 
+    /**
+     * @ORM\OneToMany(targetEntity="UserInterest", mappedBy="userId")
+     */
+    protected $interests;
+
+    /**
+     * @ORM\OneToMany(targetEntity="UserAttending", mappedBy="userId")
+     */
+    protected $attendingTo;
+
     public function __construct()
     {
         parent::__construct();
@@ -67,5 +77,71 @@ class User
     public function getEvents()
     {
         return $this->events;
+    }
+
+    /**
+     * Add interests
+     *
+     * @param \Atotrukis\MainBundle\Entity\UserInterests $interests
+     * @return User
+     */
+    public function addInterest(\Atotrukis\MainBundle\Entity\UserInterests $interests)
+    {
+        $this->interests[] = $interests;
+
+        return $this;
+    }
+
+    /**
+     * Remove interests
+     *
+     * @param \Atotrukis\MainBundle\Entity\UserInterests $interests
+     */
+    public function removeInterest(\Atotrukis\MainBundle\Entity\UserInterests $interests)
+    {
+        $this->interests->removeElement($interests);
+    }
+
+    /**
+     * Get interests
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getInterests()
+    {
+        return $this->interests;
+    }
+
+    /**
+     * Add attendingTo
+     *
+     * @param \Atotrukis\MainBundle\Entity\UserAttending $attendingTo
+     * @return User
+     */
+    public function addAttendingTo(\Atotrukis\MainBundle\Entity\UserAttending $attendingTo)
+    {
+        $this->attendingTo[] = $attendingTo;
+
+        return $this;
+    }
+
+    /**
+     * Remove attendingTo
+     *
+     * @param \Atotrukis\MainBundle\Entity\UserAttending $attendingTo
+     */
+    public function removeAttendingTo(\Atotrukis\MainBundle\Entity\UserAttending $attendingTo)
+    {
+        $this->attendingTo->removeElement($attendingTo);
+    }
+
+    /**
+     * Get attendingTo
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getAttendingTo()
+    {
+        return $this->attendingTo;
     }
 }

@@ -1,0 +1,30 @@
+<?php
+namespace Atotrukis\MainBundle\Entity;
+
+use Doctrine\ORM\Mapping as ORM;
+
+/**
+ * @ORM\Entity
+ * @ORM\Table(name="events")
+ */
+class UserAttending
+{
+    /**
+     * @ORM\Column(type="integer")
+     * @ORM\Id
+     * @ORM\GeneratedValue(strategy="AUTO")
+     */
+    protected $id;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="attendingTo")
+     * @ORM\JoinColumn(name="userId", referencedColumnName="id")
+     */
+    protected $userId;
+
+    /**
+     * @ORM\ManyToOne(targetEntity="Event", inversedBy="usersAttending")
+     * @ORM\JoinColumn(name="eventId", referencedColumnName="id")
+     */
+    protected $eventId;
+}
