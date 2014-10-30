@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Oct 29, 2014 at 12:26 PM
+-- Generation Time: Oct 30, 2014 at 10:45 PM
 -- Server version: 5.5.38
 -- PHP Version: 5.6.2-1~dotdeb.1
 
@@ -31,7 +31,7 @@ CREATE TABLE IF NOT EXISTS `cities` (
   `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   `priority` int(11) NOT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=3 ;
 
 -- --------------------------------------------------------
 
@@ -50,8 +50,8 @@ CREATE TABLE IF NOT EXISTS `events` (
   `map` varchar(2083) COLLATE utf8_unicode_ci NOT NULL,
   `createdBy` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `UNIQ_5387574A2D5B0234` (`city`),
-  KEY `IDX_5387574AD3564642` (`createdBy`)
+  KEY `IDX_5387574AD3564642` (`createdBy`),
+  KEY `IDX_5387574A2D5B0234` (`city`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
 
 -- --------------------------------------------------------
@@ -91,10 +91,11 @@ CREATE TABLE IF NOT EXISTS `users` (
   `roles` longtext COLLATE utf8_unicode_ci NOT NULL COMMENT '(DC2Type:array)',
   `credentials_expired` tinyint(1) NOT NULL,
   `credentials_expire_at` datetime DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8_unicode_ci NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `UNIQ_1483A5E992FC23A8` (`username_canonical`),
   UNIQUE KEY `UNIQ_1483A5E9A0D96FBF` (`email_canonical`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=1 ;
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci AUTO_INCREMENT=5 ;
 
 -- --------------------------------------------------------
 

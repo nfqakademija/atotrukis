@@ -25,7 +25,7 @@ class City
     protected $priority; //Didziuosius miestus iskelt i virsu
 
     /**
-     * @ORM\OneToOne(targetEntity="Event", mappedBy="city")
+     * @ORM\OneToMany(targetEntity="Event", mappedBy="city")
      */
     protected $eventId;
 
@@ -106,5 +106,35 @@ class City
     public function getEventId()
     {
         return $this->eventId;
+    }
+    /**
+     * Constructor
+     */
+    public function __construct()
+    {
+        $this->eventId = new \Doctrine\Common\Collections\ArrayCollection();
+    }
+
+    /**
+     * Add eventId
+     *
+     * @param \Atotrukis\MainBundle\Entity\Event $eventId
+     * @return City
+     */
+    public function addEventId(\Atotrukis\MainBundle\Entity\Event $eventId)
+    {
+        $this->eventId[] = $eventId;
+
+        return $this;
+    }
+
+    /**
+     * Remove eventId
+     *
+     * @param \Atotrukis\MainBundle\Entity\Event $eventId
+     */
+    public function removeEventId(\Atotrukis\MainBundle\Entity\Event $eventId)
+    {
+        $this->eventId->removeElement($eventId);
     }
 }
