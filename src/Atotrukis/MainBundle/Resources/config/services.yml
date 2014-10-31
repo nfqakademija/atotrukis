@@ -3,3 +3,7 @@ services:
         class: Atotrukis\MainBundle\Form\Type\RegistrationFormType
         tags:
             - { name: form.type, alias: atotrukis_user_registration }
+
+    eventService:
+        class: Atotrukis\MainBundle\Service\EventService
+        arguments: [ @doctrine.orm.entity_manager ]

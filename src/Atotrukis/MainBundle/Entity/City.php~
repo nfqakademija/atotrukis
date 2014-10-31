@@ -116,4 +116,27 @@ class City
     {
         $this->eventId->removeElement($eventId);
     }
+
+    /**
+     * Set priority
+     *
+     * @param integer $priority
+     * @return City
+     */
+    public function setPriority($priority)
+    {
+        $this->priority = $priority;
+
+        return $this;
+    }
+
+    /**
+     * Get priority
+     *
+     * @return integer 
+     */
+    public function getPriority()
+    {
+        return $this->priority;
+    }
 }
