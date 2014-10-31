@@ -1,0 +1,15 @@
+{% extends "::base.html.twig" %}
+
+{% block title %}Renginys{% endblock %}
+
+{% block body %}
+
+    <h1>Renginys</h1>
+
+    Pavadinimas: {{ event.name }}<br>
+    Aprašymas: {{ event.description }}<br>
+    Pradžia: {{ event.startDate|date('Y-m-d H:i') }}<br>
+    Pabaiga: {{ event.endDate|date('Y-m-d H:i') }}<br>
+    Vieta žemėlapyje:<br> <iframe src="{{ event.map }}"></iframe>
+
+{% endblock %}

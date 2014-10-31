@@ -1,6 +1,6 @@
-atotrukis_hello_world:
-    path:     /
-    defaults: { _controller: AtotrukisMainBundle:Default:index }
+#/atotrukis_hello_world:
+#    path:     /
+#    defaults: { _controller: AtotrukisMainBundle:Default:index }
 
 create_event:
     path:     /mano-renginiai/sukurti
@@ -19,3 +19,13 @@ my_events:
     path:     /mano-renginiai
     defaults: { _controller: AtotrukisMainBundle:Event:readMyEvents }
 
+
+
+
+_show_all_events:
+    path:     /
+    defaults: { _controller: AtotrukisMainBundle:ShowEvents:ShowAllEvents }
+
+_show_event:
+    path:     renginys/{id}
+    defaults: { _controller: AtotrukisMainBundle:ShowEvents:ShowEvent }
