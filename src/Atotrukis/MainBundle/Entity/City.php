@@ -62,28 +62,7 @@ class City
         return $this->name;
     }
 
-    /**
-     * Set priority
-     *
-     * @param \tinyint $priority
-     * @return City
-     */
-    public function setPriority(\tinyint $priority)
-    {
-        $this->priority = $priority;
 
-        return $this;
-    }
-
-    /**
-     * Get priority
-     *
-     * @return \tinyint 
-     */
-    public function getPriority()
-    {
-        return $this->priority;
-    }
 
     /**
      * Set eventId
@@ -136,5 +115,28 @@ class City
     public function removeEventId(\Atotrukis\MainBundle\Entity\Event $eventId)
     {
         $this->eventId->removeElement($eventId);
+    }
+
+    /**
+     * Set priority
+     *
+     * @param integer $priority
+     * @return City
+     */
+    public function setPriority($priority)
+    {
+        $this->priority = $priority;
+
+        return $this;
+    }
+
+    /**
+     * Get priority
+     *
+     * @return integer 
+     */
+    public function getPriority()
+    {
+        return $this->priority;
     }
 }

@@ -2,6 +2,7 @@ imports:
     - { resource: parameters.yml }
     - { resource: security.yml }
 
+
 framework:
     #esi:             ~
     #translator:      { fallback: "%locale%" }
@@ -84,3 +85,4 @@ fos_user:
         enabled: false
       form:
         type: atotrukis_user_registration
+

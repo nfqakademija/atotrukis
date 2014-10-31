@@ -63,7 +63,7 @@ class Event
     protected $usersAttending;
 
     /**
-     * @ORM\OneToOne(targetEntity="City", inversedBy="eventId")
+     * @ORM\ManyToOne(targetEntity="City", inversedBy="eventId")
      * @ORM\JoinColumn(name="city", referencedColumnName="id")
      */
     protected $city;
@@ -71,8 +71,8 @@ class Event
 
     public function __construct()
     {
-        $this->createdOn = new \DateTime('y M d H:i:s');
-        parent::__construct();
+        $this->createdOn = new \DateTime();
+        //parent::__construct();
     }
 
     /**
