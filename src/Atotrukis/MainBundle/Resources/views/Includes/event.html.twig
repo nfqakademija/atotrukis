@@ -1,0 +1,9 @@
+<a class="eventLink" href="{{ path('_show_event', { 'id': e.id }) }}">
+    <div class="event">
+        <img src="{{ asset('images/mainEvent2.jpg') }}" alt="alternative">
+        <div class="eventTitleWrapper">
+            <h5>{{ e.name }}</h5>
+            <p>{{ e.startDate|date('Y-m-d H:i') }}</p>
+        </div>
+    </div>
+</a>

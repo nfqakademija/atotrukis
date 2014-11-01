@@ -1,7 +1,24 @@
-{% extends '::base.html.twig' %}
+{% extends 'AtotrukisMainBundle::layout.html.twig' %}
 
-{% block body %}
+{% block topContent %}
+    <div class="page-header">
+        <h4>Pasiūlymai tau</h4>
+    </div>
+    <div class="row">
+        {{ include('AtotrukisMainBundle:Includes:mainEvent.html.twig') }}
+    </div>
+    <hr>
+{% endblock %}
 
-    Hello World!
+{% block mainContent %}
+
+
+    {% for e in events %}
+
+        <div class="col-md-3">{{ include('AtotrukisMainBundle:Includes:event.html.twig') }}</div>
+
+    {% endfor %}
+
 
 {% endblock %}
+

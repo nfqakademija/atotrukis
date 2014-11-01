@@ -4,7 +4,7 @@
 
 create_event:
     path:     /mano-renginiai/sukurti
-    defaults: { _controller: AtotrukisMainBundle:Event:create }
+    defaults: { _controller: AtotrukisMainBundle:Event:createEvent }
 
 edit_event:
     path:     /mano-renginiai/redaguoti/{id}
@@ -13,7 +13,6 @@ edit_event:
 delete_event:
     path:     /mano-renginiai/istrinti/{id}
     defaults: { _controller: AtotrukisMainBundle:Event:deleteMyEvent }
-
 
 my_events:
     path:     /mano-renginiai
