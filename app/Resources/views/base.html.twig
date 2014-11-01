@@ -9,11 +9,16 @@
         <link rel="icon" type="image/x-icona" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-
-        {% block body %}{% endblock %}
+        <div class="container-fluid">
+            {% block body %}
+                {% block header %}{% endblock %}
+                {% block topContent %} {% endblock %}
+                {% block mainContent %}{% endblock %}
+                {% block footer %}{% endblock %}
+            {% endblock %}
+        </div>
         <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
         <script src="/javascripts/bootstrap.js"></script>
-        <script src="/javascripts/scripts.js"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
