@@ -31,8 +31,9 @@
             </ul>
         </div><!-- /.navbar-collapse -->
     </nav>
-    {% include('AtotrukisMainBundle:Includes:loginModal.html.twig') %}
-
+{% endblock %}
+{% block mainContent %}
+    {% block fos_user_content %}{% endblock %}
 {% endblock %}
 {% block footer %}
     <footer><hr></footer>
