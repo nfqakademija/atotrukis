@@ -32,7 +32,9 @@
         </div><!-- /.navbar-collapse -->
     </nav>
 {% endblock %}
-
+{% block mainContent %}
+    {% block fos_user_content %}{% endblock %}
+{% endblock %}
 {% block footer %}
     <footer><hr></footer>
 {% endblock %}
