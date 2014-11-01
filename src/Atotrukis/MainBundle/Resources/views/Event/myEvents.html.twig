@@ -1,3 +1,10 @@
+{% for label, flashes in app.session.flashbag.all %}
+    {% for flash in flashes %}
+        <div class="alert alert-{{ label }}" style="margin: 0px 15px 15px 15px">
+            {{ flash }}
+        </div>
+    {% endfor %}
+{% endfor %}
 {% for event in events %}
     {{ event.name }}
     <a href="{{ path('edit_event', {'id': event.id}) }}">[edit]</a>

@@ -16,5 +16,5 @@ delete_event:
 
 my_events:
     path:     /mano-renginiai
-    defaults: { _controller: AtotrukisMainBundle:Event:readMyEvents }
+    defaults: { _controller: AtotrukisMainBundle:Event:readUserEvents }
 
