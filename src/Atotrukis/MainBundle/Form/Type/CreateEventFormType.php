@@ -36,8 +36,20 @@ class CreateEventFormType extends AbstractType
                     ])
                 ]
             ])
-            ->add('startDate', 'datetime')
-            ->add('endDate', 'datetime')
+            ->add('startDate', 'datetime', [
+                'constraints' =>[
+                    new \Atotrukis\MainBundle\Validator\Constraints\FutureDateTime([
+                        'message' => "Pradžios laikas negali būti ankstesnis už dabartinį laiką."
+                    ])
+                ]
+            ])
+            ->add('endDate', 'datetime', [
+                'constraints' =>[
+                    new \Atotrukis\MainBundle\Validator\Constraints\FutureDateTime([
+                        'message' => "Pabaigos laikas negali būti ankstesnis už dabartinį laiką."
+                    ])
+                ]
+            ])
             ->add('map', 'text')
             ->add('city', 'entity', array(
                 'class' => 'AtotrukisMainBundle:City',
