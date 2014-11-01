@@ -4,16 +4,12 @@
         <meta charset="UTF-8" />
         <title>{% block title %}Welcome!{% endblock %}</title>
         {% block stylesheets %}{% endblock %}
-        <link rel="stylesheet" href="/stylesheets/styles.css">
-        <link rel="stylesheet" href="/stylesheets/header.css">
+	
         <link rel="icon" type="image/x-icona" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>
-
+        {{ include('AtotrukisMainBundle:Default:header.html.twig') }}
         {% block body %}{% endblock %}
-        <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
-        <script src="/javascripts/bootstrap.js"></script>
-        <script src="/javascripts/scripts.js"></script>
         {% block javascripts %}{% endblock %}
     </body>
 </html>
