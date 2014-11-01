@@ -1,0 +1,15 @@
+{% for event in events %}
+    {{ event.name }}
+    <a href="{{ path('edit_event', {'id': event.id}) }}">[edit]</a>
+    <a href="{{ path('delete_event', {'id': event.id}) }}">[delete]</a>
+
+    </br>
+    {{ event.description }} </br>
+    {{ event.startDate|date('Y-m-d H:i:s') }} </br>
+    {{ event.endDate|date('Y-m-d H:i:s') }} </br>
+    {{ event.createdBy.name }} </br>
+    {{ event.city.name }} </br>
+    {{ event.map }} </br>
+    {{ event.createdOn|date('Y-m-d H:i:s') }} </br>
+    </br>
+{% endfor %}
