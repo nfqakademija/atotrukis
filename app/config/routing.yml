@@ -4,8 +4,4 @@ atotrukis_main:
 
 fos_user:
     resource: "@FOSUserBundle/Resources/config/routing/all.xml"
-
-#main:
-#    resource: "@AtotrukisMainBundle/Controller/"
-#    type:     annotation
-#    prefix: /
+    

@@ -2,10 +2,14 @@
 namespace Atotrukis\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
+use Atotrukis\MainBundle\Validator\Constraints as CustomAssert;
+
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="events")
+ * @CustomAssert\DateRange
  */
 class Event
 {
