@@ -3,10 +3,13 @@ namespace Atotrukis\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
+use Atotrukis\MainBundle\Validator\Constraints as CustomAssert;
+
 
 /**
  * @ORM\Entity
  * @ORM\Table(name="events")
+ * @CustomAssert\DateRange
  */
 class Event
 {
@@ -334,13 +337,5 @@ class Event
     public function getUsersAttending()
     {
         return $this->usersAttending;
-    }
-
-    /**
-     * @Assert\True(message = "Pabaigos laikas turi būti vėliau negu pradžios laikas")
-     */
-    public function isDatesValid()
-    {
-        return ($this->startDate < $this->endDate);
     }
 }
