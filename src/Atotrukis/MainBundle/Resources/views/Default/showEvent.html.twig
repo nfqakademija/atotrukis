@@ -10,6 +10,7 @@
     Aprašymas: {{ event.description }}<br>
     Pradžia: {{ event.startDate|date('Y-m-d H:i') }}<br>
     Pabaiga: {{ event.endDate|date('Y-m-d H:i') }}<br>
+    Miestas: {{ event.city.name }}<br>
     Vieta žemėlapyje:<br> <iframe src="{{ event.map }}"></iframe>
 
 {% endblock %}
