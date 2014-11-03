@@ -13,8 +13,13 @@
         <div class="container-fluid">
             {% block body %}
                 {% block header %}{% endblock %}
-                {% block topContent %} {% endblock %}
-                {% block mainContent %}{% endblock %}
+                <div id="wrapper">
+                    {% block leftNav %} {% endblock %}
+                    {% block content %}
+                        {% block topContent %} {% endblock %}
+                        {% block mainContent %}{% endblock %}
+                    {% endblock %}
+                </div>
                 {% block footer %}{% endblock %}
             {% endblock %}
         </div>
