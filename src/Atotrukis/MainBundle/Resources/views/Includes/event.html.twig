@@ -3,7 +3,7 @@
         <img src="{{ asset('images/mainEvent2.jpg') }}" alt="alternative">
         <div class="eventTitleWrapper">
             <h5>{{ e.name }}</h5>
-            <p>{{ e.startDate|date('Y-m-d H:i') }}</p>
+            <p>{{ date[e.id] }}</p>
         </div>
     </div>
 </a>
