@@ -92,15 +92,27 @@ class DefaultController extends Controller
 
         // Searching events according to city
         $em = $this->getDoctrine()->getManager();
-        $query = $em->createQuery(
-            'SELECT e
-            FROM AtotrukisMainBundle:Event e, AtotrukisMainBundle:City c
-            WHERE e.startDate >= :today and e.city = c.id and c.name = :city
-            ')
-            ->setParameter('today', new \DateTime())
-            ->setParameter('city', $city);
+//        $query = $em->createQuery(
+//            'SELECT e
+//            FROM AtotrukisMainBundle:Event e INNER JOIN AtotrukisMainBundle:City c ON e.city = c.id
+//            WHERE e.startDate >= :today and c.name = :city
+//            ')
+//            ->setParameter('today', new \DateTime())
+//            ->setParameter('city', $city);
 
-        $events = $query->getResult();
+        $qb = $em->createQueryBuilder()
+            ->select('e')
+            ->from('AtotrukisMainBundle:Event', 'e')
+            ->innerJoin('e.city', 'c', 'WITH', 'e.city = c.id')
+            ->where('e.startDate >= :today')
+            ->andWhere('c.name = :city')
+            ->setParameter('today', new \DateTime())
+            ->setParameter('city', $city)
+        ;
+        $events = $qb->getQuery()->getResult();
+
+
+//        $events = $query->getResult();
 
         $date = [];
         foreach ($events as $e) {
@@ -111,8 +123,15 @@ class DefaultController extends Controller
             throw $this->createNotFoundException('Nėra nei vieno renginio');
         }
 
+        $paginator  = $this->get('knp_paginator');
+        $pagination = $paginator->paginate(
+            $qb,
+            $this->get('request')->query->get('page', 1)/*page number*/,
+            8/*limit per page*/
+        );
+
         return $this->render('AtotrukisMainBundle:Default:index.html.twig', array(
-            'events' => $events, 'date' => $date
+            'date' => $date, 'pagination' => $pagination
         ));
     }
 
