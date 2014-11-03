@@ -15,15 +15,16 @@ class EventService{
     {
         self::handleFormRequest($form, $event, $request, $user, 'Renginys sėkmingai sukurtas!');
     }
-    public function readUserEvents($userId){
+    public function readUserEvents($userId, $request){
 
         $event = $this->em
             ->getRepository('AtotrukisMainBundle:Event')
             ->findByCreatedBy($userId);
         if (!$event) {
-            throw $this->createNotFoundException(
-                'You have no events'
-            );
+//            throw $this->createNotFoundException(
+//                'You have no events'
+//            );
+             $request->getSession()->getFlashBag()->add('danger', 'Jūs neturite jokių renginių!');
         }
         return $event;
     }

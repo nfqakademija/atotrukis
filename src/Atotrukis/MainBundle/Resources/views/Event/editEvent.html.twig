@@ -70,7 +70,7 @@
 
 //        var defaultBounds = new google.maps.LatLngBounds(
 //                new google.maps.LatLng(56.256216, 21.246148));
-        var cords = new google.maps.LatLng(56.256216, 21.246148);
+        var cords = new google.maps.LatLng{{ event.map }};
         //map.setBounds(defaultBounds);
         map.setCenter(cords);
         map.setZoom(16);
@@ -148,7 +148,6 @@
         width: 345px;
     }
 </style>
-
 
 
 

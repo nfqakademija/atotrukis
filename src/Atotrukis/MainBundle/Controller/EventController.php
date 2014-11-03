@@ -24,12 +24,12 @@ class EventController extends Controller
         ));
     }
 
-    public function readUserEventsAction()
+    public function readUserEventsAction(Request $request)
     {
 
         $user = self::getUser();
 
-        $userEvents = $this->get('eventService')->readUserEvents($user);
+        $userEvents = $this->get('eventService')->readUserEvents($user, $request);
 
         return $this->render('AtotrukisMainBundle:Event:myEvents.html.twig', array('events' => $userEvents));
 
@@ -53,6 +53,7 @@ class EventController extends Controller
         $this->get('eventService')->handleFormRequest($form, $event, $request, $user, 'Renginys sėkmingai išsaugotas!');
         return $this->render('AtotrukisMainBundle:Event:editEvent.html.twig', array(
             'form' => $form->createView(),
+            'event' => $event
         ));
     }
 
