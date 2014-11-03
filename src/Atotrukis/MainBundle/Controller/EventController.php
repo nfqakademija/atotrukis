@@ -52,7 +52,7 @@ class EventController extends Controller
         $form = $this->createForm(new CreateEventFormType(), $event);
         $this->get('eventService')->handleFormRequest($form, $event, $request, $user, 'Renginys sėkmingai išsaugotas!');
         return $this->render('AtotrukisMainBundle:Event:editEvent.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ));
     }
 

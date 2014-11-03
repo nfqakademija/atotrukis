@@ -3,15 +3,13 @@ namespace Atotrukis\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 use FOS\UserBundle\Model\User as BaseUser;
-use Symfony\Component\Security\Core\User\AdvancedUserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
-use Doctrine\Common\Collections\ArrayCollection;
 
 /**
 * @ORM\Entity
 * @ORM\Table(name="users")
 */
-class User extends BaseUser implements AdvancedUserInterface, \Serializable
+class User extends BaseUser
 {
     /**
      * @ORM\Column(type="integer")
@@ -22,15 +20,6 @@ class User extends BaseUser implements AdvancedUserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=255)
-     *
-     * @Assert\NotBlank(message="Please enter your name.", groups={"Registration", "Profile"})
-     * @Assert\Length(
-     *     min=3,
-     *     max="255",
-     *     minMessage="The name is too short.",
-     *     maxMessage="The name is too long.",
-     *     groups={"Registration", "Profile"}
-     * )
      */
     protected $name;
 
@@ -45,19 +34,12 @@ class User extends BaseUser implements AdvancedUserInterface, \Serializable
     protected $interests;
 
     /**
-     * @ORM\ManyToMany(targetEntity="Role", inversedBy="users")
-     *
-     */
-    protected $roles;
-
-    /**
      * @ORM\OneToMany(targetEntity="UserAttending", mappedBy="userId")
      */
     protected $attendingTo;
 
     public function __construct()
     {
-        $this->roles = new ArrayCollection();
         parent::__construct();
     }
 
@@ -198,10 +180,5 @@ class User extends BaseUser implements AdvancedUserInterface, \Serializable
     public function getName()
     {
         return $this->name;
-    }
-
-    public function getRoles()
-    {
-        return $this->roles->toArray();
     }
 }

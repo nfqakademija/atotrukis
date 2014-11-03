@@ -50,7 +50,7 @@ class CreateEventFormType extends AbstractType
                     ])
                 ]
             ])
-            ->add('map', 'text')
+            ->add('map', 'hidden')
             ->add('city', 'entity', array(
                 'class' => 'AtotrukisMainBundle:City',
                 'property' => 'name',
@@ -65,8 +65,8 @@ class CreateEventFormType extends AbstractType
                         ->addOrderBy('c.priority', 'ASC')
                         ->addOrderBy('c.name', 'ASC');
                 },
-            ))
-            ->add('save', 'submit', array('label' => 'Sukurti'));
+            ));
+//            ->add('save', 'submit', array('label' => 'Sukurti'));
     }
     public function getName()
     {
