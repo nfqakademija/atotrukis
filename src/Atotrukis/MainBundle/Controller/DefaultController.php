@@ -27,7 +27,7 @@ class DefaultController extends Controller
 //            $descriptions = array("Labai įdomus renginys", "Linksmas laiko praleidimas", "Įdomu", "Smagu", "Čia toks labai įdomus renginys, kuriame pamatysite visokių įdomių dalykų, kurie bus labai smagūs ir linksmi.");
 //            $em = $this->getDoctrine()->getManager();
 //            $cities = $em->getRepository('AtotrukisMainBundle:City')->findAll();
-//            $dates = array("2014-11-20 15:00", "2014-12-01 18:00", "2015-01-01 20:20", "2014-12-12 15:00", "2015-01-15 20:00");
+//            $dates = array("2014-11-03 23:00", "2014-12-04 18:00", "2014-11-04 22:00");
 //            $event = new Event();
 //            $event->setName($names[array_rand($names, 1)]);
 //            $event->setDescription($descriptions[array_rand($descriptions, 1)]);
@@ -61,16 +61,22 @@ class DefaultController extends Controller
 
         // Changing date format to lithuanian
         function changeDate($time){
-
-            $mon = $time->format('n');
-            $months = array("Sausio", "Vasario", "Kovo", "Balandžio", "Gegužės", "Birželio",
-                "Liepos","Rugpjūčio", "Rugsėjo","Spalio", "Lapkričio", "Gruodžio");
             $date = "";
-            if ($time->format('Y') != (new \DateTime())->format('Y')) {
-                $date .= $time->format('Y \m. ');
+            if ($time->format("Y-m-d") == (new \DateTime())->format("Y-m-d")) {
+                $date .= "Šiandien ";
+            } elseif($time->format("Y-m-d") == (new \DateTime("tomorrow"))->format("Y-m-d")) {
+                $date .= "Rytoj ";
+            } else {
+                $mon = $time->format('n');
+                $months = array("Sausio", "Vasario", "Kovo", "Balandžio", "Gegužės", "Birželio",
+                    "Liepos", "Rugpjūčio", "Rugsėjo", "Spalio", "Lapkričio", "Gruodžio");
+                if ($time->format('Y') != (new \DateTime())->format('Y')) {
+                    $date .= $time->format('Y \m. ');
+                }
+                $date .= $months[$mon - 1];
+                $date .= $time->format(' j \d. ');
             }
-            $date .= $months[$mon-1];
-            $date .= $time->format(' j \d. H:i');
+            $date .= $time->format("H:i");
             return $date;
 
         }
@@ -89,7 +95,7 @@ class DefaultController extends Controller
         $query = $em->createQuery(
             'SELECT e
             FROM AtotrukisMainBundle:Event e, AtotrukisMainBundle:City c
-            WHERE e.startDate > :today and e.city = c.id and c.name = :city
+            WHERE e.startDate >= :today and e.city = c.id and c.name = :city
             ')
             ->setParameter('today', new \DateTime())
             ->setParameter('city', $city);
