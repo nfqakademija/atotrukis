@@ -24,6 +24,7 @@ class AppKernel extends Kernel
             new Atotrukis\MainBundle\AtotrukisMainBundle(),
             new FOS\UserBundle\FOSUserBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
+            new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
 
         );
 
