@@ -12,9 +12,10 @@
     <body>
         <div class="container-fluid">
             {% block body %}
-                {% block header %}{% endblock %}
                 <div id="wrapper">
                     {% block leftNav %} {% endblock %}
+                {% block header %}{% endblock %}
+                    {% block recommendationList %} {% endblock %}
                     {% block content %}
                         {% block topContent %} {% endblock %}
                         {% block mainContent %}{% endblock %}

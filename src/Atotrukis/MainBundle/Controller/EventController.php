@@ -57,6 +57,24 @@ class EventController extends Controller
         ));
     }
 
+    public function getEventAction(Request $request, $id)
+    {
+
+        $user = self::getUser();
+
+        return $this->render('AtotrukisMainBundle:Event:oneEvent.html.twig', array(
+        ));
+    }
+
+    public function getSearchResultAction(Request $request)
+    {
+
+        $user = self::getUser();
+
+        return $this->render('AtotrukisMainBundle:Event:searchEvents.html.twig', array(
+        ));
+    }
+
     public function getUser()
     {
         $user = $this->getDoctrine()->getRepository('AtotrukisMainBundle:User')

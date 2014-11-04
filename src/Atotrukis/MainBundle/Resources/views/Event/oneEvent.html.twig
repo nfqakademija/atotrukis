@@ -1,0 +1,41 @@
+{% extends 'AtotrukisMainBundle::layout.html.twig' %}
+{% block content %}
+    <h1>Sitas renginys</h1>
+    <div class="row">
+        <div class="col-md-4">
+            <div class="row">
+                <div class="mainEventWrapper">
+                    <div class="mainEvent">
+                        <img src="{{ asset('images/mainEvent2.jpg') }}" alt="alternative">
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <p><b>Miestas:</b> Vilnius</p><br>
+                <p><b>Pradžia:</b> 2014-10-15 11:00</p><br>
+                <p><b>Pabaiga:</b> 2014-10-15 12:00</p><br>
+                <p><b>Dalyvių:</b> 9,999,999</p><br>
+            </div>
+        </div>
+        <div class="col-md-8">
+            <div class="row">
+                <b>Aprašymas</b>
+                <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at nisl ut ante egestas condimentum. Morbi tincidunt pulvinar lectus vel facilisis. Mauris condimentum turpis maximus varius scelerisque. Phasellus ac imperdiet eros, et semper mauris. Suspendisse rhoncus varius ex, sed viverra metus mollis et. Nullam vestibulum finibus turpis sed facilisis. Phasellus facilisis erat lacus, vitae pulvinar risus semper sit amet. Nam id fringilla nisi.</p>
+            </div>
+            <div class="row">
+                <b>Komentarai</b>
+                <hr>
+                <form>
+                    <label for="name">Vardas:</label><br>
+                    <input type="text" name="name" id="name" class="form-control" placeholder="name"><br>
+                    <label for="comment">Komentaras:</label><br>
+                    <textarea name="comment" id="comment" class="form-control" placeholder="comment"></textarea><br>
+                    <input type="submit" value="Komentuoti">
+                </form>
+            </div>
+            <div class="row">
+                {# Comment section #}
+            </div>
+        </div>
+    </div>
+{% endblock %}

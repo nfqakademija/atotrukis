@@ -17,9 +17,10 @@
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-                <li><a href="#"><span class="glyphicon glyphicon-transfer"></span></a></li>
+
+                <li><a href="#" id="menu-toggle"><span class="glyphicon glyphicon-transfer"></span></a></li>
             </ul>
-            <form id="search_form" class="navbar-form navbar-left" role="search">
+            <form id="search_form" class="navbar-form navbar-left" role="search" action="{{ path('search_results') }}">
                 <div class="form-group">
                     <input type="text" class="form-control" placeholder="Search">
                 </div>
@@ -31,7 +32,38 @@
             </ul>
         </div><!-- /.navbar-collapse -->
     </nav>
-    {% include('AtotrukisMainBundle:Includes:loginModal.html.twig') %}
+{% endblock %}
+{% block leftNav %}
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+            <li class="sidebar-brand">
+                    Valdymo panelė
+            </li>
+            <li>
+                <a href="/app_dev.php">Pradinis</a>
+            </li>
+            <li>
+                <a href="{{ path('my_events') }}">Kur aš dalyvauju?</a>
+            </li>
+            <li>
+                <a href="{{ path('create_event') }}">Naujas renginys</a>
+            </li>
+            <li>
+                <a href="{{ path('my_events') }}">Mano Renginiai</a>
+            </li>
+            <hr>
+            <li>
+                <h4>Naujienos</h4>
+            </li>
+            <hr>
+            <li>
+                <h4>Naujausi kometarai</h4>
+            </li>
+        </ul>
+
+    </div>
+    <!-- /#sidebar-wrapper -->
 {% endblock %}
 {% block mainContent %}
     {% block fos_user_content %}{% endblock %}
