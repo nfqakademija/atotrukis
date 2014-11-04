@@ -5,6 +5,7 @@ namespace Atotrukis\MainBundle\Controller;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Atotrukis\MainBundle\Entity\Event;
 use Atotrukis\MainBundle\Entity\City;
+use Atotrukis\MainBundle\Entity\UserAttending;
 
 class DefaultController extends Controller
 {
@@ -135,6 +136,32 @@ class DefaultController extends Controller
 
     public function ShowEventAction($id)
     {
+        // Adding attending person
+//        $em = $this->getDoctrine()->getManager();
+//        $user = $em->getRepository('AtotrukisMainBundle:User')->find(1);
+//        $event = $em->getRepository('AtotrukisMainBundle:Event')->find(1075);
+//        $att = new UserAttending();
+//        $att->setUserId($user);
+//        $att->setEventId($event);
+//        $em = $this->getDoctrine()->getManager();
+//        $em->persist($att);
+//        $em->flush();
+
+
+        // Counting attending people
+        $em = $this->getDoctrine()->getManager();
+
+        $qb = $em->createQueryBuilder()
+            ->select('count(e)')
+            ->from('AtotrukisMainBundle:Event', 'e')
+            ->innerJoin('e.usersAttending', 'att', 'WITH', 'e.id = att.eventId')
+            ->where('e.id = :id')
+            ->setParameter('id', $id)
+        ;
+        $attending = $qb->getQuery()->getSingleScalarResult();
+
+
+        // Getting event data from id
         $event = $this->get('doctrine')->getManager()->getRepository('AtotrukisMainBundle:Event')->find($id);
 
         if (!$event) {
@@ -142,7 +169,7 @@ class DefaultController extends Controller
         }
 
         return $this->render('AtotrukisMainBundle:Default:showEvent.html.twig', array(
-            'event' => $event
+            'event' => $event, 'attending'=> $attending
         ));
     }
 
