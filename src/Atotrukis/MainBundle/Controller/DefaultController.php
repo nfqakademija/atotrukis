@@ -21,7 +21,7 @@ class DefaultController extends Controller
 //        $city = new City(); $city->setName("Panevėžys"); $city->setPriority(1); $em = $this->getDoctrine()->getManager(); $em->persist($city); $em->flush();
 
         // Generating events
-//        for ($i = 0; $i < 10; $i++) {
+//        for ($i = 0; $i < 30; $i++) {
 //            $names = array("Koncertas", "Miesto šventė", "Parduotuvės atidarymas", "Futbolo varžybos", "Krepšinio varžybos",
 //                "Šokiai", "Paroda", "Karaoke", "Protmūšis", "Spektaklis", "Paskaita", "Festivalis", "Muzikos vakaras");
 //            $descriptions = array("Labai įdomus renginys", "Linksmas laiko praleidimas", "Įdomu", "Smagu", "Čia toks labai įdomus renginys, kuriame pamatysite visokių įdomių dalykų, kurie bus labai smagūs ir linksmi.");
@@ -78,8 +78,8 @@ class DefaultController extends Controller
             }
             $date .= $time->format("H:i");
             return $date;
-
         }
+
 
         // Getting city from ip address
         function ip_details($ip) {
@@ -90,15 +90,9 @@ class DefaultController extends Controller
         $details = ip_details($_SERVER['REMOTE_ADDR']);
         $city = $details->city;
 
+
         // Searching events according to city
         $em = $this->getDoctrine()->getManager();
-//        $query = $em->createQuery(
-//            'SELECT e
-//            FROM AtotrukisMainBundle:Event e INNER JOIN AtotrukisMainBundle:City c ON e.city = c.id
-//            WHERE e.startDate >= :today and c.name = :city
-//            ')
-//            ->setParameter('today', new \DateTime())
-//            ->setParameter('city', $city);
 
         $qb = $em->createQueryBuilder()
             ->select('e')
@@ -111,29 +105,33 @@ class DefaultController extends Controller
         ;
         $events = $qb->getQuery()->getResult();
 
+        if (!$events) {
+            throw $this->createNotFoundException('Nėra nei vieno renginio');
+        }
 
-//        $events = $query->getResult();
 
+        // Changing date format to lithuanian
         $date = [];
         foreach ($events as $e) {
             $date[$e->getId()] = changeDate($e->getStartDate());
         }
 
-        if (!$events) {
-            throw $this->createNotFoundException('Nėra nei vieno renginio');
-        }
 
+        // Pagination
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
             $qb,
-            $this->get('request')->query->get('page', 1)/*page number*/,
+            $this->get('request')->query->get('puslapis', 1)/*page number*/,
             8/*limit per page*/
         );
+
 
         return $this->render('AtotrukisMainBundle:Default:index.html.twig', array(
             'date' => $date, 'pagination' => $pagination
         ));
+
     }
+
 
     public function ShowEventAction($id)
     {
