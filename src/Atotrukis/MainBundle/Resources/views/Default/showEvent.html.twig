@@ -1,16 +1,32 @@
-{% extends "::base.html.twig" %}
+{% extends "AtotrukisMainBundle::layout.html.twig" %}
 
-{% block title %}Renginys{% endblock %}
+{% block title %}{{ event.name }}{% endblock %}
 
-{% block body %}
+{% block topContent %}
+    <div class="page-header">
+        <h1>{{ event.name }}</h1>
+    </div>
+{% endblock %}
 
-    <h1>Renginys</h1>
+{% block mainContent %}
 
-    Pavadinimas: {{ event.name }}<br>
-    Aprašymas: {{ event.description }}<br>
-    Pradžia: {{ event.startDate|date('Y-m-d H:i') }}<br>
-    Pabaiga: {{ event.endDate|date('Y-m-d H:i') }}<br>
-    Miestas: {{ event.city.name }}<br>
-    Vieta žemėlapyje:<br> <iframe src="{{ event.map }}"></iframe>
+    <div class="col-md-6">
+        <img src="{{ asset('images/mainEvent2.jpg') }}" alt="alternative"><br><br><br>
+        <b>Vieta žemėlapyje:</b><br><br>
+        <iframe src="{{ event.map }}"></iframe>
+    </div>
+    <div class="col-md-6">
+        <button class="btn btn-default" type="button">Dalyvauti</button><br><br>
+        <div class="row">
+            <div class="col-md-4"><b>Miestas: </b>{{ event.city.name }}</div>
+            <div class="col-md-4"><b>Pradžia: </b>{{ event.startDate|date('Y-m-d H:i') }}</div>
+        </div>
+        <div class="row">
+            <div class="col-md-4"><b>Dalyvių: </b></div>
+            <div class="col-md-4"><b>Pabaiga: </b>{{ event.endDate|date('Y-m-d H:i') }}</div>
+        </div><br>
+        <b>Aprašymas:</b><br>
+        {{ event.description }}<br>
+    </div>
 
 {% endblock %}
