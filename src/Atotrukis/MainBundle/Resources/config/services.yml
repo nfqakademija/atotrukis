@@ -1,3 +1,6 @@
+parameters:
+    my_user_provider.class: Atotrukis\MainBundle\Service\FOSUBUserProvider
+
 services:
     atotrukis_user.registration.form.type:
         class: Atotrukis\MainBundle\Form\Type\RegistrationFormType
@@ -7,3 +10,8 @@ services:
     eventService:
         class: Atotrukis\MainBundle\Service\EventService
         arguments: [ @doctrine.orm.entity_manager ]
+
+    my_user_provider:
+        class: "%my_user_provider.class%"
+        #this is the place where the properties are passed to the UserProvider - see config.yml
+        arguments: [@fos_user.user_manager,{facebook: facebook_id}]

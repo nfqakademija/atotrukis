@@ -18,6 +18,12 @@ class User extends BaseUser
      */
     protected $id;
 
+    /** @ORM\Column(name="facebook_id", type="string", length=255, nullable=true) */
+    protected $facebook_id;
+
+    /** @ORM\Column(name="facebook_access_token", type="string", length=255, nullable=true) */
+    protected $facebook_access_token;
+
     /**
      * @ORM\Column(type="string", length=255)
      */
