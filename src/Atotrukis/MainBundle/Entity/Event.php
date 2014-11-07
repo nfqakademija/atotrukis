@@ -67,6 +67,11 @@ class Event
     protected $usersAttending;
 
     /**
+     * @ORM\OneToMany(targetEntity="EventKeywords", mappedBy="eventId")
+     */
+    protected $keywords;
+
+    /**
      * @ORM\ManyToOne(targetEntity="City", inversedBy="eventId")
      * @ORM\JoinColumn(name="city", referencedColumnName="id")
      */
@@ -337,5 +342,38 @@ class Event
     public function getUsersAttending()
     {
         return $this->usersAttending;
+    }
+
+    /**
+     * Add keywords
+     *
+     * @param \Atotrukis\MainBundle\Entity\EventKeywords $keywords
+     * @return Event
+     */
+    public function addKeyword(\Atotrukis\MainBundle\Entity\EventKeywords $keywords)
+    {
+        $this->keywords[] = $keywords;
+
+        return $this;
+    }
+
+    /**
+     * Remove keywords
+     *
+     * @param \Atotrukis\MainBundle\Entity\EventKeywords $keywords
+     */
+    public function removeKeyword(\Atotrukis\MainBundle\Entity\EventKeywords $keywords)
+    {
+        $this->keywords->removeElement($keywords);
+    }
+
+    /**
+     * Get keywords
+     *
+     * @return \Doctrine\Common\Collections\Collection 
+     */
+    public function getKeywords()
+    {
+        return $this->keywords;
     }
 }
