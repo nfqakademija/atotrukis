@@ -3,9 +3,7 @@
 namespace Atotrukis\MainBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-use Atotrukis\MainBundle\Entity\Event;
-use Atotrukis\MainBundle\Entity\City;
-use Atotrukis\MainBundle\Entity\UserAttending;
+//use Atotrukis\MainBundle\Entity\UserAttending;
 
 class DefaultController extends Controller
 {
@@ -35,12 +33,13 @@ class DefaultController extends Controller
 
 
         // Getting city from ip address
-        function ip_details($ip) {
-            $json = file_get_contents("http://ipinfo.io/");
+        $ip = $_SERVER['REMOTE_ADDR'];
+        $json = file_get_contents("http://ipinfo.io/");
+        $details = json_decode($json);
+        if (!$details->city) {
+            $json = file_get_contents("http://ipinfo.io/$ip");
             $details = json_decode($json);
-            return $details;
         }
-        $details = ip_details($_SERVER['REMOTE_ADDR']);
         $city = $details->city;
 
 
