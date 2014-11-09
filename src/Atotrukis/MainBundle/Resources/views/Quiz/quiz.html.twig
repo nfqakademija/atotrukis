@@ -1,0 +1,69 @@
+{% extends "AtotrukisMainBundle::layout.html.twig" %}
+
+{% block title %}Apklausa{% endblock %}
+
+{% block topContent %}
+    <div class="page-header">
+        <h1>Apklausa</h1>
+    </div>
+{% endblock %}
+
+{% block mainContent %}
+
+    <style>
+        input, label, button {
+            float: left;
+        }
+        input:not(.next) {
+            clear: left;
+        }
+        #quizForm .ans:not(:first-of-type) {
+            display: none;
+        }
+    </style>
+
+    {{ form_start(form, {'attr': {'id': 'quizForm', 'class': 'col-md-12'}}) }}
+
+        <div class="ans">
+            {{ form_label(form.q1) }}
+            {{ form_widget(form.q1) }}
+            <input type="button" value="next" class="next">
+        </div>
+
+        <div class="ans">
+            {{ form_label(form.q2) }}
+            {{ form_widget(form.q2) }}
+            <input type="button" value="previous" class="previous">
+            <input type="button" value="next" class="next">
+        </div>
+
+        <div class="ans">
+            {{ form_label(form.q3) }}
+            {{ form_widget(form.q3) }}
+            <input type="button" value="previous" class="previous">
+            {{ form_widget(form.save) }}
+        </div>
+
+    {{ form_end(form) }}
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script>
+        var current, next, previous;
+        $(".next").click(function() {
+            current = $(this).parent();
+            next = $(this).parent().next();
+            next.show();
+            current.hide();
+        });
+        $(".previous").click(function() {
+            current = $(this).parent();
+            previous = $(this).parent().prev();
+            previous.show();
+            current.hide();
+        });
+    </script>
+
+{% endblock %}
