@@ -22,3 +22,7 @@ my_events:
 _show_event:
     path:     renginys/{id}
     defaults: { _controller: AtotrukisMainBundle:Default:showEvent }
+
+quiz:
+    path:     /apklausa
+    defaults: { _controller: AtotrukisMainBundle:Quiz:quiz }
