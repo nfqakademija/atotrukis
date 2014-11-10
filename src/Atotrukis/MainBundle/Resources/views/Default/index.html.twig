@@ -11,13 +11,22 @@
 {% endblock %}
 
 {% block mainContent %}
-        {% for i in 0..1 %}
-            <div class="row">
-            {% for i in 0..3 %}
-                <div class="col-md-3">{{ include('AtotrukisMainBundle:Includes:event.html.twig') }}</div>
-            {% endfor %}
-            </div>
+
+
+        {% for event in pagination %}
+
+            <div class="col-md-3">{{ include('AtotrukisMainBundle:Includes:event.html.twig') }}</div>
+
         {% endfor %}
+
+
+        <div class="col-md-12">
+
+            {{ knp_pagination_render(pagination) }}
+
+        </div>
+
+
 {% endblock %}
 {% block recommendationList %}
     <div class="panel panel-default">

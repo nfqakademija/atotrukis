@@ -1,9 +1,9 @@
-<a class="eventLink" href="{{ path('one_event', {'id' : 7}) }}">
+<a class="eventLink" href="{{ path('_show_event', { 'id': event.id }) }}">
     <div class="event">
         <img src="{{ asset('images/mainEvent2.jpg') }}" alt="alternative">
         <div class="eventTitleWrapper">
-            <h5>Title here oh title oh title my title</h5>
-            <p>Rytoj 19:00  </p>
+            <h5>{{ event.name }}</h5>
+            <p>{{ date[event.id] }}</p>
         </div>
     </div>
 </a>

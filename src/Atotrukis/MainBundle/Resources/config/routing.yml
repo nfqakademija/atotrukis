@@ -27,3 +27,7 @@ search_results:
     defaults: { _controller: AtotrukisMainBundle:Event:getSearchResult }
 
 
+
+_show_event:
+    path:     renginys/{id}
+    defaults: { _controller: AtotrukisMainBundle:Default:showEvent }
