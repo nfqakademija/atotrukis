@@ -7,3 +7,7 @@ services:
     eventService:
         class: Atotrukis\MainBundle\Service\EventService
         arguments: [ @doctrine.orm.entity_manager ]
+
+    eventService:
+        class: Atotrukis\MainBundle\Service\UserKeywordService
+        arguments: [ @doctrine.orm.entity_manager ]

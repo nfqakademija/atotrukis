@@ -1,14 +1,13 @@
 <?php
-
 namespace Atotrukis\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
 
 /**
  * @ORM\Entity
- * @ORM\Table(name="event_photos")
+ * @ORM\Table(name="event_keywords")
  */
-class EventPhoto
+class EventKeywords
 {
     /**
      * @ORM\Column(type="integer")
@@ -17,18 +16,21 @@ class EventPhoto
      */
     protected $id;
 
+    /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $keyword;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Event", inversedBy="photos")
+     * @ORM\ManyToOne(targetEntity="Event", inversedBy="keywords")
      * @ORM\JoinColumn(name="eventId", referencedColumnName="id")
      */
     protected $eventId;
 
-
     /**
      * Get id
      *
-     * @return integer 
+     * @return integer
      */
     public function getId()
     {
@@ -39,7 +41,7 @@ class EventPhoto
      * Set eventId
      *
      * @param \Atotrukis\MainBundle\Entity\Event $eventId
-     * @return EventPhoto
+     * @return UserAttending
      */
     public function setEventId(\Atotrukis\MainBundle\Entity\Event $eventId = null)
     {
@@ -51,10 +53,33 @@ class EventPhoto
     /**
      * Get eventId
      *
-     * @return \Atotrukis\MainBundle\Entity\Event 
+     * @return \Atotrukis\MainBundle\Entity\Event
      */
     public function getEventId()
     {
         return $this->eventId;
+    }
+
+    /**
+     * Set keyword
+     *
+     * @param string $keyword
+     * @return EventKeywords
+     */
+    public function setKeyword($keyword)
+    {
+        $this->keyword = $keyword;
+
+        return $this;
+    }
+
+    /**
+     * Get keyword
+     *
+     * @return string 
+     */
+    public function getKeyword()
+    {
+        return $this->keyword;
     }
 }

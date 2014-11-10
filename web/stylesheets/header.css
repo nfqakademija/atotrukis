@@ -1,3 +1,10 @@
+.container-fluid{
+    padding-left:0;
+    padding-right:0;
+}
+.row{
+    margin-right:0;
+}
 .mainEvent{
     width: 300px;
     height: 200px;
@@ -25,7 +32,7 @@
     filter: grayscale(1);
 }
 .mainEvent2TitleWrapper{
-    width:93%;
+    width:92%;
     height: 80px;
     background-color:black;
     margin-top:-80px;
@@ -63,7 +70,7 @@
     filter: grayscale(1);
 }
 .eventTitleWrapper{
-    width:91%;
+    width:89%;
     height: 50px;
     background-color:black;
     margin-top:-50px;

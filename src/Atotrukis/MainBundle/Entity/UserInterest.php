@@ -23,24 +23,44 @@ class UserInterest
     /**
      * @ORM\Column(type="integer", options={"default" = 0})
      */
-    protected $valueFacebook;
-
-    /**
-     * @ORM\Column(type="integer", options={"default" = 0})
-     */
-    protected $valueGoogle;
-
-    /**
-     * @ORM\Column(type="integer", options={"default" = 0})
-     */
-    protected $valueOurPage;
+    protected $value;
 
     /**
      * @ORM\ManyToOne(targetEntity="User", inversedBy="userInterests")
      * @ORM\JoinColumn(name="userId", referencedColumnName="id")
      */
     protected $userId;
+    /**
+     * @ORM\Column(type="datetime")
+     */
+    protected $updatedDate;
 
+    public function __construct()
+    {
+        $this->updatedDate = date('Y-m-d');
+        //parent::__construct();
+    }
+
+    /**
+     * Get updatedDate
+     * @return \DateTime
+     */
+    public function getUpdateDate()
+    {
+        return $this->updateDate;
+    }
+
+    /**
+     * Set updateDate
+     *
+     * @param \DateTime $updateDate
+     * @return Event
+     */
+    public function setUpdateDate()
+    {
+        $this->updateDate = date('Y-m-d');
+        return $this;
+    }
 
     /**
      * Get id
@@ -76,72 +96,26 @@ class UserInterest
     }
 
     /**
-     * Set valueFacebook
+     * Set value
      *
-     * @param integer $valueFacebook
+     * @param integer $value
      * @return UserInterest
      */
-    public function setValueFacebook($valueFacebook)
+    public function setValue($value)
     {
-        $this->valueFacebook = $valueFacebook;
+        $this->value = $value;
 
         return $this;
     }
 
     /**
-     * Get valueFacebook
+     * Get value
      *
      * @return integer 
      */
-    public function getValueFacebook()
+    public function getValue()
     {
-        return $this->valueFacebook;
-    }
-
-    /**
-     * Set valueGoogle
-     *
-     * @param integer $valueGoogle
-     * @return UserInterest
-     */
-    public function setValueGoogle($valueGoogle)
-    {
-        $this->valueGoogle = $valueGoogle;
-
-        return $this;
-    }
-
-    /**
-     * Get valueGoogle
-     *
-     * @return integer 
-     */
-    public function getValueGoogle()
-    {
-        return $this->valueGoogle;
-    }
-
-    /**
-     * Set valueOurPage
-     *
-     * @param integer $valueOurPage
-     * @return UserInterest
-     */
-    public function setValueOurPage($valueOurPage)
-    {
-        $this->valueOurPage = $valueOurPage;
-
-        return $this;
-    }
-
-    /**
-     * Get valueOurPage
-     *
-     * @return integer 
-     */
-    public function getValueOurPage()
-    {
-        return $this->valueOurPage;
+        return $this->value;
     }
 
     /**

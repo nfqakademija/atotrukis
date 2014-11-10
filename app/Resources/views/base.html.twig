@@ -7,6 +7,12 @@
         <link rel="stylesheet" href="/stylesheets/styles.css">
         <link rel="stylesheet" href="/stylesheets/header.css">
 
+        {% stylesheets filter="sass"
+        "@AtotrukisMainBundle/Resources/style/style.sass"
+        %}
+        <link rel="stylesheet" href="{{ asset_url }}" />
+        {% endstylesheets %}
+
         <link rel="icon" type="image/x-icona" href="{{ asset('favicon.ico') }}" />
     </head>
     <body>

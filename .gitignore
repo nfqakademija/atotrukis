@@ -1,4 +1,6 @@
 /web/bundles/
+/.sass-cache
+/app/.sass-cache
 /app/bootstrap.php.cache
 /app/cache/*
 /app/config/parameters.yml
