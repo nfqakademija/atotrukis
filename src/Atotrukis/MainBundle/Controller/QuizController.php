@@ -11,38 +11,71 @@ class QuizController extends Controller
     {
         $form = $this->createFormBuilder()
             ->add('q1', 'choice', array(
-                'label' => 'Pirmas klausimas',
+                'label' => 'Pasirink muzikos žanrus, kuriuos mėgsti',
                 'required'  => false,
-                'choices' => array(array('ats1' => 'ats1'), array('ats2' => 'ats2')),
+                'choices' => array(
+                    array('rokas' => 'Rokas'),
+                    array('elektroninė muzika' => 'Elektroninė muzika'),
+                    array('pop' => 'Pop'),
+                    array('repas' => 'Repas')
+                ),
                 'expanded' => true,
                 'multiple' => true,
-                'attr' => array('display' => 'block', 'class' => 'col-md-12')
+            ))
+            ->add('t1', 'textarea', array(
+                'attr' => array('class' => 'col-md-12', 'style' => 'width: 100%'),
+                'label' => 'Įveskite savo mėgstamus nepaminėtus žanrus, atskirtus kableliais:',
+                'required'  => false,
             ))
             ->add('q2', 'choice', array(
-                'label' => 'Antras klausimas',
+                'label' => 'Sporto šakos, į kurių varžybas norėtum nueiti',
                 'required'  => false,
-                'choices' => array(array('ats1' => 'ats1'), array('ats2' => 'ats2'), array('ats3' => 'ats3')),
+                'choices' => array(
+                    array('krepšinis' => 'Krepšinis'),
+                    array('futbolas' => 'Futbolas'),
+                    array('tinklinis' => 'Tinklinis'),
+                    array('ledo ritulys' => 'Ledo ritulys')
+                ),
                 'expanded' => true,
                 'multiple' => true,
-                'attr' => array('display' => 'block', 'class' => 'col-md-12')
+            ))
+            ->add('t2', 'textarea', array(
+                'attr' => array('class' => 'col-md-12', 'style' => 'width: 100%'),
+                'label' => 'Įveskite kitas savo mėgstamas sporto šakas, atskirtas kableliais:',
+                'required'  => false,
             ))
             ->add('q3', 'choice', array(
-                'label' => 'Trecias klausimas',
+                'label' => 'Į kuriuos iš šių renginių tipų norėtum nueiti?',
                 'required'  => false,
-                'choices' => array(array('ats1' => 'ats1'), array('ats2' => 'ats2'), array('ats3' => 'ats3')),
+                'choices' => array(
+                    array('paroda' => 'Paroda'),
+                    array('spektaklis' => 'Spektaklis'),
+                    array('seminaras' => 'Seminaras'),
+                    array('vakarėlis' => 'Vakarėlis')
+                ),
                 'expanded' => true,
                 'multiple' => true,
-                'attr' => array('display' => 'block', 'class' => 'col-md-12')
             ))
-            ->add('save', 'submit', array('label' => 'Submit', 'attr' => array('class' => 'save')))
+            ->add('t3', 'textarea', array(
+                'attr' => array('class' => 'col-md-12', 'style' => 'width: 100%'),
+                'label' => 'Įveskite kitas renginių rūšis, įkurius norėtumėt nueiti, atskirtus kableliais:',
+                'required'  => false
+            ))
+            ->add('save', 'submit', array('label' => 'Baigti apklausą', 'attr' => array('class' => 'btn btn-default save')))
             ->getForm();
 
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
             $k = '';
             foreach($form->getData() as $data) {
-                foreach($data as $d) {
-                    $k .= $d . ", ";
+                if (is_array($data)) {
+                    foreach ($data as $d) {
+                        $k .= $d . ", ";
+                    }
+                } else {
+                    if ($data) {
+                        $k .= $data . ", ";
+                    }
                 }
             }
             echo $k;
