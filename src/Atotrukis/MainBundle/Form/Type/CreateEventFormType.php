@@ -50,6 +50,20 @@ class CreateEventFormType extends AbstractType
                     ])
                 ]
             ])
+            ->add('keywords', 'text', [
+                'mapped' => false,
+                'constraints' =>[
+                    new Assert\NotBlank([
+                        'message' => "Renginio raktažodžiai negali būti tušti"
+                    ]),
+                    new Assert\Length([
+                        'min' => "2",
+                        'max' => "255",
+                        'minMessage' => "Renginio raktažodžiai negali būti trumpesni nei {{ limit }} simboliai",
+                        'maxMessage' => "Renginio raktažodžiai negali būti ilgesni nei {{ limit }} simboliai"
+                    ])
+                ]
+            ])
             ->add('map', 'hidden')
             ->add('city', 'entity', array(
                 'class' => 'AtotrukisMainBundle:City',

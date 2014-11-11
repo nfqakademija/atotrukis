@@ -67,7 +67,7 @@ class Event
     protected $usersAttending;
 
     /**
-     * @ORM\OneToMany(targetEntity="EventKeywords", mappedBy="eventId")
+     * @ORM\OneToMany(targetEntity="EventKeywords", mappedBy="eventId", cascade={"remove"})
      */
     protected $keywords;
 

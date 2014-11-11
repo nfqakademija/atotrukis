@@ -1,6 +1,7 @@
 <?php
 namespace Atotrukis\MainBundle\Service;
 use Doctrine\ORM\EntityManager;
+use Atotrukis\MainBundle\Entity\EventKeywords;
 
 class EventService{
 
@@ -46,7 +47,6 @@ class EventService{
     public function updateUserEvent($id, $user, $request)
     {
         $event = $this->em->getRepository('AtotrukisMainBundle:Event')->findOneById($id);
-
         self::checkEventOwner('edit', $id, $user);
 
         $event->setName($event->getName());
@@ -55,8 +55,6 @@ class EventService{
         $event->setEndDate($event->getEndDate());
         $event->setMap($event->getMap());
         $event->setCity($event->getCity());
-
-
 
         return $event;
     }
@@ -93,7 +91,29 @@ class EventService{
 
                 $em = $this->em;
                 $em->persist($event);
+
+                $oldKeywords = $this->em->getRepository('AtotrukisMainBundle:EventKeywords')->findByEventId($event);
+                $em = $this->em;
+                foreach($oldKeywords as $oldKeyword)
+                {
+                    $em->remove($oldKeyword);
+                }
+
+                $keywords = $form['keywords']->getData();
+                $keywords = preg_replace('!\s+!', ' ', $keywords);
+                $keywords = explode(",", $keywords);
+
+                foreach($keywords as $keyword){
+                    $keyword = trim($keyword);
+
+                    $eventKeywords = new EventKeywords();
+                    $eventKeywords->setKeyword($keyword);
+                    $eventKeywords->setEventId($event);
+                    $em = $this->em;
+                    $em->persist($eventKeywords);
+                }
                 $em->flush();
+
                 $request->getSession()->getFlashBag()->add('success', $message);
             }
         }

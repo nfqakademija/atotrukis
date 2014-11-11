@@ -22,7 +22,7 @@ class EventKeywords
     protected $keyword;
 
     /**
-     * @ORM\ManyToOne(targetEntity="Event", inversedBy="keywords")
+     * @ORM\ManyToOne(targetEntity="Event", inversedBy="keywords", cascade={"all"})
      * @ORM\JoinColumn(name="eventId", referencedColumnName="id")
      */
     protected $eventId;
