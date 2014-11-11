@@ -371,7 +371,7 @@ class Event
     /**
      * Get keywords
      *
-     * @return \Doctrine\Common\Collections\Collection 
+     * @return \Doctrine\Common\Collections\Collection
      */
     public function getKeywords()
     {

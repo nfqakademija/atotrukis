@@ -1,5 +1,12 @@
 {% extends 'AtotrukisMainBundle::layout.html.twig' %}
 {% block content %}
+{% for label, flashes in app.session.flashbag.all %}
+    {% for flash in flashes %}
+        <div class="alert alert-{{ label }}" style="margin: 0px 15px 15px 15px">
+            {{ flash }}
+        </div>
+    {% endfor %}
+{% endfor %}
 {% for event in events %}
     <div class="row">
         <div class="col-md-5">

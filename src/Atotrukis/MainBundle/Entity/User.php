@@ -18,17 +18,14 @@ class User extends BaseUser
      */
     protected $id;
 
+    /** @ORM\Column(name="facebook_id", type="string", length=255, nullable=true) */
+    protected $facebook_id;
+
+    /** @ORM\Column(name="facebook_access_token", type="string", length=255, nullable=true) */
+    protected $facebook_access_token;
+
     /**
      * @ORM\Column(type="string", length=255)
-     *
-     * @Assert\NotBlank(message="Please enter your name.", groups={"Registration", "Profile"})
-     * @Assert\Length(
-     *     min=3,
-     *     max="255",
-     *     minMessage="The name is too short.",
-     *     maxMessage="The name is too long.",
-     *     groups={"Registration", "Profile"}
-     * )
      */
     protected $name;
 
@@ -98,10 +95,10 @@ class User extends BaseUser
     /**
      * Add interests
      *
-     * @param \Atotrukis\MainBundle\Entity\UserInterests $interests
+     * @param \Atotrukis\MainBundle\Entity\UserInterest $interests
      * @return User
      */
-    public function addInterest(\Atotrukis\MainBundle\Entity\UserInterests $interests)
+    public function addInterest(\Atotrukis\MainBundle\Entity\UserInterest $interests)
     {
         $this->interests[] = $interests;
 
@@ -110,10 +107,10 @@ class User extends BaseUser
 
     /**
      * Remove interests
-     *
-     * @param \Atotrukis\MainBundle\Entity\UserInterests $interests
+     *s
+     * @param \Atotrukis\MainBundle\Entity\UserInterest $interests
      */
-    public function removeInterest(\Atotrukis\MainBundle\Entity\UserInterests $interests)
+    public function removeInterest(\Atotrukis\MainBundle\Entity\UserInterest $interests)
     {
         $this->interests->removeElement($interests);
     }
@@ -189,5 +186,51 @@ class User extends BaseUser
     public function getName()
     {
         return $this->name;
+    }
+
+    /**
+     * Set facebook_id
+     *
+     * @param string $facebookId
+     * @return User
+     */
+    public function setFacebookId($facebookId)
+    {
+        $this->facebook_id = $facebookId;
+
+        return $this;
+    }
+
+    /**
+     * Get facebook_id
+     *
+     * @return string 
+     */
+    public function getFacebookId()
+    {
+        return $this->facebook_id;
+    }
+
+    /**
+     * Set facebook_access_token
+     *
+     * @param string $facebookAccessToken
+     * @return User
+     */
+    public function setFacebookAccessToken($facebookAccessToken)
+    {
+        $this->facebook_access_token = $facebookAccessToken;
+
+        return $this;
+    }
+
+    /**
+     * Get facebook_access_token
+     *
+     * @return string 
+     */
+    public function getFacebookAccessToken()
+    {
+        return $this->facebook_access_token;
     }
 }
