@@ -95,10 +95,10 @@ class User extends BaseUser
     /**
      * Add interests
      *
-     * @param \Atotrukis\MainBundle\Entity\UserInterests $interests
+     * @param \Atotrukis\MainBundle\Entity\UserInterest $interests
      * @return User
      */
-    public function addInterest(\Atotrukis\MainBundle\Entity\UserInterests $interests)
+    public function addInterest(\Atotrukis\MainBundle\Entity\UserInterest $interests)
     {
         $this->interests[] = $interests;
 
@@ -107,10 +107,10 @@ class User extends BaseUser
 
     /**
      * Remove interests
-     *
-     * @param \Atotrukis\MainBundle\Entity\UserInterests $interests
+     *s
+     * @param \Atotrukis\MainBundle\Entity\UserInterest $interests
      */
-    public function removeInterest(\Atotrukis\MainBundle\Entity\UserInterests $interests)
+    public function removeInterest(\Atotrukis\MainBundle\Entity\UserInterest $interests)
     {
         $this->interests->removeElement($interests);
     }
