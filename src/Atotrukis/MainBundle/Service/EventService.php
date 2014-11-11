@@ -13,21 +13,22 @@ class EventService{
 
     public function createEvent($event, $form, $request, $user)
     {
-        self::handleFormRequest($form, $event, $request, $user);
+        self::handleFormRequest($form, $event, $request, $user, 'Renginys sėkmingai sukurtas!');
     }
-    public function readUserEvents($userId){
+    public function readUserEvents($userId, $request){
 
         $event = $this->em
             ->getRepository('AtotrukisMainBundle:Event')
             ->findByCreatedBy($userId);
         if (!$event) {
-            throw $this->createNotFoundException(
-                'You have no events'
-            );
+//            throw $this->createNotFoundException(
+//                'You have no events'
+//            );
+             $request->getSession()->getFlashBag()->add('danger', 'Jūs neturite jokių renginių!');
         }
         return $event;
     }
-    public function deleteUserEvent($id, $user)
+    public function deleteUserEvent($id, $user, $request)
     {
         self::checkEventOwner('edit', $id, $user);
 
@@ -40,6 +41,7 @@ class EventService{
         $em = $this->em;
         $em->remove($event);
         $em->flush();
+        $request->getSession()->getFlashBag()->add('success', 'Renginys sėkmingai ištrintas!');
     }
     public function updateUserEvent($id, $user, $request)
     {
@@ -71,7 +73,7 @@ class EventService{
         }
 
     }
-    public function handleFormRequest($form, $event, $request, $user)
+    public function handleFormRequest($form, $event, $request, $user, $message)
     {
         $form->handleRequest($request);
 
@@ -92,10 +94,10 @@ class EventService{
                 $em = $this->em;
                 $em->persist($event);
                 $em->flush();
-
-                return true; //$this->redirect($this->generateUrl('my_events'));
+                $request->getSession()->getFlashBag()->add('success', $message);
             }
         }
+
     }
 
 }

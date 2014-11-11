@@ -25,6 +25,7 @@ class AppKernel extends Kernel
             new FOS\UserBundle\FOSUserBundle(),
             new Knp\Bundle\PaginatorBundle\KnpPaginatorBundle(),
             new Doctrine\Bundle\FixturesBundle\DoctrineFixturesBundle(),
+            new HWI\Bundle\OAuthBundle\HWIOAuthBundle(),
 
         );
 
