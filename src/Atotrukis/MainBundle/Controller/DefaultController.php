@@ -76,7 +76,8 @@ class DefaultController extends Controller
             $events = $qb->getQuery()->getResult();
 
             if (!$events) {
-                throw $this->createNotFoundException('Nėra nei vieno renginio');
+                //TODO not a solution
+               // throw $this->createNotFoundException('Nėra nei vieno renginio');
             }
         }
 

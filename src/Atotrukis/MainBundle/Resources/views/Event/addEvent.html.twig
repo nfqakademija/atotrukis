@@ -1,7 +1,8 @@
 {% extends 'AtotrukisMainBundle::layout.html.twig' %}
 {#{{  form(form) }}#}
+{% block content %}
 <style>
-    html, body, #map-canvas {
+   #map-canvas {
         height: 300px;
         width: 400px;
         margin: 0px;
@@ -199,3 +200,4 @@
     document.onkeypress = stopRKey;
 
 </script>
+{% endblock %}
