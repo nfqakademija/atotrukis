@@ -22,10 +22,7 @@ class EventService{
             ->getRepository('AtotrukisMainBundle:Event')
             ->findByCreatedBy($userId);
         if (!$event) {
-//            throw $this->createNotFoundException(
-//                'You have no events'
-//            );
-             $request->getSession()->getFlashBag()->add('danger', 'Jūs neturite jokių renginių!');
+            $this->addFlash($request, 'Jūs neturite jokių renginių!', 'danger');
         }
         return $event;
     }
@@ -42,7 +39,7 @@ class EventService{
         $em = $this->em;
         $em->remove($event);
         $em->flush();
-        $request->getSession()->getFlashBag()->add('success', 'Renginys sėkmingai ištrintas!');
+        $this->addFlash($request, 'Renginys sėkmingai ištrintas!', 'success');
     }
     public function updateUserEvent($id, $user, $request)
     {
@@ -74,50 +71,102 @@ class EventService{
     public function handleFormRequest($form, $event, $request, $user, $message)
     {
         $form->handleRequest($request);
-
+        $em = $this->em;
         if ($form->isValid()) {
             if ($request->isMethod('POST')) {
 
-                $city = $this->em->getRepository('AtotrukisMainBundle:City')
-                    ->findOneById($form['city']->getData());
+                $this->setEventValues($form, $event, $user, $em);
+                $this->removeOldKeywords($event, $em);
+                $this->processNewKeywords($form, $event, $em);
 
-                $event->setName($form['name']->getData());
-                $event->setDescription($form['description']->getData());
-                $event->setStartDate($form['startDate']->getData());
-                $event->setEndDate($form['endDate']->getData());
-                $event->setMap($form['map']->getData());
-                $event->setCity($city);
-                $event->setCreatedBy($user);
-
-                $em = $this->em;
-                $em->persist($event);
-
-                $oldKeywords = $this->em->getRepository('AtotrukisMainBundle:EventKeywords')->findByEventId($event);
-                $em = $this->em;
-                foreach($oldKeywords as $oldKeyword)
-                {
-                    $em->remove($oldKeyword);
-                }
-
-                $keywords = $form['keywords']->getData();
-                $keywords = preg_replace('!\s+!', ' ', $keywords);
-                $keywords = explode(",", $keywords);
-
-                foreach($keywords as $keyword){
-                    $keyword = trim($keyword);
-
-                    $eventKeywords = new EventKeywords();
-                    $eventKeywords->setKeyword($keyword);
-                    $eventKeywords->setEventId($event);
-                    $em = $this->em;
-                    $em->persist($eventKeywords);
-                }
                 $em->flush();
 
-                $request->getSession()->getFlashBag()->add('success', $message);
+                $this->addFlash($request, $message, 'success');
             }
         }
 
+    }
+
+    /**
+     * @param $form
+     * @param $event
+     * @param $user
+     * @param $em
+     */
+    public function setEventValues($form, $event, $user, $em)
+    {
+        $event->setName($form['name']->getData());
+        $event->setDescription($form['description']->getData());
+        $event->setStartDate($form['startDate']->getData());
+        $event->setEndDate($form['endDate']->getData());
+        $event->setMap($form['map']->getData());
+        $event->setCity($this->getCity($form));
+        $event->setCreatedBy($user);
+
+        $em->persist($event);
+    }
+
+    /**
+     * @param $form
+     * @return mixed
+     */
+    public function getCity($form)
+    {
+        return $this->em->getRepository('AtotrukisMainBundle:City')
+            ->findOneById($form['city']->getData());
+    }
+
+    /**
+     * @param $event
+     * @param $em
+     */
+    public function removeOldKeywords($event, $em)
+    {
+        $oldKeywords = $this->em->getRepository('AtotrukisMainBundle:EventKeywords')->findByEventId($event);
+
+        foreach ($oldKeywords as $oldKeyword) {
+            $em->remove($oldKeyword);
+        }
+    }
+
+    /**
+     * @param $form
+     * @param $event
+     * @param $em
+     */
+    public function processNewKeywords($form, $event, $em)
+    {
+        $keywords = $form['keywords']->getData();
+        $keywords = preg_replace('!\s+!', ' ', $keywords);
+        $keywords = explode(",", $keywords);
+
+        foreach ($keywords as $keyword) {
+            $keyword = trim($keyword);
+            $this->PersistKeywords($event, $em, $keyword);
+        }
+    }
+
+    /**
+     * @param $event
+     * @param $em
+     * @param $keyword
+     */
+    public function PersistKeywords($event, $em, $keyword)
+    {
+        $eventKeywords = new EventKeywords();
+        $eventKeywords->setKeyword($keyword);
+        $eventKeywords->setEventId($event);
+        $em->persist($eventKeywords);
+    }
+
+    /**
+     * @param $request
+     * @param $message
+     * @param $status
+     */
+    public function addFlash($request, $message, $status)
+    {
+        $request->getSession()->getFlashBag()->add($status, $message);
     }
 
 }

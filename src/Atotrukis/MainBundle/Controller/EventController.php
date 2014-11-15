@@ -15,9 +15,7 @@ class EventController extends Controller
         $event = new Event();
         $form = $this->createForm(new CreateEventFormType(), $event);
 
-        $user = self::getUser();
-
-        $this->get('eventService')->createEvent($event, $form, $request, $user);
+        $this->get('eventService')->createEvent($event, $form, $request, $this->getUser());
         //$request->getSession()->getFlashBag()->add('success', 'Renginys sėkmingai sukurtas!');
         return $this->render('AtotrukisMainBundle:Event:addEvent.html.twig', array(
             'form' => $form->createView(),
@@ -27,9 +25,7 @@ class EventController extends Controller
     public function readUserEventsAction(Request $request)
     {
 
-        $user = self::getUser();
-
-        $userEvents = $this->get('eventService')->readUserEvents($user, $request);
+        $userEvents = $this->get('eventService')->readUserEvents($this->getUser(), $request);
 
         return $this->render('AtotrukisMainBundle:Event:myEvents.html.twig', array('events' => $userEvents));
 
@@ -37,20 +33,17 @@ class EventController extends Controller
 
     public function deleteMyEventAction($id, Request $request)
     {
-        $user = self::getUser();
-        $this->get('eventService')->deleteUserEvent($id, $user, $request);
-        //$request->getSession()->getFlashBag()->add('success', 'Renginys sėkmingai ištrintas!');
+        $this->get('eventService')->deleteUserEvent($id, $this->getUser(), $request);
         return $this->redirect($this->generateUrl('my_events'));
     }
 
     public function editMyEventAction(Request $request, $id)
     {
 
-        $user = self::getUser();
-        $event = $this->get('eventService')->updateUserEvent($id, $user, $request);
+        $event = $this->get('eventService')->updateUserEvent($id, $this->getUser(), $request);
 
         $form = $this->createForm(new CreateEventFormType(), $event);
-        $this->get('eventService')->handleFormRequest($form, $event, $request, $user, 'Renginys sėkmingai išsaugotas!');
+        $this->get('eventService')->handleFormRequest($form, $event, $request, $this->getUser(), 'Renginys sėkmingai išsaugotas!');
         return $this->render('AtotrukisMainBundle:Event:editEvent.html.twig', array(
             'form' => $form->createView(),
             'event' => $event
