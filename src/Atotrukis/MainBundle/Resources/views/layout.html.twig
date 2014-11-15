@@ -27,8 +27,12 @@
                 <button type="submit" class="btn btn-default">Search</button>
             </form>
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="{{ path('fos_user_security_login') }}">Prisijungimas</a></li>
-                <li><a href="{{ path('fos_user_registration_register') }}">Registracija</a></li>
+                {% if app.user %}
+                    <li><a href="{{ path('fos_user_security_logout') }}">Atsijungti</a></li>
+                {% else %}
+                    <li><a href="{{ path('fos_user_security_login') }}">Prisijungimas</a></li>
+                    <li><a href="{{ path('fos_user_registration_register') }}">Registracija</a></li>
+                {% endif %}
             </ul>
         </div><!-- /.navbar-collapse -->
     </nav>
