@@ -80,7 +80,7 @@ class QuizController extends Controller
             }
             echo $k;
             /*
-             * To do: save keywords to database
+             * TODO save keywords to database
              */
             return $this->render('AtotrukisMainBundle:Quiz:result.html.twig', array(
 

@@ -35,18 +35,7 @@ class DefaultController extends Controller
 
     public function ShowEventAction($id)
     {
-        // Counting attending people
-        $em = $this->getDoctrine()->getManager();
-
-        $qb = $em->createQueryBuilder()
-            ->select('count(e)')
-            ->from('AtotrukisMainBundle:Event', 'e')
-            ->innerJoin('e.usersAttending', 'att', 'WITH', 'e.id = att.eventId')
-            ->where('e.id = :id')
-            ->setParameter('id', $id)
-        ;
-        $attending = $qb->getQuery()->getSingleScalarResult();
-
+        $attending = $this->get('eventService')->getAttending($id);
 
         // Getting event data from id
         $event = $this->get('doctrine')->getManager()->getRepository('AtotrukisMainBundle:Event')->find($id);

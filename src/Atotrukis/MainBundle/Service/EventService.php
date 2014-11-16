@@ -169,4 +169,15 @@ class EventService{
         $request->getSession()->getFlashBag()->add($status, $message);
     }
 
+    public function getAttending($id) {
+        $rep = $this->em->getRepository('AtotrukisMainBundle:Event');
+        $qb = $rep->createQueryBuilder('e')
+            ->select('count(e)')
+            ->innerJoin('e.usersAttending', 'att', 'WITH', 'e.id = att.eventId')
+            ->where('e.id = :id')
+            ->setParameter('id', $id)
+        ;
+        return $qb->getQuery()->getSingleScalarResult();
+    }
+
 }
