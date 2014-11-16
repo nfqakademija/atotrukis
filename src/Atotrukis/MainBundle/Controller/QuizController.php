@@ -67,21 +67,22 @@ class QuizController extends Controller
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
             $k = '';
+            $usr = $this->getDoctrine()->getRepository('AtotrukisMainBundle:User')
+                ->findOneById($this->get('security.context')->getToken()->getUser()->getId());
             foreach($form->getData() as $data) {
                 if (is_array($data)) {
                     foreach ($data as $d) {
-                        $k .= $d . ", ";
+//                        $k .= $d . ", ";
+                        $this->get('userKeywordService')->addKeyword($k, $usr);
                     }
                 } else {
                     if ($data) {
-                        $k .= $data . ", ";
+//                        $k .= $data . ", ";
+                        $this->get('userKeywordService')->addKeyword($k, $usr);
                     }
                 }
             }
             echo $k;
-            /*
-             * TODO save keywords to database
-             */
             return $this->render('AtotrukisMainBundle:Quiz:result.html.twig', array(
 
             ));
