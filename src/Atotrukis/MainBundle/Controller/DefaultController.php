@@ -9,15 +9,7 @@ class DefaultController extends Controller
 
     public function indexAction()
     {
-        $em = $this->getDoctrine()->getManager();
-
-        $qb = $em->createQueryBuilder()
-            ->select('e')
-            ->from('AtotrukisMainBundle:Event', 'e')
-            ->where('e.startDate >= :today')
-            ->setParameter('today', new \DateTime())
-        ;
-        $events = $qb->getQuery()->getResult();
+        $events = $this->get('homePageService')->getEvents();
 
         if (!$events) {
             //TODO not a solution
@@ -29,7 +21,7 @@ class DefaultController extends Controller
         // Pagination
         $paginator  = $this->get('knp_paginator');
         $pagination = $paginator->paginate(
-            $qb,
+            $events,
             $this->get('request')->query->get('puslapis', 1)/*page number*/,
             8/*limit per page*/
         );

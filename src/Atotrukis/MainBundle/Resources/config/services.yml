@@ -23,3 +23,7 @@ services:
     dateFormatService:
       class: Atotrukis\MainBundle\Service\DateFormatService
       arguments: []
+
+    homePageService:
+      class: Atotrukis\MainBundle\Service\HomePageService
+      arguments: [ @doctrine.orm.entity_manager ]
