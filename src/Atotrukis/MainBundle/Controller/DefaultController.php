@@ -9,20 +9,7 @@ class DefaultController extends Controller
 
     public function indexAction()
     {
-
-        // Searching events according to city
         $em = $this->getDoctrine()->getManager();
-
-//        $qb = $em->createQueryBuilder()
-//            ->select('e')
-//            ->from('AtotrukisMainBundle:Event', 'e')
-//            ->innerJoin('e.city', 'c', 'WITH', 'e.city = c.id')
-//            ->where('e.startDate >= :today')
-//            ->andWhere('c.name = :city')
-//            ->setParameter('today', new \DateTime())
-//            ->setParameter('city', $city)
-//        ;
-//        $events = $qb->getQuery()->getResult();
 
         $qb = $em->createQueryBuilder()
             ->select('e')
@@ -33,28 +20,11 @@ class DefaultController extends Controller
         $events = $qb->getQuery()->getResult();
 
         if (!$events) {
-            // if city isn't got
-            $qb = $em->createQueryBuilder()
-                ->select('e')
-                ->from('AtotrukisMainBundle:Event', 'e')
-                ->where('e.startDate >= :today')
-                ->setParameter('today', new \DateTime())
-            ;
-            $events = $qb->getQuery()->getResult();
-
-            if (!$events) {
-                //TODO not a solution
-               // throw $this->createNotFoundException('Nėra nei vieno renginio');
-            }
+            //TODO not a solution
+           // throw $this->createNotFoundException('Nėra nei vieno renginio')
         }
 
-
-        // Changing date format to lithuanian
-//        $date = [];
-//        foreach ($events as $e) {
-//            $date[$e->getId()] = changeDate($e->getStartDate());
-//        }
-
+        $date = $this->get('dateFormatService')->dateArray($events);
 
         // Pagination
         $paginator  = $this->get('knp_paginator');
@@ -64,9 +34,8 @@ class DefaultController extends Controller
             8/*limit per page*/
         );
 
-
         return $this->render('AtotrukisMainBundle:Default:index.html.twig', array(
-            //'date' => $date,
+            'date' => $date,
             'pagination' => $pagination
         ));
 

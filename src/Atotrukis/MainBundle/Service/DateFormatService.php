@@ -4,7 +4,7 @@ namespace Atotrukis\MainBundle\Service;
 
 class DateFormatService
 {
-    function changeDate($time)
+    public function changeDate($time)
     {
         $date = "";
         if ($time->format("Y-m-d") == (new \DateTime())->format("Y-m-d")) {
@@ -22,6 +22,14 @@ class DateFormatService
             $date .= $time->format(' j \d. ');
         }
         $date .= $time->format("H:i");
+        return $date;
+    }
+
+    public function dateArray($events) {
+        $date = [];
+        foreach ($events as $e) {
+            $date[$e->getId()] = $this->changeDate($e->getStartDate());
+        }
         return $date;
     }
 }
