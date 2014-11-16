@@ -10,28 +10,7 @@ class DefaultController extends Controller
 
     public function indexAction()
     {
-        // Changing date format to lithuanian
-        function changeDate($time){
-            $date = "";
-            if ($time->format("Y-m-d") == (new \DateTime())->format("Y-m-d")) {
-                $date .= "Šiandien ";
-            } elseif($time->format("Y-m-d") == (new \DateTime("tomorrow"))->format("Y-m-d")) {
-                $date .= "Rytoj ";
-            } else {
-                $mon = $time->format('n');
-                $months = array("Sausio", "Vasario", "Kovo", "Balandžio", "Gegužės", "Birželio",
-                    "Liepos", "Rugpjūčio", "Rugsėjo", "Spalio", "Lapkričio", "Gruodžio");
-                if ($time->format('Y') != (new \DateTime())->format('Y')) {
-                    $date .= $time->format('Y \m. ');
-                }
-                $date .= $months[$mon - 1];
-                $date .= $time->format(' j \d. ');
-            }
-            $date .= $time->format("H:i");
-            return $date;
-        }
-
-
+        
         // Getting city from ip address
 //        $ip = $_SERVER['REMOTE_ADDR'];
 //        $json = file_get_contents("http://ipinfo.io/");
@@ -107,18 +86,6 @@ class DefaultController extends Controller
 
     public function ShowEventAction($id)
     {
-        // Adding attending person
-//        $em = $this->getDoctrine()->getManager();
-//        $user = $em->getRepository('AtotrukisMainBundle:User')->find(1);
-//        $event = $em->getRepository('AtotrukisMainBundle:Event')->find(1075);
-//        $att = new UserAttending();
-//        $att->setUserId($user);
-//        $att->setEventId($event);
-//        $em = $this->getDoctrine()->getManager();
-//        $em->persist($att);
-//        $em->flush();
-
-
         // Counting attending people
         $em = $this->getDoctrine()->getManager();
 
