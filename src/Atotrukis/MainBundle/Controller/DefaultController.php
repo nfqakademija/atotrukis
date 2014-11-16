@@ -3,24 +3,12 @@
 namespace Atotrukis\MainBundle\Controller;
 
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
-//use Atotrukis\MainBundle\Entity\UserAttending;
 
 class DefaultController extends Controller
 {
 
     public function indexAction()
     {
-        
-        // Getting city from ip address
-//        $ip = $_SERVER['REMOTE_ADDR'];
-//        $json = file_get_contents("http://ipinfo.io/");
-//        $details = json_decode($json);
-//        if (!$details->city) {
-//            $json = file_get_contents("http://ipinfo.io/$ip");
-//            $details = json_decode($json);
-//        }
-//        $city = $details->city;
-
 
         // Searching events according to city
         $em = $this->getDoctrine()->getManager();
@@ -62,10 +50,10 @@ class DefaultController extends Controller
 
 
         // Changing date format to lithuanian
-        $date = [];
-        foreach ($events as $e) {
-            $date[$e->getId()] = changeDate($e->getStartDate());
-        }
+//        $date = [];
+//        foreach ($events as $e) {
+//            $date[$e->getId()] = changeDate($e->getStartDate());
+//        }
 
 
         // Pagination
@@ -78,7 +66,8 @@ class DefaultController extends Controller
 
 
         return $this->render('AtotrukisMainBundle:Default:index.html.twig', array(
-            'date' => $date, 'pagination' => $pagination
+            //'date' => $date,
+            'pagination' => $pagination
         ));
 
     }
