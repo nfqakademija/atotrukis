@@ -23,3 +23,7 @@ services:
     dateFormatService:
       class: Atotrukis\MainBundle\Service\DateFormatService
       arguments: []
+
+    gettingCityService:
+      class: Atotrukis\MainBundle\Service\GettingCityService
+      arguments: []

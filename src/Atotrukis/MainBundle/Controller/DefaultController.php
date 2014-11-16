@@ -9,13 +9,17 @@ class DefaultController extends Controller
 
     public function indexAction()
     {
+//        $city = $this->get('gettingCityService')->getCity();
         $em = $this->getDoctrine()->getManager();
 
         $qb = $em->createQueryBuilder()
             ->select('e')
             ->from('AtotrukisMainBundle:Event', 'e')
+//            ->innerJoin('e.city', 'c', 'WITH', 'e.city = c.id')
             ->where('e.startDate >= :today')
+//            ->andWhere('c.name = :city')
             ->setParameter('today', new \DateTime())
+//            ->setParameter('city', $city)
         ;
         $events = $qb->getQuery()->getResult();
 
