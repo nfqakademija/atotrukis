@@ -11,6 +11,10 @@ services:
         class: Atotrukis\MainBundle\Service\EventService
         arguments: [ @doctrine.orm.entity_manager ]
 
+    adminService:
+        class: Atotrukis\MainBundle\Service\AdminService
+        arguments: [ @doctrine.orm.entity_manager ]
+
     userKeywordService:
         class: Atotrukis\MainBundle\Service\UserKeywordService
         arguments: [ @doctrine.orm.entity_manager ]

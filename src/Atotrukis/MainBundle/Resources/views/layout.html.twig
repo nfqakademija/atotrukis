@@ -56,6 +56,11 @@
             <li>
                 <a href="{{ path('my_events') }}">Mano Renginiai</a>
             </li>
+            {% if is_granted('ROLE_ADMIN') %}
+                <li>
+                    <a href="{{ path('admin_users') }}">Vartotojai</a>
+                </li>
+            {% endif %}
             <hr>
             <li>
                 <h4>Naujienos</h4>
