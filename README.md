@@ -1,4 +1,5 @@
 [![TravisCI Status](https://travis-ci.org/nfqakademija/atotrukis.svg?branch=master)](https://travis-ci.org/nfqakademija/atotrukis)
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/nfqakademija/atotrukis/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/nfqakademija/atotrukis/?branch=master)
 # akademija.dev
 Tai virtuali mašina siūloma naudoti akademijos projektams.
 
