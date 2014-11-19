@@ -35,3 +35,11 @@ _show_event:
 quiz:
     path:     /apklausa
     defaults: { _controller: AtotrukisMainBundle:Quiz:quiz }
+
+admin_users:
+  path:       /admin/users
+  defaults: { _controller: AtotrukisMainBundle:Admin:readUsers}
+
+admin_user_block:
+  path:       /admin/vartotojai/block/{id}
+  defaults: { _controller: AtotrukisMainBundle:Admin:blockUser}

@@ -1,0 +1,26 @@
+{% extends 'AtotrukisMainBundle::layout.html.twig' %}
+{% block content %}
+    {% for label, flashes in app.session.flashbag.all %}
+        {% for flash in flashes %}
+            <div class="alert alert-{{ label }}" style="margin: 0px 15px 15px 15px">
+                {{ flash }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    <table>
+        <tr>
+            <td>ID</td><td>Vardas</td><td>El. paštas</td><td>Aktyvuotas</td><td>Užblokuotas</td><td></td>
+        </tr>
+        {% for user in users %}
+            <tr>
+                <td>{{ user.id }}</td><td>{{ user.name }}</td><td>{{  user.email }}</td><td>{{ user.enabled }}</td><td>{{ user.locked }}</td>
+
+                {% if user.locked == 1 %}
+                <td><a href="{{ path('admin_user_block', {'id': user.id}) }}">Atblokuoti</a></td>
+                {% else %}
+                    <td><a href="{{ path('admin_user_block', {'id': user.id}) }}">Užblokuoti</a></td>
+                {% endif %}
+            </tr>
+        {% endfor %}
+    </table>
+{% endblock %}
