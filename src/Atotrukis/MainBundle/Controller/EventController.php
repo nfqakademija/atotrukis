@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Atotrukis\MainBundle\Entity\Event;
 use Atotrukis\MainBundle\Form\Type\CreateEventFormType;
+
 class EventController extends Controller
 {
 
@@ -16,7 +17,6 @@ class EventController extends Controller
         $form = $this->createForm(new CreateEventFormType(), $event);
 
         $this->get('eventService')->createEvent($event, $form, $request, $this->getUser());
-        //$request->getSession()->getFlashBag()->add('success', 'Renginys sėkmingai sukurtas!');
         return $this->render('AtotrukisMainBundle:Event:addEvent.html.twig', array(
             'form' => $form->createView(),
         ));
@@ -31,41 +31,34 @@ class EventController extends Controller
 
     }
 
-    public function deleteMyEventAction($id, Request $request)
+    public function deleteMyEventAction($eventId, Request $request)
     {
-        $this->get('eventService')->deleteUserEvent($id, $this->getUser(), $request);
+        $this->get('eventService')->deleteUserEvent($eventId, $this->getUser(), $request);
         return $this->redirect($this->generateUrl('my_events'));
     }
 
-    public function editMyEventAction(Request $request, $id)
+    public function editMyEventAction(Request $request, $eventId)
     {
 
-        $event = $this->get('eventService')->updateUserEvent($id, $this->getUser(), $request);
+        $event = $this->get('eventService')->updateUserEvent($eventId, $this->getUser(), $request);
 
         $form = $this->createForm(new CreateEventFormType(), $event);
-        $this->get('eventService')->handleFormRequest($form, $event, $request, $this->getUser(), 'Renginys sėkmingai išsaugotas!');
+        $this->get('eventService')->handleFormRequest($form, $event, $request, $this->getUser(),
+            'Renginys sėkmingai išsaugotas!');
         return $this->render('AtotrukisMainBundle:Event:editEvent.html.twig', array(
             'form' => $form->createView(),
             'event' => $event
         ));
     }
 
-    public function getEventAction(Request $request, $id)
+    public function getEventAction()
     {
-
-        $user = self::getUser();
-
-        return $this->render('AtotrukisMainBundle:Event:oneEvent.html.twig', array(
-        ));
+        return $this->render('AtotrukisMainBundle:Event:oneEvent.html.twig', array());
     }
 
-    public function getSearchResultAction(Request $request)
+    public function getSearchResultAction()
     {
-
-        $user = self::getUser();
-
-        return $this->render('AtotrukisMainBundle:Event:searchEvents.html.twig', array(
-        ));
+        return $this->render('AtotrukisMainBundle:Event:searchEvents.html.twig', array());
     }
 
     public function getUser()
