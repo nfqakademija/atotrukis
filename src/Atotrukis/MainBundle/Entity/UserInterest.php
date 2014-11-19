@@ -47,7 +47,7 @@ class UserInterest
      */
     public function getUpdateDate()
     {
-        return $this->updateDate;
+        return $this->updatedDate;
     }
 
     /**
