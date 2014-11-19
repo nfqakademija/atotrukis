@@ -1,13 +1,15 @@
 <?php
 namespace Atotrukis\MainBundle\Service;
+
 use Doctrine\ORM\EntityManager;
 
-class UserKeywordService{
-    protected $em;
+class UserKeywordService
+{
+    protected $entityManager;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $entityManager)
     {
-        $this->em = $em;
+        $this->entityManager = $entityManager;
     }
 
     /**
@@ -16,13 +18,13 @@ class UserKeywordService{
      * @param $keyword   keyword name
      * @param $userID    id of user
      */
-    public function addKeyword($keyword, $userID){
-       $key = $this->em->getRepository("AtotrukisMainBundle:UserInterest")->
-                         findOneBy(array('keyword' => $keyword, 'userId'=>$userID));
-        if(!$key){
+    public function addKeyword($keyword, $userID)
+    {
+        $key = $this->entityManager->getRepository("AtotrukisMainBundle:UserInterest")->
+        findOneBy(array('keyword' => $keyword, 'userId' => $userID));
+        if (!$key) {
             $this->keywordCreate($keyword, $userID);
-        }
-        else{
+        } else {
             $this->keywordUpdate($key);
         }
     }
@@ -33,7 +35,8 @@ class UserKeywordService{
      * @param $keyword   keyword name
      * @param $userID    id of user
      */
-    private function keywordUpdate($keyword){
+    private function keywordUpdate($keyword)
+    {
         $keyword->setUpdateDate();
         $keywordValue = $keyword->getValue();
         $newKeywordValue = $keywordValue + 1;
@@ -46,7 +49,8 @@ class UserKeywordService{
      * @param $keyword   keyword name
      * @param $userID    id of user
      */
-    private function keywordCreate($keyword, $userID){
+    private function keywordCreate($keyword, $userID)
+    {
         $key = new UserAttending();
         $key->setUpdateDate();
         $key->setKeyword($keyword);
@@ -61,25 +65,27 @@ class UserKeywordService{
      * @param $userID    id of user
      * @return Int rate value
      */
-    public function getEventRate($eventKeywords, $userId){
+    public function getEventRate($eventKeywords, $userId)
+    {
         $rate = 0;
-        foreach($eventKeywords as $eventKey=>$eventValue){
+        foreach ($eventKeywords as $eventKey => $eventValue) {
             $userKey = $this->getKeyword($userId, $eventKey);
-            if(!$userKey){
+            if (!$userKey) {
 
-            } else{
+            } else {
                 $userAllKeyValues = $this->getAllKeywordsValueCount($userId);
-                $userKeyValue = $userKey->getValue()/$userAllKeyValues;
-                if(!$this->checkIfKeywordExpired($userKey, $userId)){
+                $userKeyValue = $userKey->getValue() / $userAllKeyValues;
+                if (!$this->checkIfKeywordExpired($userKey, $userId)) {
                     $rate += $userKeyValue;
-                } else{
-                    $rate = $rate + $userKeyValue/($this->checkIfKeywordExpired($userKey, $userId) / 60);
+                } else {
+                    $rate = $rate + $userKeyValue / ($this->checkIfKeywordExpired($userKey, $userId) / 60);
                 }
 
             }
         }
         return $rate;
     }
+
     /**
      * Check if user keyword last upate date is older than 60 days
      * if true, the value of keyword should become
@@ -89,13 +95,14 @@ class UserKeywordService{
      * @param $userID    id of user
      * @return difference in days if updateDate is older than 60 days, or false
      */
-    private function checkIfKeywordExpired($keyword, $userID){
-        $key = $this->em->getRepository("AtotrukisMainBundle:UserInterest")->
-                          findOneBy(array('keyword' => $keyword, 'userId'=>$userID));
+    private function checkIfKeywordExpired($keyword, $userID)
+    {
+        $key = $this->entityManager->getRepository("AtotrukisMainBundle:UserInterest")->
+        findOneBy(array('keyword' => $keyword, 'userId' => $userID));
         $lastUpdateDate = $key->getUpdateDate();
         $diffInSeconds = strtotime(date('Y-m-d')) - strtotime($lastUpdateDate);
-        $diffInDays = $diffInSeconds/(60*60*24);
-        if($diffInDays > 60){
+        $diffInDays = $diffInSeconds / (60 * 60 * 24);
+        if ($diffInDays > 60) {
             return $diffInDays;
         }
         return false;
@@ -107,8 +114,9 @@ class UserKeywordService{
      * @param $userID    id of user
      * @return Array of keywords user has
      */
-    private function getKeywords($userID){
-        $keys = $this->em->getRepository("AtotrukisMainBundle:UserInterest")->findByUserId($userID);
+    private function getKeywords($userID)
+    {
+        $keys = $this->entityManager->getRepository("AtotrukisMainBundle:UserInterest")->findByUserId($userID);
         return $keys;
     }
 
@@ -119,9 +127,10 @@ class UserKeywordService{
      * @param $keyword    keyword to find
      * @return String keyword or false
      */
-    private function getKeyword($userID, $keyword){
-        $key = $this->em->getRepository("AtotrukisMainBundle:UserInterest")->
-                          findOneBy(array('keyword' => $keyword, 'userId'=>$userID));
+    private function getKeyword($userID, $keyword)
+    {
+        $key = $this->entityManager->getRepository("AtotrukisMainBundle:UserInterest")->
+        findOneBy(array('keyword' => $keyword, 'userId' => $userID));
         return $key;
     }
 
@@ -131,10 +140,11 @@ class UserKeywordService{
      * @param $userID    id of user
      * @return Int count
      */
-    private function getAllKeywordsValueCount($userId){
+    private function getAllKeywordsValueCount($userId)
+    {
         $keys = $this->getKeywords($userId);
         $count = 0;
-        foreach($keys as $key){
+        foreach ($keys as $key) {
             $count = $key->getValue();
         }
         return $count;
