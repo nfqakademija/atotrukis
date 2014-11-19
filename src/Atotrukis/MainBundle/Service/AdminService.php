@@ -1,19 +1,23 @@
 <?php
+
 namespace Atotrukis\MainBundle\Service;
+
 use Doctrine\ORM\EntityManager;
 
-class AdminService{
+class AdminService
+{
 
-    protected $em;
+    protected $entityManager;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $entityManager)
     {
-        $this->em = $em;
+        $this->entityManager = $entityManager;
     }
 
-    public function readUsers($request){
+    public function readUsers($request)
+    {
 
-        $user = $this->em
+        $user = $this->entityManager
             ->getRepository('AtotrukisMainBundle:User')
             ->findAll();
         if (!$user) {
@@ -21,11 +25,12 @@ class AdminService{
         }
         return $user;
     }
-    public function blockUser($request, $id){
+    public function blockUser($request, $userId)
+    {
 
-        $user = $this->em
+        $user = $this->entityManager
             ->getRepository('AtotrukisMainBundle:User')
-            ->findOneById($id);
+            ->findOneById($userId);
         if (!$user) {
             $this->addFlash($request, 'Vartotojo su tokiu ID nėra!', 'danger');
         }
@@ -34,9 +39,9 @@ class AdminService{
         }else{
             $user->setLocked(1);
         }
-        $em = $this->em;
-        $em->persist($user);
-        $em->flush();
+        $entityManager = $this->entityManager;
+        $entityManager->persist($user);
+        $entityManager->flush();
     }
 
     /**

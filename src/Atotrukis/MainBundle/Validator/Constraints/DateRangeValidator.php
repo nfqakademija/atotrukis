@@ -10,7 +10,7 @@ class DateRangeValidator extends ConstraintValidator
     public function validate($obj, Constraint $constraint)
     {
         if ($obj->getStartDate() > $obj->getEndDate()) {
-            $this->buildViolation('Pabaigos laikas negali būti anksčiau nei pradžios laikas.')
+            $this->context->buildViolation('Pabaigos laikas negali būti anksčiau nei pradžios laikas.')
                 ->atPath('endDate')
                 ->addViolation();
         }
