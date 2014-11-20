@@ -56,6 +56,7 @@ class UserKeywordService
         $key->setKeyword($keyword);
         $key->setValue(1);
         $key->setUserId($userID);
+        $this->entityManager->persist($key);
     }
 
     /**
