@@ -1,0 +1,14 @@
+language: php
+
+php:
+    - 5.5
+
+before_install:
+    - sudo chmod 0777 -R app/logs/ app/cache/
+
+install:
+    - composer install -n --prefer-source
+
+before_script:
+    - "sed -i 's/database_password: 123/database_password: ~/g' app/config/parameters.yml"
+    - app/console doctrine:database:create -e test

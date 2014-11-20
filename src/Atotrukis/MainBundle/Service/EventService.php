@@ -1,24 +1,27 @@
 <?php
 namespace Atotrukis\MainBundle\Service;
+
 use Doctrine\ORM\EntityManager;
 use Atotrukis\MainBundle\Entity\EventKeywords;
 
-class EventService{
+class EventService
+{
 
-    protected $em;
+    protected $entityManager;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $entityManager)
     {
-        $this->em = $em;
+        $this->entityManager = $entityManager;
     }
 
     public function createEvent($event, $form, $request, $user)
     {
         self::handleFormRequest($form, $event, $request, $user, 'Renginys sėkmingai sukurtas!');
     }
-    public function readUserEvents($userId, $request){
+    public function readUserEvents($userId, $request)
+    {
 
-        $event = $this->em
+        $event = $this->entityManager
             ->getRepository('AtotrukisMainBundle:Event')
             ->findByCreatedBy($userId);
         if (!$event) {
@@ -26,25 +29,23 @@ class EventService{
         }
         return $event;
     }
-    public function deleteUserEvent($id, $user, $request)
+    public function deleteUserEvent($eventId, $user, $request)
     {
-        self::checkEventOwner('edit', $id, $user);
+        self::checkEventOwner('edit', $eventId, $user);
 
-        $event = $this->em->getRepository('AtotrukisMainBundle:Event')->findOneById($id);
+        $event = $this->entityManager->getRepository('AtotrukisMainBundle:Event')->findOneById($eventId);
         if (!$event) {
-            throw $this->createNotFoundException(
-                'No event found for id '.$id
-            );
+            $this->addFlash($request, 'Renginys nerastas!', 'danger');
         }
-        $em = $this->em;
-        $em->remove($event);
-        $em->flush();
+        $entityManager = $this->entityManager;
+        $entityManager->remove($event);
+        $entityManager->flush();
         $this->addFlash($request, 'Renginys sėkmingai ištrintas!', 'success');
     }
-    public function updateUserEvent($id, $user, $request)
+    public function updateUserEvent($eventId, $user)
     {
-        $event = $this->em->getRepository('AtotrukisMainBundle:Event')->findOneById($id);
-        self::checkEventOwner('edit', $id, $user);
+        $event = $this->entityManager->getRepository('AtotrukisMainBundle:Event')->findOneById($eventId);
+        self::checkEventOwner('edit', $eventId, $user);
 
         $event->setName($event->getName());
         $event->setDescription($event->getDescription());
@@ -56,12 +57,11 @@ class EventService{
         return $event;
     }
 
-    public function checkEventOwner($action, $id, $user)
+    public function checkEventOwner($action, $eventId, $user)
     {
-        $event = $this->em->getRepository('AtotrukisMainBundle:Event')->findOneById($id);
+        $event = $this->entityManager->getRepository('AtotrukisMainBundle:Event')->findOneById($eventId);
 
-        if($event->getCreatedBy() != $user)
-        {
+        if ($event->getCreatedBy() != $user) {
             throw $this->createAccessDeniedException(
                 'You have no permissions to '.$action.' this event'
             );
@@ -71,15 +71,15 @@ class EventService{
     public function handleFormRequest($form, $event, $request, $user, $message)
     {
         $form->handleRequest($request);
-        $em = $this->em;
+        $entityManager = $this->entityManager;
         if ($form->isValid()) {
             if ($request->isMethod('POST')) {
 
-                $this->setEventValues($form, $event, $user, $em);
-                $this->removeOldKeywords($event, $em);
-                $this->processNewKeywords($form, $event, $em);
+                $this->setEventValues($form, $event, $user, $entityManager);
+                $this->removeOldKeywords($event, $entityManager);
+                $this->processNewKeywords($form, $event, $entityManager);
 
-                $em->flush();
+                $entityManager->flush();
 
                 $this->addFlash($request, $message, 'success');
             }
@@ -91,9 +91,9 @@ class EventService{
      * @param $form
      * @param $event
      * @param $user
-     * @param $em
+     * @param $entityManager
      */
-    public function setEventValues($form, $event, $user, $em)
+    public function setEventValues($form, $event, $user, $entityManager)
     {
         $event->setName($form['name']->getData());
         $event->setDescription($form['description']->getData());
@@ -103,7 +103,7 @@ class EventService{
         $event->setCity($this->getCity($form));
         $event->setCreatedBy($user);
 
-        $em->persist($event);
+        $entityManager->persist($event);
     }
 
     /**
@@ -112,29 +112,29 @@ class EventService{
      */
     public function getCity($form)
     {
-        return $this->em->getRepository('AtotrukisMainBundle:City')
+        return $this->entityManager->getRepository('AtotrukisMainBundle:City')
             ->findOneById($form['city']->getData());
     }
 
     /**
      * @param $event
-     * @param $em
+     * @param $entityManager
      */
-    public function removeOldKeywords($event, $em)
+    public function removeOldKeywords($event, $entityManager)
     {
-        $oldKeywords = $this->em->getRepository('AtotrukisMainBundle:EventKeywords')->findByEventId($event);
+        $oldKeywords = $this->entityManager->getRepository('AtotrukisMainBundle:EventKeywords')->findByEventId($event);
 
         foreach ($oldKeywords as $oldKeyword) {
-            $em->remove($oldKeyword);
+            $entityManager->remove($oldKeyword);
         }
     }
 
     /**
      * @param $form
      * @param $event
-     * @param $em
+     * @param $entityManager
      */
-    public function processNewKeywords($form, $event, $em)
+    public function processNewKeywords($form, $event, $entityManager)
     {
         $keywords = $form['keywords']->getData();
         $keywords = preg_replace('!\s+!', ' ', $keywords);
@@ -142,21 +142,21 @@ class EventService{
 
         foreach ($keywords as $keyword) {
             $keyword = trim($keyword);
-            $this->PersistKeywords($event, $em, $keyword);
+            $this->PersistKeywords($event, $entityManager, $keyword);
         }
     }
 
     /**
      * @param $event
-     * @param $em
+     * @param $entityManager
      * @param $keyword
      */
-    public function PersistKeywords($event, $em, $keyword)
+    public function PersistKeywords($event, $entityManager, $keyword)
     {
         $eventKeywords = new EventKeywords();
         $eventKeywords->setKeyword($keyword);
         $eventKeywords->setEventId($event);
-        $em->persist($eventKeywords);
+        $entityManager->persist($eventKeywords);
     }
 
     /**
@@ -169,8 +169,8 @@ class EventService{
         $request->getSession()->getFlashBag()->add($status, $message);
     }
 
-    public function getAttending($id) {
-        $rep = $this->em->getRepository('AtotrukisMainBundle:Event');
+    public function getAttending($id){
+        $rep = $this->entityManager->getRepository('AtotrukisMainBundle:Event');
         $qb = $rep->createQueryBuilder('e')
             ->select('count(e)')
             ->innerJoin('e.usersAttending', 'att', 'WITH', 'e.id = att.eventId')

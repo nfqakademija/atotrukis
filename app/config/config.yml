@@ -104,8 +104,8 @@ hwi_oauth:
     resource_owners:
         facebook:
             type:                facebook
-            client_id:           "526441800824842"
-            client_secret:       "c423cf61474aaec9dd82dc3672ada619"
+            client_id:           "526427617492927"
+            client_secret:       "62a1aa79562977cc1be0d2dd410dfc21"
             scope:               "email, public_profile"
 knp_paginator:
     page_range: 5                      # default page range used in pagination control
