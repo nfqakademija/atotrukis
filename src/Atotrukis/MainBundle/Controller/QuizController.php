@@ -73,7 +73,6 @@ class QuizController extends Controller
             foreach ($form->getData() as $data) {
                 if (is_array($data)) {
                     foreach ($data as $k) {
-                        echo $k;
                         $this->get('userKeywordService')->addKeyword($k, $usr);
                     }
                 } else {
