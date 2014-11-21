@@ -2,6 +2,7 @@
 namespace Atotrukis\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * @ORM\Entity
@@ -58,7 +59,7 @@ class UserInterest
      */
     public function setUpdateDate()
     {
-        $this->updateDate = date('Y-m-d');
+        $this->updatedDate = new \DateTime();
         return $this;
     }
 

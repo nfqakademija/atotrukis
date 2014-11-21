@@ -1,8 +1,8 @@
 <?php
 namespace Atotrukis\MainBundle\Service;
 
+use Atotrukis\MainBundle\Entity\UserInterest;
 use Doctrine\ORM\EntityManager;
-use Atotrukis\MainBundle\Entity\UserAttending;
 
 class UserKeywordService
 {
@@ -48,16 +48,17 @@ class UserKeywordService
      * Create keyword
      *
      * @param $keyword   keyword name
-     * @param $userID    id of user
+     * @param $userID    /Atotrukis/MainBundle/Entity/User of user
      */
     private function keywordCreate($keyword, $userID)
     {
-        $key = new UserAttending();
+        $key = new UserInterest();
         $key->setUpdateDate();
         $key->setKeyword($keyword);
         $key->setValue(1);
         $key->setUserId($userID);
         $this->entityManager->persist($key);
+        $this->entityManager->flush();
     }
 
     /**

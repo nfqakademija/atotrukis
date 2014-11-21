@@ -65,28 +65,26 @@ class QuizController extends Controller
                 'label' => 'Baigti apklausą', 'attr' => array('class' => 'btn btn-default save')
             ))
             ->getForm();
-
+        
         if ($request->getMethod() == 'POST') {
-            $form->bind($request);
-//            $key = '';
+            $form->handleRequest($request);
             $usr = $this->getDoctrine()->getRepository('AtotrukisMainBundle:User')
-                ->findOneById($this->get('security.context')->getToken()->getUser()->getId())->getId();
+                ->findOneById($this->get('security.context')->getToken()->getUser());
             foreach ($form->getData() as $data) {
                 if (is_array($data)) {
-                    foreach ($data as $d) {
-//                        $key .= $d . ", ";
-                        $this->get('userKeywordService')->addKeyword($d, $usr);
+                    foreach ($data as $k) {
+                        echo $k;
+                        $this->get('userKeywordService')->addKeyword($k, $usr);
                     }
                 } else {
-                    if ($data) {
-//                        $key .= $data . ", ";
-                        $this->get('userKeywordService')->addKeyword($data, $usr);
+                    $keywords = preg_split("/[, ]/", $data);
+                    foreach ($keywords as $keys) {
+                        echo $keys;
+                        $this->get('userKeywordService')->addKeyword($keys, $usr);
                     }
                 }
             }
-//            echo $k;
             return $this->render('AtotrukisMainBundle:Quiz:result.html.twig', array(
-
             ));
         }
 
@@ -94,5 +92,4 @@ class QuizController extends Controller
                'form' => $form->createView()
         ));
     }
-
 }
