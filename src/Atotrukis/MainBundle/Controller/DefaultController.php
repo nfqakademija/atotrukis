@@ -33,12 +33,12 @@ class DefaultController extends Controller
     }
 
 
-    public function ShowEventAction($id)
+    public function showEventAction($eventId)
     {
-        $attending = $this->get('eventService')->getAttending($id);
+        $attending = $this->get('eventService')->getAttending($eventId);
 
         // Getting event data from id
-        $event = $this->get('doctrine')->getManager()->getRepository('AtotrukisMainBundle:Event')->find($id);
+        $event = $this->get('doctrine')->getManager()->getRepository('AtotrukisMainBundle:Event')->find($eventId);
 
         if (!$event) {
             throw $this->createNotFoundException();

@@ -2,6 +2,7 @@
 namespace Atotrukis\MainBundle\Service;
 
 use Doctrine\ORM\EntityManager;
+use Atotrukis\MainBundle\Entity\UserAttending;
 
 class UserKeywordService
 {

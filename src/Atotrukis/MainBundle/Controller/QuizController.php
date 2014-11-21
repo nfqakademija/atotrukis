@@ -61,28 +61,30 @@ class QuizController extends Controller
                 'label' => 'Įveskite kitas renginių rūšis, įkurius norėtumėt nueiti, atskirtus kableliais:',
                 'required'  => false
             ))
-            ->add('save', 'submit', array('label' => 'Baigti apklausą', 'attr' => array('class' => 'btn btn-default save')))
+            ->add('save', 'submit', array(
+                'label' => 'Baigti apklausą', 'attr' => array('class' => 'btn btn-default save')
+            ))
             ->getForm();
 
         if ($request->getMethod() == 'POST') {
             $form->bind($request);
-            $k = '';
+//            $key = '';
             $usr = $this->getDoctrine()->getRepository('AtotrukisMainBundle:User')
-                ->findOneById($this->get('security.context')->getToken()->getUser()->getId());
-            foreach($form->getData() as $data) {
+                ->findOneById($this->get('security.context')->getToken()->getUser()->getId())->getId();
+            foreach ($form->getData() as $data) {
                 if (is_array($data)) {
                     foreach ($data as $d) {
-//                        $k .= $d . ", ";
-                        $this->get('userKeywordService')->addKeyword($k, $usr);
+//                        $key .= $d . ", ";
+                        $this->get('userKeywordService')->addKeyword($d, $usr);
                     }
                 } else {
                     if ($data) {
-//                        $k .= $data . ", ";
-                        $this->get('userKeywordService')->addKeyword($k, $usr);
+//                        $key .= $data . ", ";
+                        $this->get('userKeywordService')->addKeyword($data, $usr);
                     }
                 }
             }
-            echo $k;
+//            echo $k;
             return $this->render('AtotrukisMainBundle:Quiz:result.html.twig', array(
 
             ));

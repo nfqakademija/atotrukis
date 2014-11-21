@@ -29,7 +29,7 @@ search_results:
 
 
 _show_event:
-    path:     renginys/{id}
+    path:     renginys/{eventId}
     defaults: { _controller: AtotrukisMainBundle:Default:showEvent }
 
 quiz:
