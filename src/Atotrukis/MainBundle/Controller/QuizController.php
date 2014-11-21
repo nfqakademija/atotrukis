@@ -79,7 +79,6 @@ class QuizController extends Controller
                 } else {
                     $keywords = preg_split("/[, ]/", $data);
                     foreach ($keywords as $keys) {
-                        echo $keys;
                         $this->get('userKeywordService')->addKeyword($keys, $usr);
                     }
                 }
