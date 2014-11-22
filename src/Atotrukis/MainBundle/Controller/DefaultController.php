@@ -16,7 +16,8 @@ class DefaultController extends Controller
            // throw $this->createNotFoundException('Nėra nei vieno renginio')
         }
 
-        $date = $this->get('dateFormatService')->dateArray($events);
+        $startDate = $this->get('dateFormatService')->startDate($events);
+        $endDate = $this->get('dateFormatService')->endDate($events);
 
         // Pagination
         $paginator  = $this->get('knp_paginator');
@@ -26,8 +27,12 @@ class DefaultController extends Controller
             8/*limit per page*/
         );
 
+        $attending = $this->get('eventService')->getAttending($events[0]->getId());
+
         return $this->render('AtotrukisMainBundle:Default:index.html.twig', array(
-            'date' => $date, 'pagination' => $pagination
+            'pagination' => $pagination,
+            'startDate' => $startDate, 'endDate' => $endDate,
+            'attending' => $attending
         ));
 
     }

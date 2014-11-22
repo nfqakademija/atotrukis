@@ -17,7 +17,7 @@
                     <div class="row">
                         {{ include('AtotrukisMainBundle:Includes:mainEvent.html.twig') }}
                 {% endif %}
-                {% if pagination.getPaginationData.firstItemNumber+loop.index0 == 1 %}
+                {% if pagination.getPaginationData.firstItemNumber+loop.index0 == 2 %}
                         <div class="col-md-4">
                             {{ include('AtotrukisMainBundle:Includes:mainEvent2.html.twig') }}
                         </div>
@@ -29,7 +29,9 @@
                 </div>
             {% endif %}
 
-            <div class="col-md-3">{{ include('AtotrukisMainBundle:Includes:event.html.twig') }}</div>
+            {% if pagination.getPaginationData.firstItemNumber+loop.index0 > 2 %}
+                <div class="col-md-3">{{ include('AtotrukisMainBundle:Includes:event.html.twig') }}</div>
+            {% endif %}
 
         {% endfor %}
 

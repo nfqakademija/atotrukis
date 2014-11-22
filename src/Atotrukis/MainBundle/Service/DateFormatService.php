@@ -25,10 +25,20 @@ class DateFormatService
         return $date;
     }
 
-    public function dateArray($events) {
+    public function startDate($events)
+    {
         $date = [];
         foreach ($events as $e) {
             $date[$e->getId()] = $this->changeDate($e->getStartDate());
+        }
+        return $date;
+    }
+
+    public function endDate($events)
+    {
+        $date = [];
+        foreach ($events as $e) {
+            $date[$e->getId()] = $this->changeDate($e->getEndDate());
         }
         return $date;
     }

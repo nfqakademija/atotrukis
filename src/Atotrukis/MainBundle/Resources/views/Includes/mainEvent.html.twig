@@ -9,32 +9,32 @@
         </div>
         <div class="col-md-4">
             <div class="row">
-                <h4>Super renginys 1 tau</h4>
+                <h4>{{ event.name }}</h4>
             </div>
             <div class="row">
                 <div class="col-md-5">
-                    <p><b>Miestas:</b> Vilnius</p>
+                    <p><b>Miestas:</b> {{ event.city.name }}</p>
                 </div>
                 <div class="col-md-7">
-                    <p><b>Pradžia:</b> 2014-10-15 11:00</p>
+                    <p><b>Pradžia:</b> {{ startDate[event.id] }}</p>
                 </div>
             </div>
             <div class="row">
                 <div class="col-md-5">
-                    <p><b>Dalyvių:</b> 9,999,999</p>
+                    <p><b>Dalyvių:</b> {{ attending }}</p>
                 </div>
                 <div class="col-md-7">
-                    <p><b>Pabaiga:</b> 2014-10-15 12:00</p>
+                    <p><b>Pabaiga:</b> {{ endDate[event.id] }}</p>
                 </div>
             </div>
             <div class="row">
                 <b>Aprašymas:</b>
-                <p>Mūsų aprašymas</p>
+                <p>{{ event.description }}</p>
             </div>
         </div>
         <div class="col-md-2">
             <button type="button" class="btn-mainEvent btn btn-primary"><p>Komentarai<br>(8000)</p></button>
-            <a href="{{ path('one_event', {'id' : 7}) }}"><button type="button" class="btn-mainEvent btn btn-primary">Skaityti toliau ></button></a>
+            <a href="{{ path('_show_event', { 'eventId': event.id }) }}"><button type="button" class="btn-mainEvent btn btn-primary">Skaityti toliau ></button></a>
         </div>
     </div>
 </div>
