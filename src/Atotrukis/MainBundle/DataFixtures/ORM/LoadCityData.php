@@ -10,14 +10,23 @@ use Atotrukis\MainBundle\Entity\City;
 class LoadCityData extends AbstractFixture implements OrderedFixtureInterface
 {
 
-    public function load(ObjectManager $em)
+    public function load(ObjectManager $entityManager)
     {
-        $city = new City(); $city->setName("Kaunas"); $city->setPriority(1);  $em->persist($city); $em->flush();
-        $city = new City(); $city->setName("Vilnius"); $city->setPriority(1);  $em->persist($city); $em->flush();
-        $city = new City(); $city->setName("Klaipėda"); $city->setPriority(1); $em->persist($city); $em->flush();
-        $city = new City(); $city->setName("Alytus"); $city->setPriority(1); $em->persist($city); $em->flush();
-        $city = new City(); $city->setName("Šiauliai"); $city->setPriority(1); $em->persist($city); $em->flush();
-        $city = new City(); $city->setName("Panevėžys"); $city->setPriority(1); $em->persist($city); $em->flush();
+        $this->setValues("Kaunas", $entityManager);
+        $this->setValues("Vilnius", $entityManager);
+        $this->setValues("Klaipėda", $entityManager);
+        $this->setValues("Alytus", $entityManager);
+        $this->setValues("Šiauliai", $entityManager);
+        $this->setValues("Panevėžys", $entityManager);
+    }
+
+    private function setValues($name, $entityManager)
+    {
+        $city = new City();
+        $city->setName($name);
+        $city->setPriority(1);
+        $entityManager->persist($city);
+        $entityManager->flush();
     }
 
     public function getOrder()
