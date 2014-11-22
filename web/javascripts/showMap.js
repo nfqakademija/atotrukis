@@ -4,6 +4,13 @@ function initialize(lat, lng) {
         zoom: 16
     });
 
+    var marker = new google.maps.Marker({
+        position: new google.maps.LatLng(lat, lng),
+        map: map,
+        title:"Hello World!"
+    });
+    marker.setMap(map);
+
     var infowindow = new google.maps.InfoWindow();
     var service = new google.maps.places.PlacesService(map);
 
