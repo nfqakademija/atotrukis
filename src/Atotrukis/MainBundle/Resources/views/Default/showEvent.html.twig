@@ -1,7 +1,9 @@
 {% extends "AtotrukisMainBundle::layout.html.twig" %}
 
 {% block title %}{{ event.name }}{% endblock %}
-
+{% block stylesheets %}
+    <link href="{{ asset('stylesheets/showEvent.css') }}" rel="stylesheet">
+{% endblock %}
 {% block topContent %}
     <div class="page-header">
         <h1>{{ event.name }}</h1>
@@ -13,7 +15,7 @@
     <div class="col-md-6">
         <img src="{{ asset('images/mainEvent2.jpg') }}" alt="alternative"><br><br><br>
         <b>Vieta žemėlapyje:</b><br><br>
-        {{ event.map }}
+        <div id="map-canvas"></div>
     </div>
     <div class="col-md-6">
         <button class="btn btn-default" type="button">Dalyvauti</button><br><br>
@@ -28,5 +30,15 @@
         <b>Aprašymas:</b><br>
         {{ event.description }}<br>
     </div>
+
+{% endblock %}
+
+{% block javascripts %}
+
+    <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+    <script src="{{ asset('javascripts/showMap.js') }}"></script>
+    <script>
+        onload=initialize{{ event.map }};
+    </script>
 
 {% endblock %}
