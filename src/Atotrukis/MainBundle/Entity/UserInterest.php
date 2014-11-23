@@ -2,7 +2,6 @@
 namespace Atotrukis\MainBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Validator\Constraints\DateTime;
 
 /**
  * @ORM\Entity
@@ -39,7 +38,6 @@ class UserInterest
     public function __construct()
     {
         $this->updatedDate = date('Y-m-d');
-        //parent::__construct();
     }
 
     /**
@@ -54,7 +52,6 @@ class UserInterest
     /**
      * Set updateDate
      *
-     * @param \DateTime $updateDate
      * @return Event
      */
     public function setUpdateDate()
@@ -122,10 +119,10 @@ class UserInterest
     /**
      * Set userId
      *
-     * @param \Atotrukis\MainBundle\Entity\User $userId
+     * @param User $userId
      * @return UserInterest
      */
-    public function setUserId(\Atotrukis\MainBundle\Entity\User $userId = null)
+    public function setUserId(User $userId = null)
     {
         $this->userId = $userId;
 
@@ -135,7 +132,7 @@ class UserInterest
     /**
      * Get userId
      *
-     * @return \Atotrukis\MainBundle\Entity\User 
+     * @return User
      */
     public function getUserId()
     {

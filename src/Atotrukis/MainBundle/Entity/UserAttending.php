@@ -41,10 +41,10 @@ class UserAttending
     /**
      * Set userId
      *
-     * @param \Atotrukis\MainBundle\Entity\User $userId
+     * @param User $userId
      * @return UserAttending
      */
-    public function setUserId(\Atotrukis\MainBundle\Entity\User $userId = null)
+    public function setUserId(User $userId = null)
     {
         $this->userId = $userId;
 
@@ -54,7 +54,7 @@ class UserAttending
     /**
      * Get userId
      *
-     * @return \Atotrukis\MainBundle\Entity\User 
+     * @return User
      */
     public function getUserId()
     {
@@ -64,10 +64,10 @@ class UserAttending
     /**
      * Set eventId
      *
-     * @param \Atotrukis\MainBundle\Entity\Event $eventId
+     * @param Event $eventId
      * @return UserAttending
      */
-    public function setEventId(\Atotrukis\MainBundle\Entity\Event $eventId = null)
+    public function setEventId(Event $eventId = null)
     {
         $this->eventId = $eventId;
 
@@ -77,7 +77,7 @@ class UserAttending
     /**
      * Get eventId
      *
-     * @return \Atotrukis\MainBundle\Entity\Event 
+     * @return Event
      */
     public function getEventId()
     {
