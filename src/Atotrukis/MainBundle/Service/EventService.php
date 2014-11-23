@@ -3,6 +3,7 @@ namespace Atotrukis\MainBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 use Atotrukis\MainBundle\Entity\EventKeywords;
+use Atotrukis\MainBundle\Entity\UserAttending;
 
 class EventService
 {
@@ -178,6 +179,23 @@ class EventService
             ->setParameter('id', $id)
         ;
         return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    public function attendEvent($eventId, $userId){
+        $userAttending = new UserAttending();
+        $userAttending->setUserId($userId);
+        $userAttending->setEventId($eventId);
+        $this->entityManager->persist($userAttending);
+        $this->entityManager->flush();
+    }
+
+    public function isUserAttendingEvent($eventId, $userId){
+        $event = $this->entityManager->getRepository("AtotrukisMainBundle:UserAttending")->
+        findOneBy(array('userId' => $userId, 'eventId' => $eventId));
+        if($event != null) {
+            return true;
+        }
+        return false;
     }
 
 }
