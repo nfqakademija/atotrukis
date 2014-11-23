@@ -33,7 +33,7 @@
                     <p><b>Miestas:</b> {{ event.city.name }}</p>
                 </div>
                 <div class="col-md-7">
-                    <p><b>Pradžia:</b> {{ startDate[event.id] }}</p>
+                    <p><b>Pradžia:</b><br> {{ startDate[event.id] }}</p>
                 </div>
             </div>
             <div class="row">
@@ -41,7 +41,7 @@
                     <p><b>Dalyvių:</b> {{ attending[event.id] }}</p>
                 </div>
                 <div class="col-md-7">
-                    <p><b>Pabaiga:</b> {{ endDate[event.id] }}</p>
+                    <p><b>Pabaiga:</b><br> {{ endDate[event.id] }}</p>
                 </div>
             </div>
             <div class="row">
@@ -50,8 +50,8 @@
             </div>
         </div>
         <div class="col-md-2">
-            <button type="button" class="btn-mainEvent btn btn-primary"><p>Komentarai<br>(8000)</p></button>
-            <a href="{{ path('_show_event', { 'eventId': event.id }) }}"><button type="button" class="btn-mainEvent btn btn-primary">Skaityti toliau ></button></a>
+            <button type="button" class="btn-mainEvent btn btn-primary btn-circle"><p>Komentarai<br>(8000)</p><span class="glyphicon glyphicon-chevron-right"></span></button>
+            <a href="{{ path('_show_event', { 'eventId': event.id }) }}"><button type="button" class="btn-mainEvent btn btn-primary btn-circle"><p>Skaityti toliau</p><span class="glyphicon glyphicon-chevron-right"></span></button></a>
         </div>
     </div>
 </div>
