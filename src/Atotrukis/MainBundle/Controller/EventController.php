@@ -117,10 +117,12 @@ class EventController extends Controller
      */
     public function getUser()
     {
-        $user = $this->getDoctrine()->getRepository('AtotrukisMainBundle:User')
-            ->findOneById($this->get('security.context')->getToken()->getUser()->getId());
-
-        return $user;
+        if ($this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $user = $this->getDoctrine()->getRepository('AtotrukisMainBundle:User')
+                ->findOneById($this->get('security.context')->getToken()->getUser()->getId());
+            return $user;
+        }
+        return false;
     }
 
     //ajax request method for attending buttons

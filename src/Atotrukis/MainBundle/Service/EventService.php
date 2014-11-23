@@ -256,7 +256,6 @@ class EventService
         return false;
     }
 
-}
     /**
      * @param $form \Atotrukis\MainBundle\Form\Type\CreateEventFormType
      * @return array of keywords (String)
