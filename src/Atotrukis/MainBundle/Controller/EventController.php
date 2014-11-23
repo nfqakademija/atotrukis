@@ -89,4 +89,22 @@ class EventController extends Controller
             return new JsonResponse(array('data' => $newButton));
         }
     }
+
+    //ajax request method for leaving buttons
+    //TODO: need to move logic to service
+    public function leaveAction(Request $request){
+        $eventId = $request->request->get('eventId', 'error');
+        $user = $this->getUser();
+        $this->get('eventService')->leaveEvent($eventId, $user->getId());
+        $newUrl = $url = $this->generateUrl('attend_event');
+        $newButton = '
+            <button class="btn btn-default attendButton" type="button">
+                Dalyausiu
+                <span class="glyphicon glyphicon-thumbs-up"></span>
+                <span class="eventID">'.$eventId.'</span>
+                <span class="jsRoute">'.$newUrl.'</span></button>';
+        if ($request->isXMLHttpRequest()) {
+            return new JsonResponse(array('data' => $newButton));
+        }
+    }
 }
