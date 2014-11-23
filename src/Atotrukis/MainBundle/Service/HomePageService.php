@@ -11,12 +11,12 @@ class HomePageService
 
     public function __construct(EntityManager $entityManager)
     {
-        $this->em = $entityManager;
+        $this->entityManager = $entityManager;
     }
 
     public function getEvents()
     {
-        $rep = $this->em->getRepository('AtotrukisMainBundle:Event');
+        $rep = $this->entityManager->getRepository('AtotrukisMainBundle:Event');
         $queryBuilder = $rep->createQueryBuilder('e')
             ->select('e')
             ->where('e.startDate >= :today')
