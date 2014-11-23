@@ -9,11 +9,18 @@ class AdminService
 
     protected $entityManager;
 
+    /**
+     * @param EntityManager $entityManager
+     */
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * @param $request \Symfony\Component\HttpFoundation\Request
+     * @return array of \Atotrukis\MainBundle\Entity\User
+     */
     public function readUsers($request)
     {
 
@@ -25,6 +32,13 @@ class AdminService
         }
         return $user;
     }
+
+    /**
+     * blocks/unblocks user
+     *
+     * @param $request \Symfony\Component\HttpFoundation\Request
+     * @param $userId int
+     */
     public function blockUser($request, $userId)
     {
 
@@ -45,9 +59,9 @@ class AdminService
     }
 
     /**
-     * @param $request
-     * @param $message
-     * @param $status
+     * @param $request \Symfony\Component\HttpFoundation\Request
+     * @param $message String
+     * @param $status String
      */
     public function addFlash($request, $message, $status)
     {

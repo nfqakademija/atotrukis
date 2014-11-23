@@ -12,6 +12,12 @@ class SearchService
     private $userKeywordService;
     private $entityManager;
 
+    /**
+     * @param EntityManager $entityManager
+     * @param EngineInterface $templating
+     * @param EventService $eventService
+     * @param UserKeywordService $userKeywordService
+     */
     public function __construct(
         EntityManager $entityManager,
         EngineInterface $templating,
@@ -24,12 +30,20 @@ class SearchService
         $this->userKeywordService = $userKeywordService;
     }
 
+    /**
+     * @param $form \Atotrukis\MainBundle\Form\Type\SearchFormType
+     * @param $request
+     * @param $user \Atotrukis\MainBundle\Entity\User
+     * @return array formIsValid - bool, searchResult - array of events and matched percents
+     */
     public function handleFormRequest($form, $request, $user)
     {
         $form->handleRequest($request);
         if ($form->isValid()) {
             if ($request->isMethod('POST')) {
-                $this->processKeywords($form, $user);
+                if ($user) {
+                    $this->processKeywords($form, $user);
+                }
                 $searchResult = $this->getResults($this->eventService->explodeKeywords($form));
                 return array('formIsValid' => true, 'searchResult' => $searchResult);
             }
@@ -38,6 +52,7 @@ class SearchService
     }
 
     /**
+     * explodes keywords by spaces and trims any other spaces from the string of keywords
      * @param $form
      * @param $user
      */
@@ -51,6 +66,13 @@ class SearchService
         }
     }
 
+    /**
+     * calculates the how many percent of the entered keywords matches to Event keywords and adds events with the
+     * matching percent to the array and sorts it by matching percent DESC
+     *
+     * @param $searchKeywords
+     * @return array of $searchResult ($event and $matched)
+     */
     public function getResults($searchKeywords)
     {
         $events = $this->entityManager->getRepository('AtotrukisMainBundle:Event')->findAll();
@@ -83,6 +105,8 @@ class SearchService
     }
 
     /**
+     * sorts the $searchResult array by matching percent DESC
+     *
      * @param $searchResult
      * @return mixed
      */

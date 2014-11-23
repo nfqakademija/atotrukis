@@ -9,29 +9,55 @@ class EventService
 
     protected $entityManager;
 
+    /**
+     * @param EntityManager $entityManager
+     */
     public function __construct(EntityManager $entityManager)
     {
         $this->entityManager = $entityManager;
     }
 
+    /**
+     * creates event and returns true if the form is valid
+     *
+     * @param $event \Atotrukis\MainBundle\Entity\Event
+     * @param $form \Atotrukis\MainBundle\Form\Type\CreateEventFormType
+     * @param $request \Symfony\Component\HttpFoundation\Request
+     * @param $user \Atotrukis\MainBundle\Entity\User
+     * @return bool
+     */
     public function createEvent($event, $form, $request, $user)
     {
-        self::handleFormRequest($form, $event, $request, $user, 'Renginys sėkmingai sukurtas!');
+        return $this->handleFormRequest($form, $event, $request, $user, 'Renginys sėkmingai sukurtas!');
     }
-    public function readUserEvents($userId, $request)
+
+    /**
+     * @param $user \Atotrukis\MainBundle\Entity\User
+     * @param $request \Symfony\Component\HttpFoundation\Request
+     * @return \Atotrukis\MainBundle\Entity\Event array
+     */
+    public function readUserEvents($user, $request)
     {
 
         $event = $this->entityManager
             ->getRepository('AtotrukisMainBundle:Event')
-            ->findByCreatedBy($userId);
+            ->findByCreatedBy($user);
         if (!$event) {
             $this->addFlash($request, 'Jūs neturite jokių renginių!', 'danger');
         }
         return $event;
     }
+
+    /**
+     * deletes user event
+     *
+     * @param $eventId int
+     * @param $user \Atotrukis\MainBundle\Entity\User
+     * @param $request \Symfony\Component\HttpFoundation\Request
+     */
     public function deleteUserEvent($eventId, $user, $request)
     {
-        self::checkEventOwner('edit', $eventId, $user);
+        $this->checkEventOwner('edit', $eventId, $user);
 
         $event = $this->entityManager->getRepository('AtotrukisMainBundle:Event')->findOneById($eventId);
         if (!$event) {
@@ -42,6 +68,14 @@ class EventService
         $entityManager->flush();
         $this->addFlash($request, 'Renginys sėkmingai ištrintas!', 'success');
     }
+
+    /**
+     * sets current event's values for a form
+     *
+     * @param $eventId int
+     * @param $user \Atotrukis\MainBundle\Entity\User
+     * @return \Atotrukis\MainBundle\Entity\Event
+     */
     public function updateUserEvent($eventId, $user)
     {
         $event = $this->entityManager->getRepository('AtotrukisMainBundle:Event')->findOneById($eventId);
@@ -57,6 +91,11 @@ class EventService
         return $event;
     }
 
+    /**
+     * @param $action String edit/delete
+     * @param $eventId int
+     * @param $user \Atotrukis\MainBundle\Entity\User
+     */
     public function checkEventOwner($action, $eventId, $user)
     {
         $event = $this->entityManager->getRepository('AtotrukisMainBundle:Event')->findOneById($eventId);
@@ -68,6 +107,15 @@ class EventService
         }
 
     }
+
+    /**
+     * @param $form \Atotrukis\MainBundle\Form\Type\CreateEventFormType
+     * @param $event \Atotrukis\MainBundle\Entity\Event
+     * @param $request \Symfony\Component\HttpFoundation\Request
+     * @param $user \Atotrukis\MainBundle\Entity\User
+     * @param $message String for a flash
+     * @return bool true if form is valid
+     */
     public function handleFormRequest($form, $event, $request, $user, $message)
     {
         $form->handleRequest($request);
@@ -82,18 +130,21 @@ class EventService
                 $entityManager->flush();
 
                 $this->addFlash($request, $message, 'success');
+                return true;
             }
+            return false;
         }
-
+        return false;
     }
 
     /**
-     * @param $form
-     * @param $event
-     * @param $user
-     * @param $entityManager
+     * sets updated values for event
+     *
+     * @param $form \Atotrukis\MainBundle\Form\Type\CreateEventFormType
+     * @param $event \Atotrukis\MainBundle\Entity\Event
+     * @param $user \Atotrukis\MainBundle\Entity\User
      */
-    public function setEventValues($form, $event, $user, $entityManager)
+    public function setEventValues($form, $event, $user)
     {
         $event->setName($form['name']->getData());
         $event->setDescription($form['description']->getData());
@@ -103,12 +154,12 @@ class EventService
         $event->setCity($this->getCity($form));
         $event->setCreatedBy($user);
 
-        $entityManager->persist($event);
+        $this->entityManager->persist($event);
     }
 
     /**
-     * @param $form
-     * @return mixed
+     * @param $form \Atotrukis\MainBundle\Form\Type\CreateEventFormType
+     * @return \Atotrukis\MainBundle\Entity\City
      */
     public function getCity($form)
     {
@@ -117,50 +168,51 @@ class EventService
     }
 
     /**
-     * @param $event
-     * @param $entityManager
+     * when updating event removes old keywords
+     *
+     * @param $eventId int
      */
-    public function removeOldKeywords($event, $entityManager)
+    public function removeOldKeywords($eventId)
     {
-        $oldKeywords = $this->entityManager->getRepository('AtotrukisMainBundle:EventKeywords')->findByEventId($event);
+        $oldKeywords = $this->entityManager
+            ->getRepository('AtotrukisMainBundle:EventKeywords')
+            ->findByEventId($eventId);
 
         foreach ($oldKeywords as $oldKeyword) {
-            $entityManager->remove($oldKeyword);
+            $this->entityManager->remove($oldKeyword);
         }
     }
 
     /**
-     * @param $form
-     * @param $event
-     * @param $entityManager
+     * @param $form \Atotrukis\MainBundle\Form\Type\CreateEventFormType
+     * @param $event \Atotrukis\MainBundle\Entity\Event
      */
-    public function processNewKeywords($form, $event, $entityManager)
+    public function processNewKeywords($form, $event)
     {
         $keywords = $this->explodeKeywords($form);
 
         foreach ($keywords as $keyword) {
             $keyword = trim($keyword);
-            $this->PersistKeywords($event, $entityManager, $keyword);
+            $this->persistKeywords($event, $keyword);
         }
     }
 
     /**
-     * @param $event
-     * @param $entityManager
-     * @param $keyword
+     * @param $event \Atotrukis\MainBundle\Entity\Event
+     * @param $keyword String
      */
-    public function PersistKeywords($event, $entityManager, $keyword)
+    public function persistKeywords($event, $keyword)
     {
         $eventKeywords = new EventKeywords();
         $eventKeywords->setKeyword($keyword);
         $eventKeywords->setEventId($event);
-        $entityManager->persist($eventKeywords);
+        $this->entityManager->persist($eventKeywords);
     }
 
     /**
-     * @param $request
-     * @param $message
-     * @param $status
+     * @param $request \Symfony\Component\HttpFoundation\Request
+     * @param $message String
+     * @param $status String success, danger etc.
      */
     public function addFlash($request, $message, $status)
     {
@@ -179,8 +231,8 @@ class EventService
     }
 
     /**
-     * @param $form
-     * @return array|mixed
+     * @param $form \Atotrukis\MainBundle\Form\Type\CreateEventFormType
+     * @return array of keywords (String)
      */
     public function explodeKeywords($form)
     {
@@ -188,5 +240,4 @@ class EventService
         $keywords = explode(" ", $keywords);
         return $keywords;
     }
-
 }
