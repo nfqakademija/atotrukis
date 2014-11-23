@@ -11,6 +11,10 @@ class SearchFormType extends AbstractType
     {
         $builder
             ->add('keywords', 'text', [
+                'attr' =>[
+                    'placeholder' => 'Įveskite paieškos žodžius atskirtus kableliais'
+                ],
+
                 'constraints' =>[
                     new Assert\NotBlank([
                         'message' => "Įveskite paieškos žodžius"

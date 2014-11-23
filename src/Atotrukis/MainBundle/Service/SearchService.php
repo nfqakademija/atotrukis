@@ -28,9 +28,13 @@ class SearchService
 
                 $this->processKeywords($form, $user);
 
-                return $this->templating->renderResponse(
-                    'AtotrukisMainBundle::layout.html.twig'
-                );
+//                return $this->templating->renderResponse(
+//                    'AtotrukisMainBundle:Event:searchEvents.html.twig',
+//                    array(
+//                        'search' => $form->createView()
+//                    )
+//                );
+                return true;
             }
         }
 
@@ -49,5 +53,9 @@ class SearchService
             $this->userKeywordService->addKeyword($keyword, $user);
         }
     }
-}
 
+    public function getResults()
+    {
+
+    }
+}
