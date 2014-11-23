@@ -40,10 +40,10 @@ class EventKeywords
     /**
      * Set eventId
      *
-     * @param \Atotrukis\MainBundle\Entity\Event $eventId
+     * @param Event $eventId
      * @return UserAttending
      */
-    public function setEventId(\Atotrukis\MainBundle\Entity\Event $eventId = null)
+    public function setEventId(Event $eventId = null)
     {
         $this->eventId = $eventId;
 
@@ -53,7 +53,7 @@ class EventKeywords
     /**
      * Get eventId
      *
-     * @return \Atotrukis\MainBundle\Entity\Event
+     * @return Event
      */
     public function getEventId()
     {

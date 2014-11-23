@@ -5,7 +5,6 @@ use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Validator\Constraints as Assert;
 use Atotrukis\MainBundle\Validator\Constraints as CustomAssert;
 
-
 /**
  * @ORM\Entity
  * @ORM\Table(name="events")
@@ -235,10 +234,10 @@ class Event
     /**
      * Add photos
      *
-     * @param \Atotrukis\MainBundle\Entity\EventPhoto $photos
+     * @param EventPhoto $photos
      * @return Event
      */
-    public function addPhoto(\Atotrukis\MainBundle\Entity\EventPhoto $photos)
+    public function addPhoto(EventPhoto $photos)
     {
         $this->photos[] = $photos;
 
@@ -248,9 +247,9 @@ class Event
     /**
      * Remove photos
      *
-     * @param \Atotrukis\MainBundle\Entity\EventPhoto $photos
+     * @param EventPhoto $photos
      */
-    public function removePhoto(\Atotrukis\MainBundle\Entity\EventPhoto $photos)
+    public function removePhoto(EventPhoto $photos)
     {
         $this->photos->removeElement($photos);
     }
@@ -291,10 +290,10 @@ class Event
     /**
      * Set city
      *
-     * @param \Atotrukis\MainBundle\Entity\City $city
+     * @param City $city
      * @return Event
      */
-    public function setCity(\Atotrukis\MainBundle\Entity\City $city = null)
+    public function setCity(City $city = null)
     {
         $this->city = $city;
 
@@ -304,7 +303,7 @@ class Event
     /**
      * Get city
      *
-     * @return \Atotrukis\MainBundle\Entity\City 
+     * @return City
      */
     public function getCity()
     {
@@ -314,10 +313,10 @@ class Event
     /**
      * Add usersAttending
      *
-     * @param \Atotrukis\MainBundle\Entity\UserAttending $usersAttending
+     * @param UserAttending $usersAttending
      * @return Event
      */
-    public function addUsersAttending(\Atotrukis\MainBundle\Entity\UserAttending $usersAttending)
+    public function addUsersAttending(UserAttending $usersAttending)
     {
         $this->usersAttending[] = $usersAttending;
 
@@ -327,9 +326,9 @@ class Event
     /**
      * Remove usersAttending
      *
-     * @param \Atotrukis\MainBundle\Entity\UserAttending $usersAttending
+     * @param UserAttending $usersAttending
      */
-    public function removeUsersAttending(\Atotrukis\MainBundle\Entity\UserAttending $usersAttending)
+    public function removeUsersAttending(UserAttending $usersAttending)
     {
         $this->usersAttending->removeElement($usersAttending);
     }
@@ -348,10 +347,10 @@ class Event
     /**
      * Add keywords
      *
-     * @param \Atotrukis\MainBundle\Entity\EventKeywords $keywords
+     * @param EventKeywords $keywords
      * @return Event
      */
-    public function addKeyword(\Atotrukis\MainBundle\Entity\EventKeywords $keywords)
+    public function addKeyword(EventKeywords $keywords)
     {
         $this->keywords[] = $keywords;
 
@@ -361,9 +360,9 @@ class Event
     /**
      * Remove keywords
      *
-     * @param \Atotrukis\MainBundle\Entity\EventKeywords $keywords
+     * @param EventKeywords $keywords
      */
-    public function removeKeyword(\Atotrukis\MainBundle\Entity\EventKeywords $keywords)
+    public function removeKeyword(EventKeywords $keywords)
     {
         $this->keywords->removeElement($keywords);
     }

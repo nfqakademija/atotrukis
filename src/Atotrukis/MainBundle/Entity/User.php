@@ -62,10 +62,10 @@ class User extends BaseUser
     /**
      * Add events
      *
-     * @param \Atotrukis\MainBundle\Entity\Event $events
+     * @param Event $events
      * @return User
      */
-    public function addEvent(\Atotrukis\MainBundle\Entity\Event $events)
+    public function addEvent(Event $events)
     {
         $this->events[] = $events;
 
@@ -75,9 +75,9 @@ class User extends BaseUser
     /**
      * Remove events
      *
-     * @param \Atotrukis\MainBundle\Entity\Event $events
+     * @param Event $events
      */
-    public function removeEvent(\Atotrukis\MainBundle\Entity\Event $events)
+    public function removeEvent(Event $events)
     {
         $this->events->removeElement($events);
     }
@@ -95,10 +95,10 @@ class User extends BaseUser
     /**
      * Add interests
      *
-     * @param \Atotrukis\MainBundle\Entity\UserInterest $interests
+     * @param UserInterest $interests
      * @return User
      */
-    public function addInterest(\Atotrukis\MainBundle\Entity\UserInterest $interests)
+    public function addInterest(UserInterest $interests)
     {
         $this->interests[] = $interests;
 
@@ -108,9 +108,9 @@ class User extends BaseUser
     /**
      * Remove interests
      *s
-     * @param \Atotrukis\MainBundle\Entity\UserInterest $interests
+     * @param UserInterest $interests
      */
-    public function removeInterest(\Atotrukis\MainBundle\Entity\UserInterest $interests)
+    public function removeInterest(UserInterest $interests)
     {
         $this->interests->removeElement($interests);
     }
@@ -128,10 +128,10 @@ class User extends BaseUser
     /**
      * Add attendingTo
      *
-     * @param \Atotrukis\MainBundle\Entity\UserAttending $attendingTo
+     * @param UserAttending $attendingTo
      * @return User
      */
-    public function addAttendingTo(\Atotrukis\MainBundle\Entity\UserAttending $attendingTo)
+    public function addAttendingTo(UserAttending $attendingTo)
     {
         $this->attendingTo[] = $attendingTo;
 
@@ -141,9 +141,9 @@ class User extends BaseUser
     /**
      * Remove attendingTo
      *
-     * @param \Atotrukis\MainBundle\Entity\UserAttending $attendingTo
+     * @param UserAttending $attendingTo
      */
-    public function removeAttendingTo(\Atotrukis\MainBundle\Entity\UserAttending $attendingTo)
+    public function removeAttendingTo(UserAttending $attendingTo)
     {
         $this->attendingTo->removeElement($attendingTo);
     }

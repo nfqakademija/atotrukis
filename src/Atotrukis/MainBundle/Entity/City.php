@@ -1,6 +1,7 @@
 <?php
 namespace Atotrukis\MainBundle\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -67,10 +68,10 @@ class City
     /**
      * Set eventId
      *
-     * @param \Atotrukis\MainBundle\Entity\Event $eventId
+     * @param Event $eventId
      * @return City
      */
-    public function setEventId(\Atotrukis\MainBundle\Entity\Event $eventId = null)
+    public function setEventId(Event $eventId = null)
     {
         $this->eventId = $eventId;
 
@@ -80,7 +81,7 @@ class City
     /**
      * Get eventId
      *
-     * @return \Atotrukis\MainBundle\Entity\Event 
+     * @return Event
      */
     public function getEventId()
     {
@@ -91,16 +92,16 @@ class City
      */
     public function __construct()
     {
-        $this->eventId = new \Doctrine\Common\Collections\ArrayCollection();
+        $this->eventId = new ArrayCollection();
     }
 
     /**
      * Add eventId
      *
-     * @param \Atotrukis\MainBundle\Entity\Event $eventId
+     * @param Event $eventId
      * @return City
      */
-    public function addEventId(\Atotrukis\MainBundle\Entity\Event $eventId)
+    public function addEventId(Event $eventId)
     {
         $this->eventId[] = $eventId;
 
@@ -110,9 +111,9 @@ class City
     /**
      * Remove eventId
      *
-     * @param \Atotrukis\MainBundle\Entity\Event $eventId
+     * @param Event $eventId
      */
-    public function removeEventId(\Atotrukis\MainBundle\Entity\Event $eventId)
+    public function removeEventId(Event $eventId)
     {
         $this->eventId->removeElement($eventId);
     }
