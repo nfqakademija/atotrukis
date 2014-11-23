@@ -7,7 +7,6 @@ use Symfony\Component\Security\Core\User\UserInterface;
 
 class FOSUBUserProvider extends BaseClass
 {
-
     /**
      * {@inheritDoc}
      */
@@ -64,6 +63,7 @@ class FOSUBUserProvider extends BaseClass
             $user->setPlainPassword($username);
             $user->setEnabled(true);
             $this->userManager->updateUser($user);
+            $this->insertUserLikes($response, $user);
             return $user;
         }
 
@@ -77,6 +77,31 @@ class FOSUBUserProvider extends BaseClass
         $user->$setter($response->getAccessToken());
 
         return $user;
+    }
+
+    /**
+     * @param UserResponseInterface $response
+     * @param $user
+     */
+    private function insertUserLikes(UserResponseInterface $response, $user)
+    {
+        $data = $response->getResponse();
+        $likes = array();
+        $likes[] = $data['favorite_athletes'];
+        $likes[] = $data['favorite_teams'];
+        $likes[] = $data['inspirational_people'];
+        foreach ($likes as $like) {
+            foreach ($like as $item) {
+                $words = explode(" ", $item['name']);
+                foreach ($words as $word) {
+                    $word = preg_replace('/[^\p{L}\s]+$/', '', $word);
+                    $word = preg_replace('/^[^\p{L}\s]+/', '', $word);
+                    if (!empty($word)) {
+                        $this->userKeywordService->addKeyword($word, $user);
+                    }
+                }
+            }
+        }
     }
 
 }
