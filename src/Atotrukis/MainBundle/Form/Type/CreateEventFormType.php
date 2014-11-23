@@ -51,6 +51,9 @@ class CreateEventFormType extends AbstractType
                 ]
             ])
             ->add('keywords', 'text', [
+                'attr' =>[
+                    'placeholder' => 'Įveskite paieškos žodžius'
+                ],
                 'mapped' => false,
                 'constraints' =>[
                     new Assert\NotBlank([
@@ -80,7 +83,6 @@ class CreateEventFormType extends AbstractType
                         ->addOrderBy('c.name', 'ASC');
                 },
             ));
-//            ->add('save', 'submit', array('label' => 'Sukurti'));
     }
     public function getName()
     {
