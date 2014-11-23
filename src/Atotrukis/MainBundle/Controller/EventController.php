@@ -67,8 +67,13 @@ class EventController extends Controller
         $form = $this->createForm(new SearchFormType());
 
         if ($this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            if ($this->get('searchService')->handleFormRequest($form, $request, $this->getUser())) {
+
+            $response = $this->get('searchService')->handleFormRequest($form, $request, $this->getUser());
+            if ($response['formIsValid']) {
                 return $this->redirect($this->generateUrl('atotrukis_hello_world'));
+//                return $this->render('AtotrukisMainBundle:Default:index.html.twig', array(
+//                    'event' => $response['searchResult']
+//                ));
             }
 
         }
