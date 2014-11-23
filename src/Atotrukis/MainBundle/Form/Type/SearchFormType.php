@@ -12,7 +12,7 @@ class SearchFormType extends AbstractType
         $builder
             ->add('keywords', 'text', [
                 'attr' =>[
-                    'placeholder' => 'Įveskite paieškos žodžius atskirtus kableliais'
+                    'placeholder' => 'Įveskite paieškos žodžius'
                 ],
 
                 'constraints' =>[

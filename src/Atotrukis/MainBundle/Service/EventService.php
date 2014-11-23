@@ -185,8 +185,7 @@ class EventService
     public function explodeKeywords($form)
     {
         $keywords = $form['keywords']->getData();
-        $keywords = preg_replace('!\s+!', ' ', $keywords);
-        $keywords = explode(",", $keywords);
+        $keywords = explode(" ", $keywords);
         return $keywords;
     }
 

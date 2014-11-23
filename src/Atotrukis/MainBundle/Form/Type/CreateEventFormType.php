@@ -51,6 +51,9 @@ class CreateEventFormType extends AbstractType
                 ]
             ])
             ->add('keywords', 'text', [
+                'attr' =>[
+                    'placeholder' => 'Įveskite paieškos žodžius'
+                ],
                 'mapped' => false,
                 'constraints' =>[
                     new Assert\NotBlank([

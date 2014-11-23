@@ -30,7 +30,7 @@ class SearchService
         if ($form->isValid()) {
             if ($request->isMethod('POST')) {
                 $this->processKeywords($form, $user);
-                $searchResult = $this->getResults($form['keywords']->getData());
+                $searchResult = $this->getResults($this->eventService->explodeKeywords($form));
                 return array('formIsValid' => true, 'searchResult' => $searchResult);
             }
         }
@@ -63,13 +63,19 @@ class SearchService
             $eventKeywordCount = sizeof($eventKeywords);
             $matchedKeywordsCount = 0;
             foreach ($eventKeywords as $eventKeyword) {
+                $keyword = $eventKeyword->getKeyword();
                 foreach ($searchKeywords as $searchKeyword) {
-                    if ($eventKeyword == $searchKeyword) {
+                    $searchKeyword = trim($searchKeyword);
+                    if ($keyword == $searchKeyword) {
                         $matchedKeywordsCount++;
                     }
                 }
             }
-            $matched = $matchedKeywordsCount / $eventKeywordCount * 100;
+            if ($eventKeywordCount != 0) {
+                $matched = $matchedKeywordsCount / $eventKeywordCount * 100;
+            } else {
+                $matched = 0;
+            }
             array_push($searchResult, array("event" => $event, "matched" => $matched));
         }
 
