@@ -7,6 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Atotrukis\MainBundle\Entity\Event;
 use Atotrukis\MainBundle\Form\Type\CreateEventFormType;
+use Symfony\Component\HttpFoundation\JsonResponse;
 
 class EventController extends Controller
 {
@@ -67,5 +68,16 @@ class EventController extends Controller
             ->findOneById($this->get('security.context')->getToken()->getUser()->getId());
 
         return $user;
+    }
+
+    public function attendAction(Request $request){
+        $eventId = $request->request->get('eventId', 'error');
+        $event = $this->getDoctrine()->getRepository('AtotrukisMainBundle:Event')
+                ->findOneById($eventId);
+        $user = $this->getUser();
+        $this->get('eventService')->attendEvent($event, $user);
+        if ($request->isXMLHttpRequest()) {
+            return new JsonResponse(array('data' => $eventId));
+        }
     }
 }

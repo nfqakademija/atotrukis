@@ -43,3 +43,8 @@ admin_users:
 admin_user_block:
   path:       /admin/vartotojai/block/{id}
   defaults: { _controller: AtotrukisMainBundle:Admin:blockUser}
+
+attend_event:
+    path:     /attend
+    defaults: { _controller: AtotrukisMainBundle:Event:attend }
+    methods:  [POST]
