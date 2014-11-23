@@ -11,14 +11,12 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Brand</a>
+            <a class="navbar-brand" id="logo" href="#">Brand</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
             <ul class="nav navbar-nav">
-
-                <li><a href="#" id="menu-toggle"><span class="glyphicon glyphicon-transfer"></span></a></li>
             </ul>
             <form id="search_form" class="navbar-form navbar-left" role="search" action="{{ path('search_results') }}">
                 <div class="form-group">
@@ -42,7 +40,7 @@
     <div id="sidebar-wrapper">
         <ul class="sidebar-nav">
             <li class="sidebar-brand">
-                    Valdymo panelė
+                    <b>Valdymo panelė</b>
             </li>
             <li>
                 <a href="/app_dev.php">Pradinis</a>
@@ -72,6 +70,10 @@
         </ul>
 
     </div>
+    <div id="sideBarToggle">
+        <a href="#" id="menu-toggle"><span class="menuCollapse"></span></a>
+    </div>
+
     <!-- /#sidebar-wrapper -->
 {% endblock %}
 {% block mainContent %}

@@ -10,42 +10,42 @@
  {% endblock %}
 
 {% block content %}
+<div id="createEventContainer">
+    {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
 
-{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_label(form.name, 'Pavadinimas') }}
+    {{ form_errors(form.name) }}
+    {{ form_widget(form.name, { 'attr': {'class': "form-control", 'placeholder': "Pavadinimas"} }) }}
 
-{{ form_label(form.name, 'Pavadinimas') }}
-{{ form_errors(form.name) }}
-{{ form_widget(form.name, { 'attr': {'class': "form-control", 'placeholder': "Pavadinimas"} }) }}
+    {{ form_label(form.description, 'Aprašymas') }}
+    {{ form_errors(form.description) }}
+    {{ form_widget(form.description, { 'attr': {'class': "form-control", 'placeholder': "Aprašymas"} }) }}
 
-{{ form_label(form.description, 'Aprašymas') }}
-{{ form_errors(form.description) }}
-{{ form_widget(form.description, { 'attr': {'class': "form-control", 'placeholder': "Aprašymas"} }) }}
+    {{ form_label(form.startDate, 'Pradžios laikas') }}
+    {{ form_errors(form.startDate) }}
+    {{ form_widget(form.startDate, { 'attr': {'class': "form-control", 'placeholder': "Pradžios laikas"} }) }}
 
-{{ form_label(form.startDate, 'Pradžios laikas') }}
-{{ form_errors(form.startDate) }}
-{{ form_widget(form.startDate, { 'attr': {'class': "form-control", 'placeholder': "Pradžios laikas"} }) }}
+    {{ form_label(form.endDate, 'Pabaigos laikas') }}
+    {{ form_errors(form.endDate) }}
+    {{ form_widget(form.endDate, { 'attr': {'class': "form-control", 'placeholder': "Pabaigos laikas"} }) }}
 
-{{ form_label(form.endDate, 'Pabaigos laikas') }}
-{{ form_errors(form.endDate) }}
-{{ form_widget(form.endDate, { 'attr': {'class': "form-control", 'placeholder': "Pabaigos laikas"} }) }}
+    {{ form_widget(form.map, { 'attr': {'class': "form-control", 'placeholder': "Adresas"} }) }}
 
-{{ form_widget(form.map, { 'attr': {'class': "form-control", 'placeholder': "Adresas"} }) }}
+    <div id="inputField">
+        <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+    </div>
+    <div id="map-canvas"></div>
 
-<div id="inputField">
-    <input id="pac-input" class="controls" type="text" placeholder="Search Box">
+    {{ form_label(form.city, 'Miestas') }}
+    {{ form_errors(form.city) }}
+    {{ form_widget(form.city, { 'attr': {'class': "form-control", 'placeholder': "Miestas"} }) }}
+
+    {{ form_label(form.keywords, 'Raktažodžiai (atskirti kableliais)') }}
+    {{ form_errors(form.keywords) }}
+    {{ form_widget(form.keywords, { 'attr': {'class': "form-control", 'placeholder': "Raktažodžiai"} }) }}
+
+    <input type="submit" id="newEventSubmit" value="Sukurti" class="btn red-btn sign-up-btn"/>
+
+    {{ form_rest(form) }}
 </div>
-<div id="map-canvas"></div>
-
-{{ form_label(form.city, 'Miestas') }}
-{{ form_errors(form.city) }}
-{{ form_widget(form.city, { 'attr': {'class': "form-control", 'placeholder': "Miestas"} }) }}
-
-{{ form_label(form.keywords, 'Raktažodžiai (atskirti kableliais)') }}
-{{ form_errors(form.keywords) }}
-{{ form_widget(form.keywords, { 'attr': {'class': "form-control", 'placeholder': "Raktažodžiai"} }) }}
-
-<input type="submit" value="Sukurti" class="btn red-btn sign-up-btn"/>
-
-{{ form_rest(form) }}
-
 {% endblock %}
