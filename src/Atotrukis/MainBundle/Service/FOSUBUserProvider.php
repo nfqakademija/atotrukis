@@ -80,6 +80,7 @@ class FOSUBUserProvider extends BaseClass
     }
 
     /**
+     * strips keywords and inserts them to database
      * @param UserResponseInterface $response
      * @param $user
      */

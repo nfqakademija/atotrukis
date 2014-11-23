@@ -5,6 +5,10 @@ use Doctrine\ORM\EntityManager;
 use Atotrukis\MainBundle\Entity\EventKeywords;
 use Atotrukis\MainBundle\Entity\UserAttending;
 
+/**
+ * Class EventService
+ * @package Atotrukis\MainBundle\Service
+ */
 class EventService
 {
 
@@ -231,7 +235,13 @@ class EventService
         return $qb->getQuery()->getSingleScalarResult();
     }
 
-    public function attendEvent($eventId, $userId){
+    /**
+     * set user as attending event
+     * @param $eventId
+     * @param $userId
+     */
+    public function attendEvent($eventId, $userId)
+    {
         $userAttending = new UserAttending();
         $userAttending->setUserId($userId);
         $userAttending->setEventId($eventId);
@@ -239,18 +249,31 @@ class EventService
         $this->entityManager->flush();
     }
 
-    public function leaveEvent($eventId, $userId){
+    /**
+     * removes user from attending event
+     * @param $eventId
+     * @param $userId
+     */
+    public function leaveEvent($eventId, $userId)
+    {
         $userAttending = $this->entityManager->getRepository("AtotrukisMainBundle:UserAttending")->
                          findOneBy(array('eventId' => $eventId, 'userId' => $userId));
-        $em = $this->entityManager;
-        $em->remove($userAttending);
-        $em->flush();
+        $entityManager = $this->entityManager;
+        $entityManager->remove($userAttending);
+        $entityManager->flush();
     }
 
-    public function isUserAttendingEvent($eventId, $userId){
+    /**
+     * checks if user attends event
+     * @param $eventId
+     * @param $userId
+     * @return bool
+     */
+    public function isUserAttendingEvent($eventId, $userId)
+    {
         $event = $this->entityManager->getRepository("AtotrukisMainBundle:UserAttending")->
         findOneBy(array('userId' => $userId, 'eventId' => $eventId));
-        if($event != null) {
+        if ($event != null) {
             return true;
         }
         return false;
