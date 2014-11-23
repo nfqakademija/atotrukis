@@ -1,5 +1,5 @@
 <?php
-
+umask(0002);
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Debug\Debug;
 
