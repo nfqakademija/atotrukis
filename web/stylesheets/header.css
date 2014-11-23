@@ -137,11 +137,14 @@
     height: 100%;
     margin-left: -250px;
     overflow-y: auto;
-    background-color: #fcf8e3;
+    background-color: white;
+    border-right: solid 1px;
+    border-color: #ff7400;
     -webkit-transition: all 0.5s ease;
     -moz-transition: all 0.5s ease;
     -o-transition: all 0.5s ease;
     transition: all 0.5s ease;
+    box-shadow: 2px 0px 10px #888888;
 }
 
 #wrapper.toggled #sidebar-wrapper {
@@ -177,7 +180,7 @@
 .sidebar-nav li a {
     display: block;
     text-decoration: none;
-    color: #999999;
+    color: #000;
 }
 
 .sidebar-nav li a:hover {
@@ -197,15 +200,9 @@
     line-height: 60px;
 }
 
-.sidebar-nav > .sidebar-brand a {
-    color: #999999;
+.sidebar-brand b{
+   color: black;
 }
-
-.sidebar-nav > .sidebar-brand a:hover {
-    color: #fff;
-    background: none;
-}
-
 @media(min-width:768px) {
     #wrapper {
         padding-left: 250px;
