@@ -27,7 +27,10 @@ class DefaultController extends Controller
                 paginate($paginator, $this->get('request')->query->get('puslapis', 1), 12);
         }
 
-        $attending = $this->get('eventService')->getAttending($events[0]->getId());
+        $attending = [];
+        foreach ($events as $event) {
+            $attending = $this->get('eventService')->getAttending($event->getId());
+        }
 
         return $this->render('AtotrukisMainBundle:Default:index.html.twig', array(
             'pagination' => $pagination,
