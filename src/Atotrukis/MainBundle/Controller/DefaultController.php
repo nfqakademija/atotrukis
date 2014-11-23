@@ -31,8 +31,12 @@ class DefaultController extends Controller
         foreach ($events as $event) {
             $eventId = $event->getId();
             $attending[$eventId] = $this->get('eventService')->getAttending($eventId);
-            $user = $this->get('security.context')->getToken()->getUser()->getId();
-            $amIAttending[$eventId] = $this->get('eventService')->isUserAttendingEvent($eventId, $user);
+            if($this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')){
+                $user = $this->get('security.context')->getToken()->getUser()->getId();
+                $amIAttending[$eventId] = $this->get('eventService')->isUserAttendingEvent($eventId, $user);
+            } else {
+                $amIAttending[$eventId] = null;
+            }
         }
 
         return $this->render('AtotrukisMainBundle:Default:index.html.twig', array(
