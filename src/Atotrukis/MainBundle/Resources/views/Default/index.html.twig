@@ -4,7 +4,7 @@
     <div class="page-header">
         <h4>Pasiūlymai tau</h4>
     </div>
-    <hr>
+
 {% endblock %}
 
 {% block mainContent %}
@@ -21,11 +21,13 @@
                             {{ include('AtotrukisMainBundle:Includes:mainEvent2.html.twig') }}
                         </div>
                     </div>
+                    <hr>
                 {% endif %}
             {% else %}
                 <div class="row">
                     {{ include('AtotrukisMainBundle:Includes:mainEvent.html.twig') }}
                 </div>
+                <hr>
             {% endif %}
 
             {% if pagination.getPaginationData.firstItemNumber+loop.index0 > 2 %}
