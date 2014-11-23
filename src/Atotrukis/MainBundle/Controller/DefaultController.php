@@ -26,7 +26,7 @@ class DefaultController extends Controller
             $pagination = $this->get('homePageService')->
                 paginate($paginator, $this->get('request')->query->get('puslapis', 1), 12);
         }
-
+        // TODO: needs to be fixed if there are no events undefined offset error
         $attending = $this->get('eventService')->getAttending($events[0]->getId());
 
         return $this->render('AtotrukisMainBundle:Default:index.html.twig', array(
