@@ -1,14 +1,14 @@
 {% extends 'AtotrukisMainBundle::layout.html.twig' %}
 
 {% block topContent %}
-    <div class="page-header">
-        <h4>Pasiūlymai tau</h4>
-    </div>
+    <div class="contentWrapper">
+        <div class="page-header">
+            <h4>Pasiūlymai tau</h4>
+        </div>
 
 {% endblock %}
 
 {% block mainContent %}
-
         {% for event in pagination %}
 
             {% if pagination.getPaginationData.totalCount > 1 %}
@@ -35,7 +35,7 @@
             {% endif %}
 
         {% endfor %}
-
+    </div>
         <div class="col-md-12">
 
             {{ knp_pagination_render(pagination) }}
@@ -47,7 +47,10 @@
     <div class="panel panel-default">
         <div class="panel-body">
             <div id="top_recommendation_nav">
-                <a href="#">Rekomenduojami tau</a> | <a href="#">Išbandyk naujovę</a>
+                <ul class="nav nav-pills">
+                    <li class="active"><a href="#" class="menuText">Rekomenduojami tau</a></li>
+                    <li><a href="#" class="menuText">Išbandyk naujovę</a></li>
+                </ul>
             </div>
         </div>
     </div>

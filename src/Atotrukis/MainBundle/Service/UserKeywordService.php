@@ -42,6 +42,8 @@ class UserKeywordService
         $keywordValue = $keyword->getValue();
         $newKeywordValue = $keywordValue + 1;
         $keyword->setValue($newKeywordValue);
+        $this->entityManager->persist($keyword);
+        $this->entityManager->flush();
     }
 
     /**
