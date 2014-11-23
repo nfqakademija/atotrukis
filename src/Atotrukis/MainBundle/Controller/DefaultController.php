@@ -29,7 +29,8 @@ class DefaultController extends Controller
 
         $attending = [];
         foreach ($events as $event) {
-            $attending = $this->get('eventService')->getAttending($event->getId());
+            $eventId = $event->getId();
+            $attending[$eventId] = $this->get('eventService')->getAttending($eventId);
         }
 
         return $this->render('AtotrukisMainBundle:Default:index.html.twig', array(
