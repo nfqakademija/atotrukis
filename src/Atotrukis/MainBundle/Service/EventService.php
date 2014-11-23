@@ -189,6 +189,14 @@ class EventService
         $this->entityManager->flush();
     }
 
+    public function leaveEvent($eventId, $userId){
+        $userAttending = $this->entityManager->getRepository("AtotrukisMainBundle:UserAttending")->
+                         findOneBy(array('eventId' => $eventId, 'userId' => $userId));
+        $em = $this->entityManager;
+        $em->remove($userAttending);
+        $em->flush();
+    }
+
     public function isUserAttendingEvent($eventId, $userId){
         $event = $this->entityManager->getRepository("AtotrukisMainBundle:UserAttending")->
         findOneBy(array('userId' => $userId, 'eventId' => $eventId));
