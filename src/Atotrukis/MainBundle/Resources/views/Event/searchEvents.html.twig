@@ -1,1 +1,10 @@
-{% extends 'AtotrukisMainBundle::layout.html.twig' %}
+{#{% extends "AtotrukisMainBundle::layout.html.twig" %}#}
+
+{%  block searchForm %}
+    {{ form_start(search, {'attr': {'novalidate': 'novalidate'}}) }}
+    <div class="form-group">
+        {{ form_widget(search.keywords, { 'attr': {'class': "form-control" } }) }}
+    </div>
+    <button type="submit" class="btn btn-default">Search</button>
+    {{ form_rest(search) }}
+{% endblock %}
