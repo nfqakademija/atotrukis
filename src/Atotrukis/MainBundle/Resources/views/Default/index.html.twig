@@ -9,6 +9,7 @@
 {% endblock %}
 
 {% block mainContent %}
+        {{ dump(pagination.items) }}
         {% for event in pagination %}
 
             {% if pagination.getPaginationData.totalCount > 1 %}
