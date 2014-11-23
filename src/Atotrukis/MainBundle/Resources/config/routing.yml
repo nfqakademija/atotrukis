@@ -48,3 +48,8 @@ attend_event:
     path:     /attend
     defaults: { _controller: AtotrukisMainBundle:Event:attend }
     methods:  [POST]
+
+leave_event:
+    path:     /leave
+    defaults: { _controller: AtotrukisMainBundle:Event:leave }
+    methods:  [POST]

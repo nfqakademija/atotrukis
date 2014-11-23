@@ -70,14 +70,23 @@ class EventController extends Controller
         return $user;
     }
 
+    //ajax request method for attending buttons
+    //TODO: need to move logic to service
     public function attendAction(Request $request){
         $eventId = $request->request->get('eventId', 'error');
         $event = $this->getDoctrine()->getRepository('AtotrukisMainBundle:Event')
                 ->findOneById($eventId);
         $user = $this->getUser();
         $this->get('eventService')->attendEvent($event, $user);
+        $newUrl = $url = $this->generateUrl('leave_event');
+        $newButton = '
+            <button class="btn btn-default attendingButton" type="button">
+                Dalyauju
+                <span class="glyphicon glyphicon-ok"></span>
+                <span class="eventID">'.$eventId.'</span>
+                <span class="jsRoute">'.$newUrl.'</span></button>';
         if ($request->isXMLHttpRequest()) {
-            return new JsonResponse(array('data' => $eventId));
+            return new JsonResponse(array('data' => $newButton));
         }
     }
 }

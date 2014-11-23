@@ -4,12 +4,21 @@
             <div class="mainEventWrapper">
                 <div class="mainEvent">
                     <img src="{{ asset('images/mainEvent2.jpg') }}" alt="alternative">
-                    <button class="btn btn-default attendButton" type="button">
-                        Dalyausiu
-                        <span class="glyphicon glyphicon-thumbs-up"></span>
-                        <span class="eventID">{{ event.id }}</span>
-                        <span class="jsRoute">{{ path("attend_event")}}</span>
-                    </button>
+                    {% if userRegistered[event.id] == 1 %}
+                        <button class="btn btn-default attendingButton" type="button">
+                            Dalyauju
+                            <span class="glyphicon glyphicon-ok"></span>
+                            <span class="eventID">{{ event.id }}</span>
+                            <span class="jsRoute">{{ path("attend_event")}}</span>
+                        </button>
+                    {% else %}
+                        <button class="btn btn-default attendButton" type="button">
+                            Dalyausiu
+                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                            <span class="eventID">{{ event.id }}</span>
+                            <span class="jsRoute">{{ path("attend_event")}}</span>
+                        </button>
+                    {% endif %}
                 </div>
             </div>
         </div>

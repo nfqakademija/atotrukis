@@ -26,17 +26,20 @@ class DefaultController extends Controller
             $pagination = $this->get('homePageService')->
                 paginate($paginator, $this->get('request')->query->get('puslapis', 1), 12);
         }
-
+        $amIAttending = [];
         $attending = [];
         foreach ($events as $event) {
             $eventId = $event->getId();
             $attending[$eventId] = $this->get('eventService')->getAttending($eventId);
+            $user = $this->get('security.context')->getToken()->getUser()->getId();
+            $amIAttending[$eventId] = $this->get('eventService')->isUserAttendingEvent($eventId, $user);
         }
 
         return $this->render('AtotrukisMainBundle:Default:index.html.twig', array(
             'pagination' => $pagination,
             'startDate' => $startDate, 'endDate' => $endDate,
             'attending' => $attending,
+            'userRegistered' => $amIAttending,
         ));
 
     }

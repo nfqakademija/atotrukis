@@ -5,13 +5,14 @@ $("#menu-toggle").click(function(e) {
 $(".attendButton").click(function(){
     var path = $(this).find(".jsRoute").text();
     var id = $(this).find(".eventID").text();
+    var current_element = $(this);
     $.ajax({
         type: "POST",
         url:path,
         data : { 'eventId' : id},
         dataType: 'json',
         success:function(data){
-            alert(data.data);
+            current_element.replaceWith(data.data);
         }
     });
 });
