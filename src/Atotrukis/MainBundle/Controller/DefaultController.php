@@ -7,7 +7,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class DefaultController extends Controller
 {
 
-    public function indexAction()
+    public function indexAction($max = 10)
     {
         $events = $this->get('homePageService')->getEvents();
 
@@ -19,20 +19,20 @@ class DefaultController extends Controller
         $startDate = $this->get('dateFormatService')->startDate($events);
         $endDate = $this->get('dateFormatService')->endDate($events);
 
-        // Pagination
         $paginator  = $this->get('knp_paginator');
-        $pagination = $paginator->paginate(
-            $events,
-            $this->get('request')->query->get('puslapis', 1)/*page number*/,
-            8/*limit per page*/
-        );
+        $pagination = $this->get('homePageService')->
+            paginate($paginator, $this->get('request')->query->get('puslapis', 1), $max);
+        if ($pagination->getPaginationData()['current'] > 1) {
+            $pagination = $this->get('homePageService')->
+                paginate($paginator, $this->get('request')->query->get('puslapis', 1), 12);
+        }
 
         $attending = $this->get('eventService')->getAttending($events[0]->getId());
 
         return $this->render('AtotrukisMainBundle:Default:index.html.twig', array(
             'pagination' => $pagination,
             'startDate' => $startDate, 'endDate' => $endDate,
-            'attending' => $attending
+            'attending' => $attending,
         ));
 
     }

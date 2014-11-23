@@ -4,22 +4,34 @@ namespace Atotrukis\MainBundle\Service;
 
 use Doctrine\ORM\EntityManager;
 
-class HomePageService{
+class HomePageService
+{
 
-    protected $em;
+    protected $entityManager;
 
-    public function __construct(EntityManager $em)
+    public function __construct(EntityManager $entityManager)
     {
-        $this->em = $em;
+        $this->em = $entityManager;
     }
 
-    public function getEvents() {
+    public function getEvents()
+    {
         $rep = $this->em->getRepository('AtotrukisMainBundle:Event');
-        $qb = $rep->createQueryBuilder('e')
+        $queryBuilder = $rep->createQueryBuilder('e')
             ->select('e')
             ->where('e.startDate >= :today')
             ->setParameter('today', new \DateTime());
-        return $qb->getQuery()->getResult();
+        return $queryBuilder->getQuery()->getResult();
+    }
+
+    public function paginate($paginator, $request, $max)
+    {
+        $pagination = $paginator->paginate(
+            $this->getEvents(),
+            $request, /*page number*/
+            $max/*limit per page*/
+        );
+        return $pagination;
     }
 
 }

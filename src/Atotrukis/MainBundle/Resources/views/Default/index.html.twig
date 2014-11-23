@@ -9,7 +9,6 @@
 
 {% block mainContent %}
 
-
         {% for event in pagination %}
 
             {% if pagination.getPaginationData.totalCount > 1 %}
@@ -35,13 +34,11 @@
 
         {% endfor %}
 
-
         <div class="col-md-12">
 
             {{ knp_pagination_render(pagination) }}
 
         </div>
-
 
 {% endblock %}
 {% block recommendationList %}
