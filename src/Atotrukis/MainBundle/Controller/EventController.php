@@ -2,11 +2,11 @@
 
 namespace Atotrukis\MainBundle\Controller;
 
-use Atotrukis\MainBundle\Form\Type\CreateEventType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Atotrukis\MainBundle\Entity\Event;
 use Atotrukis\MainBundle\Form\Type\CreateEventFormType;
+use Atotrukis\MainBundle\Form\Type\SearchFormType;
 
 class EventController extends Controller
 {
@@ -43,8 +43,14 @@ class EventController extends Controller
         $event = $this->get('eventService')->updateUserEvent($eventId, $this->getUser(), $request);
 
         $form = $this->createForm(new CreateEventFormType(), $event);
-        $this->get('eventService')->handleFormRequest($form, $event, $request, $this->getUser(),
-            'Renginys sėkmingai išsaugotas!');
+        $this->get('eventService')
+            ->handleFormRequest(
+                $form,
+                $event,
+                $request,
+                $this->getUser(),
+                'Renginys sėkmingai išsaugotas!'
+            );
         return $this->render('AtotrukisMainBundle:Event:editEvent.html.twig', array(
             'form' => $form->createView(),
             'event' => $event
@@ -56,10 +62,22 @@ class EventController extends Controller
         return $this->render('AtotrukisMainBundle:Event:oneEvent.html.twig', array());
     }
 
-    public function getSearchResultAction()
+    public function getSearchResultAction(Request $request)
     {
-        return $this->render('AtotrukisMainBundle:Event:searchEvents.html.twig', array());
+        $form = $this->createForm(new SearchFormType());
+
+        if ($this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $this->get('searchService')->handleFormRequest($form, $request, $this->getUser());
+        }
+
+//        return $this->render('AtotrukisMainBundle::layout.html.twig', array(
+//            'search' => $form->createView(),
+//        ));
+        return $this->render('AtotrukisMainBundle:Event:searchEvents.html.twig', array(
+            'search' => $form->createView(),
+        ));
     }
+
 
     public function getUser()
     {

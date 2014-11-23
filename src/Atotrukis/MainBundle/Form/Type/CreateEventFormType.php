@@ -80,7 +80,6 @@ class CreateEventFormType extends AbstractType
                         ->addOrderBy('c.name', 'ASC');
                 },
             ));
-//            ->add('save', 'submit', array('label' => 'Sukurti'));
     }
     public function getName()
     {

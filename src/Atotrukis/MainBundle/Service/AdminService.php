@@ -34,9 +34,9 @@ class AdminService
         if (!$user) {
             $this->addFlash($request, 'Vartotojo su tokiu ID nėra!', 'danger');
         }
-        if($user->isLocked()){
+        if ($user->isLocked()) {
             $user->setLocked(0);
-        }else{
+        } else {
             $user->setLocked(1);
         }
         $entityManager = $this->entityManager;
@@ -53,5 +53,4 @@ class AdminService
     {
         $request->getSession()->getFlashBag()->add($status, $message);
     }
-
 }

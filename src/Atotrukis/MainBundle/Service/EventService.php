@@ -136,9 +136,7 @@ class EventService
      */
     public function processNewKeywords($form, $event, $entityManager)
     {
-        $keywords = $form['keywords']->getData();
-        $keywords = preg_replace('!\s+!', ' ', $keywords);
-        $keywords = explode(",", $keywords);
+        $keywords = $this->explodeKeywords($form);
 
         foreach ($keywords as $keyword) {
             $keyword = trim($keyword);
@@ -178,6 +176,18 @@ class EventService
             ->setParameter('id', $id)
         ;
         return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * @param $form
+     * @return array|mixed
+     */
+    public function explodeKeywords($form)
+    {
+        $keywords = $form['keywords']->getData();
+        $keywords = preg_replace('!\s+!', ' ', $keywords);
+        $keywords = explode(",", $keywords);
+        return $keywords;
     }
 
 }
