@@ -23,7 +23,9 @@
 
     {{ form_label(form.startDate, 'Pradžios laikas') }}
     {{ form_errors(form.startDate) }}
-    {{ form_widget(form.startDate, { 'attr': {'class': "form-control", 'placeholder': "Pradžios laikas"} }) }}
+    {{ form_widget(form.startDate, { 'attr': {'class': "form-control", 'id':'datetimepicker', 'placeholder': "Pradžios laikas"} }) }}
+
+
 
     {{ form_label(form.endDate, 'Pabaigos laikas') }}
     {{ form_errors(form.endDate) }}

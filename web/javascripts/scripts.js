@@ -1,3 +1,5 @@
+$('#createEventForm_startDate').datetimepicker();
+$('#createEventForm_endDate').datetimepicker();
 $("#menu-toggle").click(function(e) {
     e.preventDefault();
     $("#wrapper").toggleClass("toggled");

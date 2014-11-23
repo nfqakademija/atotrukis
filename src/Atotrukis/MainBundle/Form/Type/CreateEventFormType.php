@@ -36,14 +36,58 @@ class CreateEventFormType extends AbstractType
                     ])
                 ]
             ])
-            ->add('startDate', 'datetime', [
+            ->add('startDate', 'collot_datetime', [
+                'pickerOptions' => [
+                    'format' => 'mm/dd/yyyy',
+                    'weekStart' => 0,
+                    'startDate' => date('m/d/Y'), //example
+                    'endDate' => '01/01/3000', //example
+                    'daysOfWeekDisabled' => '0,6', //example
+                    'autoclose' => false,
+                    'startView' => 'month',
+                    'minView' => 'hour',
+                    'maxView' => 'decade',
+                    'todayBtn' => false,
+                    'todayHighlight' => false,
+                    'keyboardNavigation' => true,
+                    'language' => 'en',
+                    'forceParse' => true,
+                    'minuteStep' => 5,
+                    'pickerReferer ' => 'default', //deprecated
+                    'pickerPosition' => 'bottom-right',
+                    'viewSelect' => 'hour',
+                    'showMeridian' => false,
+                    'initialDate' => date('m/d/Y', 1577836800), //example
+                ],
                 'constraints' =>[
                     new \Atotrukis\MainBundle\Validator\Constraints\FutureDateTime([
                         'message' => "Pradžios laikas negali būti ankstesnis už dabartinį laiką."
                     ])
                 ]
             ])
-            ->add('endDate', 'datetime', [
+            ->add('endDate', 'collot_datetime', [
+                'pickerOptions' => [
+                    'format' => 'mm/dd/yyyy',
+                    'weekStart' => 0,
+                    'startDate' => date('m/d/Y'), //example
+                    'endDate' => '01/01/3000', //example
+                    'daysOfWeekDisabled' => '0,6', //example
+                    'autoclose' => false,
+                    'startView' => 'month',
+                    'minView' => 'hour',
+                    'maxView' => 'decade',
+                    'todayBtn' => false,
+                    'todayHighlight' => false,
+                    'keyboardNavigation' => true,
+                    'language' => 'en',
+                    'forceParse' => true,
+                    'minuteStep' => 5,
+                    'pickerReferer ' => 'default', //deprecated
+                    'pickerPosition' => 'bottom-right',
+                    'viewSelect' => 'hour',
+                    'showMeridian' => false,
+                    'initialDate' => date('m/d/Y', 1577836800), //example
+                ],
                 'constraints' =>[
                     new \Atotrukis\MainBundle\Validator\Constraints\FutureDateTime([
                         'message' => "Pabaigos laikas negali būti ankstesnis už dabartinį laiką."
