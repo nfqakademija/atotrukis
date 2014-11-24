@@ -53,3 +53,7 @@ leave_event:
     path:     /leave
     defaults: { _controller: AtotrukisMainBundle:Event:leave }
     methods:  [POST]
+
+get_news:
+    pattern:   /news
+    defaults:  { _controller: AtotrukisMainBundle:Event:getNewestEvents }

@@ -1,0 +1,5 @@
+<div class="news">
+    {%  for event in events %}
+        <h5><a href="#">{{ event.name }}</a><br><small>{{ event.createdOn|date("Y-m-d h:m") }}</small></h5>
+    {% endfor %}
+</div>

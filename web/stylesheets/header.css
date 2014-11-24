@@ -180,14 +180,16 @@
 
 .sidebar-nav li a:hover {
     text-decoration: none;
-    color: #000;
-    background: rgba(255,255,255,0.2);
+    color: #fff;
+    background: #ff7400
 }
 
 .sidebar-nav li a:active,
 .sidebar-nav li a:focus {
     text-decoration: none;
 }
+
+
 
 .sidebar-nav > .sidebar-brand {
     height: 65px;

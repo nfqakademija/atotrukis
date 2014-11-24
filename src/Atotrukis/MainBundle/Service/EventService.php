@@ -289,4 +289,22 @@ class EventService
         $keywords = explode(" ", $keywords);
         return $keywords;
     }
+
+    /**
+     * gets newest events
+     * @param int $start
+     * @param int $limit
+     * @return array
+     */
+    public function getNewestEvents($start = 0, $limit = 5)
+    {
+        $rep = $this->entityManager->getRepository('AtotrukisMainBundle:Event');
+        $queryBuilder = $rep->createQueryBuilder('e')
+            ->select('e')
+            ->orderBy('e.createdOn', 'DESC')
+            ->setFirstResult($start)
+            ->setMaxResults($start + $limit);
+        $results = $queryBuilder->getQuery()->getArrayResult();
+        return $results;
+    }
 }

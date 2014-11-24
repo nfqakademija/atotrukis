@@ -8,6 +8,7 @@ use Atotrukis\MainBundle\Entity\Event;
 use Atotrukis\MainBundle\Form\Type\CreateEventFormType;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Atotrukis\MainBundle\Form\Type\SearchFormType;
+use Symfony\Component\HttpFoundation\Response;
 
 class EventController extends Controller
 {
@@ -147,11 +148,12 @@ class EventController extends Controller
 
     //ajax request method for leaving buttons
     //TODO: need to move logic to service
-    public function leaveAction(Request $request){
+    public function leaveAction(Request $request)
+    {
         $eventId = $request->request->get('eventId', 'error');
         $user = $this->getUser();
         $this->get('eventService')->leaveEvent($eventId, $user->getId());
-        $newUrl = $url = $this->generateUrl('attend_event');
+        $newUrl = $this->generateUrl('attend_event');
         $newButton = '
             <button class="btn btn-default attendButton" type="button">
                 Dalyausiu
@@ -161,5 +163,18 @@ class EventController extends Controller
         if ($request->isXMLHttpRequest()) {
             return new JsonResponse(array('data' => $newButton));
         }
+    }
+
+    /**
+     * gets newest events
+     * default start offset = 0, limit = 5
+     * @return array
+     */
+    public function getNewestEventsAction()
+    {
+        $news = $this->get('eventService')->getNewestEvents();
+        return $this->render('AtotrukisMainBundle:Default:newEvents.html.twig', array(
+            'events' => $news,
+        ));
     }
 }
