@@ -49,6 +49,8 @@
         <hr>
         <h3>Komentarai</h3>
         {{ render(controller('AtotrukisMainBundle:Comments:createComment', {'eventId': app.request.get('eventId') })) }}
+        <hr>
+        {{ render(controller('AtotrukisMainBundle:Comments:showComments', {'eventId': app.request.get('eventId') })) }}
     </div>
 
 {% endblock %}

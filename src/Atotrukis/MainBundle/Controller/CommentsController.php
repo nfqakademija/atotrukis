@@ -11,7 +11,7 @@ use Atotrukis\MainBundle\Entity\Event;
 class CommentsController extends Controller
 {
     //TODO: create default event with 0 id
-    public function createCommentAction(Request $request, $eventId=0)
+    public function createCommentAction(Request $request, $eventId = 0)
     {
         $comment = new EventComments();
         $form = $this->createForm('createCommentForm', $comment);
@@ -25,9 +25,16 @@ class CommentsController extends Controller
         ));
     }
 
-    public function showComments()
+    /**
+     * @param int $eventId
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showCommentsAction($eventId = 0)
     {
-
+        $comments = $this->get('commentsService')->getEventComments($eventId);
+        return $this->render('AtotrukisMainBundle:Comment:showComments.html.twig', array(
+            'comments' => $comments,
+        ));
     }
 
     /**
