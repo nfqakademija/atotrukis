@@ -9,7 +9,13 @@ class DefaultController extends Controller
 
     public function indexAction($max = 10)
     {
-        $events = $this->get('homePageService')->getEvents();
+        if ($this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $user = $this->get('security.context')->getToken()->getUser()->getId();
+            $events = $this->get('homePageService')->getBestEvents($user);
+        } else {
+            $user = "";
+            $events = $this->get('homePageService')->getEvents($user);
+        }
 
         if (!$events) {
             //TODO not a solution
@@ -21,12 +27,11 @@ class DefaultController extends Controller
 
         $paginator  = $this->get('knp_paginator');
         $pag = $this->get('homePageService')->
-            paginate($paginator, $this->get('request')->query->get('puslapis', 1), 12);
+            paginate($paginator, $this->get('request')->query->get('puslapis', 1), 12, $user);
         $pagination = $this->get('homePageService')->
-            paginate($paginator, $this->get('request')->query->get('puslapis', 1), $max);
+            paginate($paginator, $this->get('request')->query->get('puslapis', 1), $max, $user);
         if ($pagination->getPaginationData()['current'] > 1) {
-            $pagination = $this->get('homePageService')->
-                paginate($paginator, $this->get('request')->query->get('puslapis', 1), 12);
+            $pagination = $pag;
         }
         $amIAttending = [];
         $attending = [];
