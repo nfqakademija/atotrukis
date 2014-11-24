@@ -3,6 +3,7 @@ $("#menu-toggle").click(function(e) {
     $("#wrapper").toggleClass("toggled");
 });
 $(".attendmentButton").on("click", ".attendButton", function(){
+    $(this).prop('disabled', true);
     var path = $(this).find(".jsRoute").text();
     var id = $(this).find(".eventID").text();
     var current_element = $(this);
@@ -17,6 +18,7 @@ $(".attendmentButton").on("click", ".attendButton", function(){
     });
 });
 $(".attendmentButton").on("click", ".attendingButton", function(){
+    $(this).prop('disabled', true);
     var path = $(this).find(".jsRoute").text();
     var id = $(this).find(".eventID").text();
     var current_element = $(this);
