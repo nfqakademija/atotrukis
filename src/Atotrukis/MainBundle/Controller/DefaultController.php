@@ -59,9 +59,14 @@ class DefaultController extends Controller
         if (!$event) {
             throw $this->createNotFoundException();
         }
-
+        if ($this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $user = $this->get('security.context')->getToken()->getUser()->getId();
+            $amIAttending = $this->get('eventService')->isUserAttendingEvent($eventId, $user);
+        } else {
+            $amIAttending = null;
+        }
         return $this->render('AtotrukisMainBundle:Default:showEvent.html.twig', array(
-            'event' => $event, 'attending'=> $attending
+            'event' => $event, 'attending'=> $attending, 'userRegistered' => $amIAttending,
         ));
     }
 

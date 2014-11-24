@@ -16,6 +16,17 @@
     display: block;
     max-height: 200px;
 }
+.mainEventShow{
+    width: 400px;
+    height: 200px;
+    background-color: #dfdfdf;
+}
+.mainEventShow img{
+    margin-left: auto;
+    margin-right: auto;
+    display: block;
+    max-height: 200px;
+}
 .mainEvent2{
     width:100%;
     height: 200px;
