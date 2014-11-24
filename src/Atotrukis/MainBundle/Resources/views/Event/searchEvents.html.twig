@@ -1,7 +1,7 @@
 {#{% extends "AtotrukisMainBundle::layout.html.twig" %}#}
 
 {%  block searchForm %}
-    {{ form_start(search, {'attr': {'novalidate': 'novalidate'}}) }}
+    {{ form_start(search, {'attr': {'novalidate': 'novalidate', 'class': 'navbar-form navbar-left', 'role': 'search'}}) }}
     <div class="form-group">
         {{ form_widget(search.keywords, { 'attr': {'class': "form-control" } }) }}
     </div>

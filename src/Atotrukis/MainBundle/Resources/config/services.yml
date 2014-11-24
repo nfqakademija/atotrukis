@@ -36,3 +36,8 @@ services:
       class: Atotrukis\MainBundle\Service\SearchService
       arguments: [@doctrine.orm.entity_manager, @templating, @eventService, @userKeywordService]
 
+    atotrukis_search.form.type.createCommentForm:
+        class: Atotrukis\MainBundle\Form\Type\SearchFormType
+        arguments: [ @router ]
+        tags:
+            - { name: form.type, alias: searchForm }
