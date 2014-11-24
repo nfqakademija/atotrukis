@@ -20,6 +20,7 @@ class EventController extends Controller
      */
     public function createEventAction(Request $request)
     {
+
         $event = new Event();
         $form = $this->createForm(new CreateEventFormType(), $event);
 
@@ -98,7 +99,7 @@ class EventController extends Controller
      */
     public function getSearchResultAction(Request $request)
     {
-        $form = $this->createForm(new SearchFormType());
+        $form = $this->createForm('searchForm');
 
         $response = $this->get('searchService')->handleFormRequest($form, $request, $this->getUser());
         if ($response['formIsValid']) {

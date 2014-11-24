@@ -1,0 +1,8 @@
+{{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+{{ form_label(form.comment, 'Komentaras') }}
+    {{ form_errors(form.comment) }}
+    {{ form_widget(form.comment, { 'attr': {'class': "form-control", 'placeholder': "Komentaras"} }) }}
+    {{ form_widget(form.eventId, { 'attr': {'class': "form-control", 'value': eventId } }) }}
+<input type="submit" id="newCommentSubmit" value="Komentuoti" class="btn red-btn sign-up-btn"/>
+
+{{ form_rest(form) }}

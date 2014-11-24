@@ -46,6 +46,9 @@
         </div><br>
         <b>Aprašymas:</b><br>
         {{ event.description }}<br>
+        <hr>
+        <h3>Komentarai</h3>
+        {{ render(controller('AtotrukisMainBundle:Comments:createComment', {'eventId': app.request.get('eventId') })) }}
     </div>
 
 {% endblock %}
