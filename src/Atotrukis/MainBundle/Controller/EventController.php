@@ -20,6 +20,7 @@ class EventController extends Controller
      */
     public function createEventAction(Request $request)
     {
+
         $event = new Event();
         $form = $this->createForm(new CreateEventFormType(), $event);
 

@@ -57,3 +57,7 @@ leave_event:
 get_news:
     pattern:   /news
     defaults:  { _controller: AtotrukisMainBundle:Event:getNewestEvents }
+
+comment_form:
+    pattern:   /commentForm
+    defaults:  { _controller: AtotrukisMainBundle:Comments:createComment }

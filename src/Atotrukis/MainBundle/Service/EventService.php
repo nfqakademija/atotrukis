@@ -307,4 +307,11 @@ class EventService
         $results = $queryBuilder->getQuery()->getArrayResult();
         return $results;
     }
+
+    public function getEventById($eventId)
+    {
+        $event = $this->entityManager->getRepository('AtotrukisMainBundle:Event')
+            ->findOneById($eventId);
+        return $event;
+    }
 }

@@ -7,6 +7,12 @@ services:
         tags:
             - { name: form.type, alias: atotrukis_user_registration }
 
+    atotrukis_comments.form.type.createCommentForm:
+        class: Atotrukis\MainBundle\Form\Type\CreateCommentFormType
+        arguments: [ @router ]
+        tags:
+            - { name: form.type, alias: createCommentForm }
+
     eventService:
         class: Atotrukis\MainBundle\Service\EventService
         arguments: [ @doctrine.orm.entity_manager ]
@@ -35,6 +41,11 @@ services:
     searchService:
       class: Atotrukis\MainBundle\Service\SearchService
       arguments: [@doctrine.orm.entity_manager, @templating, @eventService, @userKeywordService]
+
+    commentsService:
+      class: Atotrukis\MainBundle\Service\CommentsService
+      arguments: [@doctrine.orm.entity_manager, @eventService, @templating]
+
 
     atotrukis_search.form.type.createCommentForm:
         class: Atotrukis\MainBundle\Form\Type\SearchFormType
