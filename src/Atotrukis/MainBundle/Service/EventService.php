@@ -156,20 +156,10 @@ class EventService
         $event->setStartDate($form['startDate']->getData());
         $event->setEndDate($form['endDate']->getData());
         $event->setMap($form['map']->getData());
-        $event->setCity($this->getCity($form));
+        $event->setCity($form['city']->getData());
         $event->setCreatedBy($user);
 
         $this->entityManager->persist($event);
-    }
-
-    /**
-     * @param $form \Atotrukis\MainBundle\Form\Type\CreateEventFormType
-     * @return \Atotrukis\MainBundle\Entity\City
-     */
-    public function getCity($form)
-    {
-        return $this->entityManager->getRepository('AtotrukisMainBundle:City')
-            ->findOneById($form['city']->getData());
     }
 
     /**

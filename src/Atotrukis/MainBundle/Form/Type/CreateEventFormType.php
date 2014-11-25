@@ -68,21 +68,7 @@ class CreateEventFormType extends AbstractType
                 ]
             ])
             ->add('map', 'hidden')
-            ->add('city', 'entity', array(
-                'class' => 'AtotrukisMainBundle:City',
-                'property' => 'name',
-                'constraints' =>[
-                    new Assert\NotBlank([
-                        'message' => "Privalote pasirinkti miestą"
-                    ])
-                ],
-                'empty_value' => 'Pasirinkite miestą',
-                'query_builder' => function(EntityRepository $er) {
-                    return $er->createQueryBuilder('c')
-                        ->addOrderBy('c.priority', 'ASC')
-                        ->addOrderBy('c.name', 'ASC');
-                },
-            ));
+            ->add('city', 'hidden');
     }
     public function getName()
     {

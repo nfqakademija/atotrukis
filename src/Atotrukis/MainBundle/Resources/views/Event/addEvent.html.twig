@@ -36,11 +36,9 @@
     </div>
     <div id="map-canvas"></div>
 
-    {{ form_label(form.city, 'Miestas') }}
-    {{ form_errors(form.city) }}
-    {{ form_widget(form.city, { 'attr': {'class': "form-control", 'placeholder': "Miestas"} }) }}
+    {{ form_widget(form.city) }}
 
-    {{ form_label(form.keywords, 'Raktažodžiai (atskirti kableliais)') }}
+    {{ form_label(form.keywords, 'Raktažodžiai') }}
     {{ form_errors(form.keywords) }}
     {{ form_widget(form.keywords, { 'attr': {'class': "form-control", 'placeholder': "Raktažodžiai"} }) }}
 
