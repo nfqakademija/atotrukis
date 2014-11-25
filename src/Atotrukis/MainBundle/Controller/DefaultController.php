@@ -62,6 +62,45 @@ class DefaultController extends Controller
 
     }
 
+    public function allEventsAction($max = 10)
+    {
+        $events = $this->get('homePageService')->getEvents();
+
+        if (!$events) {
+            //TODO not a solution
+            // throw $this->createNotFoundException('Nėra nei vieno renginio')
+        }
+
+        $startDate = $this->get('dateFormatService')->startDate($events);
+        $endDate = $this->get('dateFormatService')->endDate($events);
+
+        $paginator = $this->get('knp_paginator');
+        $pag = $this->get('homePageService')->
+        paginate($paginator, $this->get('request')->query->get('puslapis', 1), 12);
+        $pagination = $this->get('homePageService')->
+        paginate($paginator, $this->get('request')->query->get('puslapis', 1), $max);
+        if ($pagination->getPaginationData()['current'] > 1) {
+            $pagination = $pag;
+        }
+        $amIAttending = [];
+        $attending = [];
+        foreach ($events as $event) {
+            $eventId = $event->getId();
+            $attending[$eventId] = $this->get('eventService')->getAttending($eventId);
+            $user = $this->get('security.context')->getToken()->getUser()->getId();
+            $amIAttending[$eventId] = $this->get('eventService')->isUserAttendingEvent($eventId, $user);
+        }
+
+        return $this->render('AtotrukisMainBundle:Default:index.html.twig', array(
+            'pagination' => $pagination,
+            'pag' => $pag,
+            'startDate' => $startDate,
+            'endDate' => $endDate,
+            'attending' => $attending,
+            'userRegistered' => $amIAttending,
+        ));
+    }
+
 
     public function showEventAction($eventId)
     {
