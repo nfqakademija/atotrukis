@@ -55,6 +55,11 @@
     margin-left: 20px;
     color:white;
     font-weight: bold;
+    white-space: nowrap;
+    width: 20em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
 }
 .mainEvent2TitleWrapper p{
     margin-left: 20px;
