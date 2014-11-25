@@ -29,14 +29,14 @@
 }
 .mainEvent2{
     width:100%;
-    height: 200px;
+    height: 240px;
     background-color: #dfdfdf;
 }
 .mainEvent2 img{
     margin-left: auto;
     margin-right: auto;
     display: block;
-    max-height: 200px;
+    height: 240px;
 }
 .mainEvent2:hover{
     -webkit-filter: grayscale(1);
