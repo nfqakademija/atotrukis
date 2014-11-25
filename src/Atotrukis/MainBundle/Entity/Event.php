@@ -71,8 +71,7 @@ class Event
     protected $keywords;
 
     /**
-     * @ORM\ManyToOne(targetEntity="City", inversedBy="eventId")
-     * @ORM\JoinColumn(name="city", referencedColumnName="id")
+     * @ORM\Column(type="string", length=255)
      */
     protected $city;
 
@@ -293,7 +292,7 @@ class Event
      * @param City $city
      * @return Event
      */
-    public function setCity(City $city = null)
+    public function setCity($city)
     {
         $this->city = $city;
 
