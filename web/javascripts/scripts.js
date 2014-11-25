@@ -32,3 +32,4 @@ $(".attendmentButton").on("click", ".attendingButton", function(){
         }
     });
 });
+$('[data-toggle="tooltip"]').tooltip()

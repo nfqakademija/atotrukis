@@ -17,7 +17,7 @@
         {% endif %}
         <img src="{{ asset('images/mainEvent2.jpg') }}" alt="alternative">
         <div class="eventTitleWrapper">
-            <h5>{{ event.name }}</h5>
+            <h5  data-toggle="tooltip" data-placement="top" title="{{ event.name }}">{{ event.name }}</h5>
             <p>{{ startDate[event.id] }}</p>
         </div>
     </div>
