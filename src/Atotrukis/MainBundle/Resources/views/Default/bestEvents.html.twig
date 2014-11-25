@@ -1,0 +1,52 @@
+{% extends 'AtotrukisMainBundle::layout.html.twig' %}
+
+{% block topContent %}
+<div class="contentWrapper">
+    <div class="page-header">
+        <h4>Pasiūlymai tau</h4>
+    </div>
+
+{% endblock %}
+
+{% block mainContent %}
+    {% for event in events %}
+
+        {% if loop.length > 1 %}
+            {% if loop.index0 == 1 %}
+                <div class="row">
+                {{ include('AtotrukisMainBundle:Includes:mainEvent.html.twig') }}
+            {% endif %}
+            {% if loop.index0 == 2 %}
+                <div class="col-md-4">
+                    {{ include('AtotrukisMainBundle:Includes:mainEvent2.html.twig') }}
+                </div>
+                </div>
+                <hr>
+            {% endif %}
+        {% else %}
+            <div class="row">
+                {{ include('AtotrukisMainBundle:Includes:mainEvent.html.twig') }}
+            </div>
+            <hr>
+        {% endif %}
+
+        {% if loop.index0 > 2 %}
+            <div class="col-md-3">{{ include('AtotrukisMainBundle:Includes:event.html.twig') }}</div>
+        {% endif %}
+
+    {% endfor %}
+</div>
+
+{% endblock %}
+{% block recommendationList %}
+    <div class="panel panel-default">
+        <div class="panel-body">
+            <div id="top_recommendation_nav">
+                <ul class="nav nav-pills">
+                    <li class="active"><a href="#" class="menuText">Rekomenduojami tau</a></li>
+                    <li><a href="#" class="menuText">Išbandyk naujovę</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+{% endblock %}

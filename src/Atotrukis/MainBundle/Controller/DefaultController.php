@@ -9,13 +9,7 @@ class DefaultController extends Controller
 
     public function indexAction($max = 10)
     {
-        if ($this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            $user = $this->get('security.context')->getToken()->getUser()->getId();
-            $events = $this->get('homePageService')->getBestEvents($user);
-        } else {
-            $user = "";
-            $events = $this->get('homePageService')->getEvents($user);
-        }
+        $events = $this->get('homePageService')->getEvents();
 
         if (!$events) {
             //TODO not a solution
@@ -25,33 +19,46 @@ class DefaultController extends Controller
         $startDate = $this->get('dateFormatService')->startDate($events);
         $endDate = $this->get('dateFormatService')->endDate($events);
 
-        $paginator  = $this->get('knp_paginator');
-        $pag = $this->get('homePageService')->
-            paginate($paginator, $this->get('request')->query->get('puslapis', 1), 12, $user);
-        $pagination = $this->get('homePageService')->
-            paginate($paginator, $this->get('request')->query->get('puslapis', 1), $max, $user);
-        if ($pagination->getPaginationData()['current'] > 1) {
-            $pagination = $pag;
-        }
-        $amIAttending = [];
-        $attending = [];
-        foreach ($events as $event) {
-            $eventId = $event->getId();
-            $attending[$eventId] = $this->get('eventService')->getAttending($eventId);
-            if ($this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+        if ($this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $amIAttending = [];
+            $attending = [];
+            foreach ($events as $event) {
+                $eventId = $event->getId();
+                $attending[$eventId] = $this->get('eventService')->getAttending($eventId);
                 $user = $this->get('security.context')->getToken()->getUser()->getId();
                 $amIAttending[$eventId] = $this->get('eventService')->isUserAttendingEvent($eventId, $user);
-            } else {
-                $amIAttending[$eventId] = null;
             }
-        }
+            return $this->render('AtotrukisMainBundle:Default:bestEvents.html.twig', array(
+                'events' => $events,
+                'startDate' => $startDate,
+                'endDate' => $endDate,
+                'attending' => $attending,
+                'userRegistered' => $amIAttending,
+            ));
+        } else {
 
-        return $this->render('AtotrukisMainBundle:Default:index.html.twig', array(
-            'pagination' => $pagination, 'pag' => $pag,
-            'startDate' => $startDate, 'endDate' => $endDate,
-            'attending' => $attending,
-            'userRegistered' => $amIAttending,
-        ));
+            $paginator = $this->get('knp_paginator');
+            $pag = $this->get('homePageService')->
+            paginate($paginator, $this->get('request')->query->get('puslapis', 1), 12);
+            $pagination = $this->get('homePageService')->
+            paginate($paginator, $this->get('request')->query->get('puslapis', 1), $max);
+            if ($pagination->getPaginationData()['current'] > 1) {
+                $pagination = $pag;
+            }
+            $attending = [];
+            foreach ($events as $event) {
+                $eventId = $event->getId();
+                $attending[$eventId] = $this->get('eventService')->getAttending($eventId);
+            }
+
+            return $this->render('AtotrukisMainBundle:Default:index.html.twig', array(
+                'pagination' => $pagination,
+                'pag' => $pag,
+                'startDate' => $startDate,
+                'endDate' => $endDate,
+                'attending' => $attending,
+            ));
+        }
 
     }
 
