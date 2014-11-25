@@ -26,11 +26,6 @@ class City
     protected $priority; //Didziuosius miestus iskelt i virsu
 
     /**
-     * @ORM\OneToMany(targetEntity="Event", mappedBy="city")
-     */
-    protected $eventId;
-
-    /**
      * Get id
      *
      * @return integer 
@@ -63,30 +58,6 @@ class City
         return $this->name;
     }
 
-
-
-    /**
-     * Set eventId
-     *
-     * @param Event $eventId
-     * @return City
-     */
-    public function setEventId(Event $eventId = null)
-    {
-        $this->eventId = $eventId;
-
-        return $this;
-    }
-
-    /**
-     * Get eventId
-     *
-     * @return Event
-     */
-    public function getEventId()
-    {
-        return $this->eventId;
-    }
     /**
      * Constructor
      */

@@ -58,7 +58,7 @@ function initialize() {
             //alert(document.getElementById("createEventForm_map").value);
             //$("#createEventForm_map").val(marker.position);
             //alert(marker.position);
-
+            displayLocation(marker.position.lat(), marker.position.lng());
             //markers = [];
             markers.push(marker);
             bounds.extend(place.geometry.location);
@@ -75,10 +75,33 @@ function initialize() {
         var bounds = map.getBounds();
         searchBox.setBounds(bounds);
 
+
+
+
         //map.setCenter(pt);
 
     });
 }
+function displayLocation(latitude,longitude){
+    var request = new XMLHttpRequest();
+
+    var method = 'GET';
+    var url = 'http://maps.googleapis.com/maps/api/geocode/json?latlng='+latitude+','+longitude+'&sensor=true';
+    var async = true;
+
+    request.open(method, url, async);
+    request.onreadystatechange = function(){
+        if(request.readyState == 4 && request.status == 200){
+            var data = JSON.parse(request.responseText);
+            var address = data.results[0];
+            //document.write(address.formatted_address + address.address_components[2].long_name);
+            document.getElementById("createEventForm_city").value = address.address_components[2].long_name;
+
+        }
+    };
+    request.send();
+};
+
 
 google.maps.event.addDomListener(window, 'load', initialize);
 
