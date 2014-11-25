@@ -58,6 +58,16 @@ leave_event:
     defaults: { _controller: AtotrukisMainBundle:Event:leave }
     methods:  [POST]
 
+attend_event_sml:
+    path:     /attendSml
+    defaults: { _controller: AtotrukisMainBundle:Event:attendSmall }
+    methods:  [POST]
+
+leave_event_sml:
+    path:     /leaveSml
+    defaults: { _controller: AtotrukisMainBundle:Event:leaveSmall }
+    methods:  [POST]
+
 get_news:
     pattern:   /news
     defaults:  { _controller: AtotrukisMainBundle:Event:getNewestEvents }
