@@ -148,6 +148,7 @@
     height: 100%;
     margin-left: -250px;
     overflow-y: auto;
+    overflow-x: hidden;
     background-color: white;
     border-right: solid 1px;
     border-color: #ff7400;
