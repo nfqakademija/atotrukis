@@ -21,12 +21,7 @@
         <div class="eventTitleWrapper">
             <h5  data-toggle="tooltip" data-placement="top" title="{{ event.name }}">{{ event.name }}</h5>
             <div class="row eventInfoSmallRow">
-                <div class="col-md-3 col-md-offset-1 mainEventDataNames">
-                    <small><span class="glyphicon glyphicon-time"></span> Nuo:</small>
-                </div>
-                <div class="col-md-8 mainEventDataValues">
-                    <small>{{ startDate[event.id] }}</small>
-                </div>
+                    <small>Nuo: {{ startDate[event.id] }}</small>
             </div>
         </div>
     </div>
