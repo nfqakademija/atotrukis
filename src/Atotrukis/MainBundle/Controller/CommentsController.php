@@ -50,4 +50,18 @@ class CommentsController extends Controller
         }
         return null;
     }
+
+    /**
+     * @param $eventId
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
+    public function showOnlyCommentsAction($eventId)
+    {
+        $comments = $this->get('commentsService')->getEventComments($eventId);
+        $event = $this->get('eventService')->getEventById($eventId);
+        return $this->render('AtotrukisMainBundle:Comment:showOnlyComments.html.twig', array(
+            'event' => $event,
+            'comments' => $comments,
+        ));
+    }
 }

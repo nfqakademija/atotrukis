@@ -26,8 +26,6 @@ search_results:
     path:     /search
     defaults: { _controller: AtotrukisMainBundle:Event:getSearchResult }
 
-
-
 _show_event:
     path:     renginys/{eventId}
     defaults: { _controller: AtotrukisMainBundle:Default:showEvent }
@@ -71,3 +69,7 @@ get_news:
 comment_form:
     pattern:   /commentForm
     defaults:  { _controller: AtotrukisMainBundle:Comments:createComment }
+
+only_comments:
+    pattern:   /comments/{eventId}
+    defaults:  { _controller: AtotrukisMainBundle:Comments:showOnlyComments }

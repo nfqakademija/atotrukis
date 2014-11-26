@@ -50,7 +50,7 @@
                 </div>
             </div>
             <div class="mainEventRightPos">
-                <button type="button" class="btn-mainEvent btn btn-primary btn-circle"><p>Komentarai<br>(8000)</p><span class="glyphicon glyphicon-chevron-right"></span></button>
+                <a href="{{ path('only_comments', { 'eventId': event.id}) }}"><button type="button" class="btn-mainEvent btn btn-primary btn-circle"><p>Komentarai<br>(8000)</p><span class="glyphicon glyphicon-chevron-right"></span></button></a>
                 <a href="{{ path('_show_event', { 'eventId': event.id }) }}"><button type="button" class="btn-mainEvent btn btn-primary btn-circle"><p>Plačiau</p><span class="glyphicon glyphicon-chevron-right"></span></button></a>
             </div>
         </div>
