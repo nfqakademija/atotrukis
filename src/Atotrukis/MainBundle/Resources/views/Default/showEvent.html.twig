@@ -16,7 +16,7 @@
         <div class="mainEventShow">
             <img src="{{ asset('images/mainEvent2.jpg') }}" alt="alternative">
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
-                <div class="attendmentButton">
+                <div class="attendmentButton showEventAttendButton">
                     {% if userRegistered == 1 %}
                         <button class="btn btn-default attendingButton" type="button">
                             Dalyvauju
