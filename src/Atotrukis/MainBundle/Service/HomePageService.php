@@ -46,17 +46,15 @@ class HomePageService
                 $amIAttending[$eventId] = $this->eventService->isUserAttendingEvent($eventId, $user);
             }
         }
+        if (!$events) {
+            $this->addFlash($this->requestStack->getCurrentRequest(), 'Nėra jokių renginių!', 'danger');
+        }
         return array($amIAttending, $attending);
     }
 
-    public function paginate($paginator, $max)
+    public function addFlash($request, $message, $status)
     {
-        $pagination = $paginator->paginate(
-            $this->getEvents(),
-            $this->requestStack->getCurrentRequest()->query->get('puslapis', 1), /*page number*/
-            $max/*limit per page*/
-        );
-        return $pagination;
+        $request->getSession()->getFlashBag()->add($status, $message);
     }
 
 }

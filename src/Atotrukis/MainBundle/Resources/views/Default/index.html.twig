@@ -5,20 +5,27 @@
         <div class="page-header page-header-index">
             <h3>Pasiūlymai tau</h3>
         </div>
+        {% for label, flashes in app.session.flashbag.all %}
+            {% for flash in flashes %}
+                <div class="alert alert-{{ label }}" style="margin: 0px 15px 15px 15px">
+                    {{ flash }}
+                </div>
+            {% endfor %}
+        {% endfor %}
 {% endblock %}
 
-{% block mainContent %}
-        {% for event in pagination %}
+        {% block mainContent %}
+        {% for event in events %}
 
-            {% if pagination.getPaginationData.totalCount > 1 %}
-                {% if pagination.getPaginationData.firstItemNumber+loop.index0 == 1 %}
+            {% if loop.length > 1 %}
+                {% if loop.index0 == 1 %}
                     <div class="row">
-                        {{ include('AtotrukisMainBundle:Includes:mainEvent.html.twig') }}
+                    {{ include('AtotrukisMainBundle:Includes:mainEvent.html.twig') }}
                 {% endif %}
-                {% if pagination.getPaginationData.firstItemNumber+loop.index0 == 1 %}
-                        <div class="col-md-4">
-                            {{ include('AtotrukisMainBundle:Includes:mainEvent2.html.twig') }}
-                        </div>
+                {% if loop.index0 == 2 %}
+                    <div class="col-md-4">
+                        {{ include('AtotrukisMainBundle:Includes:mainEvent2.html.twig') }}
+                    </div>
                     </div>
                 {% endif %}
             {% else %}
@@ -27,17 +34,12 @@
                 </div>
             {% endif %}
 
-            {% if pagination.getPaginationData.firstItemNumber+loop.index0 > 2 %}
+            {% if loop.index0 > 2 %}
                 <div class="col-md-3">{{ include('AtotrukisMainBundle:Includes:event.html.twig') }}</div>
             {% endif %}
 
         {% endfor %}
     </div>
-        <div class="col-md-12">
-
-            {{ knp_pagination_render(pag) }}
-
-        </div>
 
 {% endblock %}
 {% block recommendationList %}

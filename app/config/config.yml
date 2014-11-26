@@ -107,13 +107,4 @@ hwi_oauth:
             client_id:           "526441800824842"
             client_secret:       "c423cf61474aaec9dd82dc3672ada619"
             scope:               "email, public_profile, user_likes, publish_actions"
-knp_paginator:
-    page_range: 5                      # default page range used in pagination control
-    default_options:
-        page_name: puslapis                # page query parameter name
-        sort_field_name: sort          # sort field query parameter name
-        sort_direction_name: direction # sort direction query parameter name
-        distinct: true                 # ensure distinct results, useful when ORM queries are using GROUP BY statements
-    template:
-        pagination: KnpPaginatorBundle:Pagination:twitter_bootstrap_v3_pagination.html.twig
-        sortable: KnpPaginatorBundle:Pagination:sortable_link.html.twig # sort link template
+
