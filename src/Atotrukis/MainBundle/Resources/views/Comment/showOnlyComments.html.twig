@@ -1,0 +1,15 @@
+{% extends 'AtotrukisMainBundle::layout.html.twig' %}
+{% block topContent %}
+<div class="mainContentWrapper">
+    <div class="page-header">
+        <h3>{{ event.name }}</h3>
+    </div>
+{% endblock %}
+
+{% block mainContent %}
+        {{ render(controller('AtotrukisMainBundle:Comments:createComment', {'eventId': app.request.get('eventId') })) }}
+        <hr>
+        {{ render(controller('AtotrukisMainBundle:Comments:showComments', {'eventId': app.request.get('eventId') })) }}
+        <hr>
+    </div>
+{% endblock %}
