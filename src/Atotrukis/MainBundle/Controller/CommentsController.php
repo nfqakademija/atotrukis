@@ -15,8 +15,9 @@ class CommentsController extends Controller
     {
         $comment = new EventComments();
         $form = $this->createForm('createCommentForm', $comment);
-
-        if ($this->get('commentsService')->createComment($comment, $form, $request, $this->getUser())) {
+        $honeypot = $request->request->get('noComment');
+        $isHoneyPotValid = $this->get('commentsService')->validateHoneyPot($honeypot);
+        if ($isHoneyPotValid && $this->get('commentsService')->createComment($comment, $form, $request, $this->getUser(), $isHoneyPotValid)) {
             return $this->redirect($this->generateUrl('_show_event', array('eventId' => $form['eventId']->getData() )));
         }
         return $this->render('AtotrukisMainBundle:Comment:addComment.html.twig', array(

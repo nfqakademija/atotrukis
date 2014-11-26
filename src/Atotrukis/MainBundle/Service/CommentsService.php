@@ -23,6 +23,18 @@ class CommentsService
     }
 
     /**
+     * checks if honeypot is empty
+     * @param $pot
+     * @return bool
+     */
+    public function validateHoneyPot($pot)
+    {
+        if(!empty($pot)) {
+            return false;
+        }
+        return true;
+    }
+    /**
      * creates comment in event
      * @param $comment
      * @param $form
