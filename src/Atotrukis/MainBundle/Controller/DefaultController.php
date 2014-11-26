@@ -20,14 +20,7 @@ class DefaultController extends Controller
         $endDate = $this->get('dateFormatService')->endDate($events);
 
         if ($this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
-            $amIAttending = [];
-            $attending = [];
-            foreach ($events as $event) {
-                $eventId = $event->getId();
-                $attending[$eventId] = $this->get('eventService')->getAttending($eventId);
-                $user = $this->get('security.context')->getToken()->getUser()->getId();
-                $amIAttending[$eventId] = $this->get('eventService')->isUserAttendingEvent($eventId, $user);
-            }
+            list($amIAttending, $attending) = $this->get('homePageService')->getAttending();
             return $this->render('AtotrukisMainBundle:Default:bestEvents.html.twig', array(
                 'events' => $events,
                 'startDate' => $startDate,
@@ -36,21 +29,15 @@ class DefaultController extends Controller
                 'userRegistered' => $amIAttending,
             ));
         } else {
-
             $paginator = $this->get('knp_paginator');
             $pag = $this->get('homePageService')->
-            paginate($paginator, $this->get('request')->query->get('puslapis', 1), 12);
+                paginate($paginator, 12);
             $pagination = $this->get('homePageService')->
-            paginate($paginator, $this->get('request')->query->get('puslapis', 1), $max);
+                paginate($paginator, $max);
             if ($pagination->getPaginationData()['current'] > 1) {
                 $pagination = $pag;
             }
-            $attending = [];
-            foreach ($events as $event) {
-                $eventId = $event->getId();
-                $attending[$eventId] = $this->get('eventService')->getAttending($eventId);
-            }
-
+            list($amIAttending, $attending) = $this->get('homePageService')->getAttending();
             return $this->render('AtotrukisMainBundle:Default:index.html.twig', array(
                 'pagination' => $pagination,
                 'pag' => $pag,
@@ -76,21 +63,13 @@ class DefaultController extends Controller
 
         $paginator = $this->get('knp_paginator');
         $pag = $this->get('homePageService')->
-        paginate($paginator, $this->get('request')->query->get('puslapis', 1), 12);
+            paginate($paginator, 12);
         $pagination = $this->get('homePageService')->
-        paginate($paginator, $this->get('request')->query->get('puslapis', 1), $max);
+            paginate($paginator, $max);
         if ($pagination->getPaginationData()['current'] > 1) {
             $pagination = $pag;
         }
-        $amIAttending = [];
-        $attending = [];
-        foreach ($events as $event) {
-            $eventId = $event->getId();
-            $attending[$eventId] = $this->get('eventService')->getAttending($eventId);
-            $user = $this->get('security.context')->getToken()->getUser()->getId();
-            $amIAttending[$eventId] = $this->get('eventService')->isUserAttendingEvent($eventId, $user);
-        }
-
+        list($amIAttending, $attending) = $this->get('homePageService')->getAttending();
         return $this->render('AtotrukisMainBundle:Default:index.html.twig', array(
             'pagination' => $pagination,
             'pag' => $pag,
@@ -105,8 +84,7 @@ class DefaultController extends Controller
     public function showEventAction($eventId)
     {
         $attending = $this->get('eventService')->getAttending($eventId);
-
-        // Getting event data from id
+        
         $event = $this->get('doctrine')->getManager()->getRepository('AtotrukisMainBundle:Event')->find($eventId);
 
         if (!$event) {

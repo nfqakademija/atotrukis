@@ -36,7 +36,7 @@ services:
 
     homePageService:
       class: Atotrukis\MainBundle\Service\HomePageService
-      arguments: [ @doctrine.orm.entity_manager ]
+      arguments: [ @doctrine.orm.entity_manager, @request_stack, @security.context, @eventService ]
 
     searchService:
       class: Atotrukis\MainBundle\Service\SearchService

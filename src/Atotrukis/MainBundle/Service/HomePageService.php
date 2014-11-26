@@ -3,15 +3,23 @@
 namespace Atotrukis\MainBundle\Service;
 
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Symfony\Component\Security\Core\SecurityContext;
 
 class HomePageService
 {
 
     protected $entityManager;
+    protected $requestStack;
+    protected $securityContext;
+    protected $eventService;
 
-    public function __construct(EntityManager $entityManager)
+    public function __construct(EntityManager $entityManager, RequestStack $requestStack, SecurityContext $securityContext, EventService $eventService)
     {
         $this->entityManager = $entityManager;
+        $this->requestStack = $requestStack;
+        $this->securityContext = $securityContext;
+        $this->eventService = $eventService;
     }
 
     public function getEvents()
@@ -25,11 +33,27 @@ class HomePageService
         return $queryBuilder->getQuery()->getResult();
     }
 
-    public function paginate($paginator, $request, $max)
+    public function getAttending()
+    {
+        $events = $this->getEvents();
+        $amIAttending = [];
+        $attending = [];
+        foreach ($events as $event) {
+            $eventId = $event->getId();
+            $attending[$eventId] = $this->eventService->getAttending($eventId);
+            if ($this->securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
+                $user = $this->securityContext->getToken()->getUser()->getId();
+                $amIAttending[$eventId] = $this->eventService->isUserAttendingEvent($eventId, $user);
+            }
+        }
+        return array($amIAttending, $attending);
+    }
+
+    public function paginate($paginator, $max)
     {
         $pagination = $paginator->paginate(
             $this->getEvents(),
-            $request, /*page number*/
+            $this->requestStack->getCurrentRequest()->query->get('puslapis', 1), /*page number*/
             $max/*limit per page*/
         );
         return $pagination;
