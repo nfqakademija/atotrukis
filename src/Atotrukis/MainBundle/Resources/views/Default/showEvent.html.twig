@@ -5,13 +5,13 @@
     <link href="{{ asset('stylesheets/showEvent.css') }}" rel="stylesheet">
 {% endblock %}
 {% block topContent %}
-    <div class="page-header">
+<div class="mainContentWrapper">
+    <div class="page-header showEventName">
         <h1 data-toggle="tooltip" data-placement="top" title="{{ event.name }}">{{ event.name }}</h1>
     </div>
 {% endblock %}
 
 {% block mainContent %}
-
     <div class="col-md-6">
         <div class="mainEventShow">
             <img src="{{ asset('images/mainEvent2.jpg') }}" alt="alternative">
@@ -39,27 +39,53 @@
         <div id="map-canvas"></div>
     </div>
     <div class="col-md-6">
-        <button class="btn btn-default" type="button">
-            Dalyvauti
-        </button>
-        <br><br>
-        <div class="row">
-            <div class="col-md-4"><b>Miestas: </b>{{ event.city }}</div>
-            <div class="col-md-4"><b>Pradžia: </b>{{ event.startDate|date('Y-m-d H:i') }}</div>
+
+        <div class="showEventInfo">
+            <div class="row">
+                <div class="col-md-3 showEventDataLeft">
+                    <span class="glyphicon glyphicon-time"></span> Nuo:
+                </div>
+                <div class="col-md-9 showEventDataRight">
+                    <span>{{ event.startDate|date("Y-m-d h:i") }}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 showEventDataLeft">
+                    <span class="glyphicon glyphicon-time"></span> Iki:
+                </div>
+                <div class="col-md-9 showEventDataRight">
+                    <span>{{ event.endDate|date("Y-m-d h:i") }}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 showEventDataLeft">
+                    <span class="glyphicon glyphicon-home"></span> Miestas:
+                </div>
+                <div class="col-md-9 showEventDataRight">
+                    <span>{{ event.city }}</span>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-md-3 showEventDataLeft">
+                    <span class="glyphicon glyphicon-user"></span> Dalyvių:
+                </div>
+                <div class="col-md-9 showEventDataRight">
+                    <span>{{ attending }}</span>
+                </div>
+            </div>
         </div>
-        <div class="row">
-            <div class="col-md-4"><b>Dalyvių: </b>{{ attending }}</div>
-            <div class="col-md-4"><b>Pabaiga: </b>{{ event.endDate|date('Y-m-d H:i') }}</div>
-        </div><br>
+        <hr>
         <b>Aprašymas:</b><br>
-        {{ event.description }}<br>
+        <div class="showEventDescription">
+            {{ event.description }}
+        </div>
         <hr>
         <h3>Komentarai</h3>
         {{ render(controller('AtotrukisMainBundle:Comments:createComment', {'eventId': app.request.get('eventId') })) }}
         <hr>
         {{ render(controller('AtotrukisMainBundle:Comments:showComments', {'eventId': app.request.get('eventId') })) }}
     </div>
-
+</div>
 {% endblock %}
 
 {% block javascripts %}

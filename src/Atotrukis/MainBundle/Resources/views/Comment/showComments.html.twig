@@ -1,6 +1,6 @@
 {% for comment in comments %}
     <h5>{{ comment.user }}  <small>{{ comment.date.date|date('Y-m-d H:i') }}</small></h5>
-    <p>{{ comment.comment }}</p>
+    <p class="commentText">{{ comment.comment }}</p>
     <hr>
 
 {% endfor %}
