@@ -47,6 +47,6 @@ class CommentsController extends Controller
                 ->findOneById($this->get('security.context')->getToken()->getUser()->getId());
             return $user;
         }
-        return false;
+        return null;
     }
 }

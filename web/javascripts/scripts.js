@@ -64,4 +64,4 @@ $(".attendmentButton").on("click", ".attendingButton-sml", function(){
         }
     });
 });
-$('[data-toggle="tooltip"]').tooltip()
+$('[data-toggle="tooltip"]').tooltip();
