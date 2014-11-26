@@ -1,12 +1,12 @@
-<form action='{{ path('fos_user_registration_register') }}' {{ form_enctype(form) }} novalidate="novalidate" method="POST">
+<div class="loginFormWrapper mainContentWrapper">
+<form role="form" action='{{ path('fos_user_registration_register') }}' {{ form_enctype(form) }} novalidate="novalidate" method="POST">
     <fieldset>
-
 
         <div class="form-group">
             {{ form_label(form.name, 'Vardas:', {'attr': {'class': 'control-label'} }) }}
             <div class="input-group">
                 {{  form_errors(form.name) }}
-                {{ form_widget(form.name, {'attr' : {'class' : 'span12' }}) }}
+                {{ form_widget(form.name, {'attr' : {'class' : 'span12 form-control' }}) }}
             </div>
         </div>
 
@@ -14,7 +14,7 @@
             {{ form_label(form.email, 'El. paštas:', {'attr': {'class': 'control-label'}}) }}
             <div class="input-group">
                 {{  form_errors(form.email) }}
-                {{ form_widget(form.email, {'attr' : {'class' : 'span12' }}) }}
+                {{ form_widget(form.email, {'attr' : {'class' : 'span12 form-control' }}) }}
             </div>
         </div>
 
@@ -22,7 +22,7 @@
             {{ form_label(form.plainPassword.first, 'Slaptažodis:', {'attr': {'class': 'control-label'}}) }}
             <div class="input-group">
                 {{  form_errors(form.plainPassword.first) }}
-                {{ form_widget(form.plainPassword.first, {'attr' : {'class' : 'span12' }}) }}
+                {{ form_widget(form.plainPassword.first, {'attr' : {'class' : 'span12 form-control' }}) }}
             </div>
         </div>
 
@@ -30,7 +30,7 @@
             {{ form_label(form.plainPassword.second, 'Pakartoti Slaptažodį:', {'attr': {'class': 'control-label'}}) }}
             <div class="input-group">
                 {{  form_errors(form.plainPassword.second) }}
-                {{ form_widget(form.plainPassword.second, {'attr' : {'class' : 'span12' }}) }}
+                {{ form_widget(form.plainPassword.second, {'attr' : {'class' : 'span12 form-control' }}) }}
             </div>
         </div>
 
@@ -41,7 +41,7 @@
         </div>
 
         {{ form_rest(form) }}
+        <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook'}) }}">Prisijungti su Facebook</a>
     </fieldset>
 </form>
-<a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook'}) }}">Prisijungti su Facebook</a>
-
+</div>
