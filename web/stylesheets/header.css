@@ -29,14 +29,14 @@
 }
 .mainEvent2{
     width:100%;
-    height: 200px;
+    height: 240px;
     background-color: #dfdfdf;
 }
 .mainEvent2 img{
     margin-left: auto;
     margin-right: auto;
     display: block;
-    max-height: 200px;
+    height: 240px;
 }
 .mainEvent2:hover{
     -webkit-filter: grayscale(1);
@@ -116,9 +116,7 @@
     width: 400px;
 }
 #top_recommendation_nav{
-    margin-left: auto;
-    margin-right: auto;
-    width: 30%;
+
 }
 /*!
  * Start Bootstrap - Simple Sidebar HTML Template (http://startbootstrap.com)
@@ -148,6 +146,7 @@
     height: 100%;
     margin-left: -250px;
     overflow-y: auto;
+    overflow-x: hidden;
     background-color: white;
     border-right: solid 1px;
     border-color: #ff7400;

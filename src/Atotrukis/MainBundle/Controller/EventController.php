@@ -165,6 +165,42 @@ class EventController extends Controller
             return new JsonResponse(array('data' => $newButton));
         }
     }
+    //ajax request method for attending small buttons
+    //TODO: need to move logic to service
+    public function attendSmallAction(Request $request){
+        $eventId = $request->request->get('eventId', 'error');
+        $event = $this->getDoctrine()->getRepository('AtotrukisMainBundle:Event')
+            ->findOneById($eventId);
+        $user = $this->getUser();
+        $this->get('eventService')->attendEvent($event, $user);
+        $newUrl = $url = $this->generateUrl('leave_event_sml');
+        $newButton = '
+            <button class="btn btn-default attendingButton-sml eventBtn" type="button">
+                <span class="glyphicon glyphicon-ok"></span>
+                <span class="eventID">'.$eventId.'</span>
+                <span class="jsRoute">'.$newUrl.'</span></button>';
+        if ($request->isXMLHttpRequest()) {
+            return new JsonResponse(array('data' => $newButton));
+        }
+    }
+
+    //ajax request method for leaving small buttons
+    //TODO: need to move logic to service
+    public function leaveSmallAction(Request $request)
+    {
+        $eventId = $request->request->get('eventId', 'error');
+        $user = $this->getUser();
+        $this->get('eventService')->leaveEvent($eventId, $user->getId());
+        $newUrl = $this->generateUrl('attend_event_sml');
+        $newButton = '
+            <button class="btn btn-default attendButton-sml eventBtn" type="button">
+                <span class="glyphicon glyphicon-thumbs-up"></span>
+                <span class="eventID">'.$eventId.'</span>
+                <span class="jsRoute">'.$newUrl.'</span></button>';
+        if ($request->isXMLHttpRequest()) {
+            return new JsonResponse(array('data' => $newButton));
+        }
+    }
 
     /**
      * gets newest events

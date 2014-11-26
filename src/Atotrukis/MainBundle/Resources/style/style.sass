@@ -10,8 +10,8 @@
 .btn-circle
   border-radius: 50%
 .btn-mainEvent
-  width: 110px
-  height: 110px
+  width: 100px
+  height: 100px
   margin-bottom: 10px
   border-color: #ff7400
 .btn-primary:hover
@@ -20,6 +20,9 @@
 .panel-default
   border-color: #ff7400
   border-radius: 0px
+  border-right-width: 0px
+  border-left-width: 0px
+  margin-bottom: 0px
 .separator
   color: #ff7400
 .menuText
@@ -43,8 +46,14 @@
 
 .nav-pills li
   display: inline
+.nav-pills
+  display: block
+  margin-left: auto
+  margin-right: auto
+  width: 310px
 .contentWrapper
   margin-left: 10px
+  margin-bottom: -10px
 hr
   background-color: #ff7400
   color: #ff7400
@@ -92,3 +101,79 @@ hr
   width: 25em
   overflow: hidden
   text-overflow: ellipsis
+.eventBtn
+  position: absolute
+  z-index: 2000
+  display: block
+.mainEventWrapper
+  border-width: 1px
+  border-style: solid
+  width: 680px
+  float: right
+  margin-right: -20px
+.mainEventLeftPos
+  float: left
+  width: 300px
+  margin-left: 10px
+.mainEventRightPos
+  float: left
+  width: 110px
+  margin-left: 10px
+  margin-top: 10px
+.mainEvent
+  width: 250px
+  float: left
+  margin-left: 10px
+.mainEventLeftPos .row
+  margin-left: 0px
+.mainEventDataNames
+  padding-right: 0px
+.mainEventDescription
+  margin-top: 5px
+.restricteDescription
+  height: 80px
+  overflow: hidden
+  text-overflow: ellipsis
+.restricteDescription
+  overflow: hidden
+  position: relative
+  max-height: 80px
+.restricteDescription::after
+  content: '...'
+  position: absolute
+  bottom: 0
+  right: 0
+  width: 2em
+  text-align: center
+  background-color: #fff
+.mainEventWrapper
+  margin-left: 10px
+  border-width: 0px 1px 1px 0px
+  border-style: solid
+  border-color: #ff7400
+  -webkit-border-radius: 50px
+  -webkit-border-bottom-left-radius: 0
+  -moz-border-radius: 50px
+  -moz-border-radius-bottomleft: 0
+  border-radius: 50px
+  border-bottom-left-radius: 0
+  margin-bottom: 10px
+  -webkit-box-shadow: 15px 0px 30px -15px rgba(255,116,0,1)
+  -moz-box-shadow: 15px 0px 30px -15px rgba(255,116,0,1)
+  box-shadow: 15px 0px 30px -15px rgba(255,116,0,1)
+.page-header
+  margin-left: auto
+  margin-right: auto
+  width: 180px
+  text-align: center
+  border-width: 0px 1px 1px 1px
+  border-style: solid
+  border-color: #ff7400
+  -webkit-border-bottom-right-radius: 50px
+  -webkit-border-bottom-left-radius: 50px
+  -moz-border-radius-bottomright: 50px
+  -moz-border-radius-bottomleft: 50px
+  border-bottom-right-radius: 50px
+  border-bottom-left-radius: 50px
+.page-header h3
+  margin-top: 0px

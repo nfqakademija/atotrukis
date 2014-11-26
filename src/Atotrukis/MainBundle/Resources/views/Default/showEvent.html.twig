@@ -6,7 +6,7 @@
 {% endblock %}
 {% block topContent %}
     <div class="page-header">
-        <h1>{{ event.name }}</h1>
+        <h1 data-toggle="tooltip" data-placement="top" title="{{ event.name }}">{{ event.name }}</h1>
     </div>
 {% endblock %}
 
@@ -15,27 +15,34 @@
     <div class="col-md-6">
         <div class="mainEventShow">
             <img src="{{ asset('images/mainEvent2.jpg') }}" alt="alternative">
-            {% if userRegistered == 1 %}
-                <button class="btn btn-default attendingButton" type="button">
-                    Dalyvauju
-                    <span class="glyphicon glyphicon-ok"></span>
-                    <span class="eventID">{{ event.id }}</span>
-                    <span class="jsRoute">{{ path("leave_event")}}</span>
-                </button>
-            {% else %}
-                <button class="btn btn-default attendButton" type="button">
-                    Dalyvausiu
-                    <span class="glyphicon glyphicon-thumbs-up"></span>
-                    <span class="eventID">{{ event.id }}</span>
-                    <span class="jsRoute">{{ path("attend_event")}}</span>
-                </button>
+            {% if is_granted('IS_AUTHENTICATED_FULLY') %}
+                <div class="attendmentButton">
+                    {% if userRegistered == 1 %}
+                        <button class="btn btn-default attendingButton" type="button">
+                            Dalyvauju
+                            <span class="glyphicon glyphicon-ok"></span>
+                            <span class="eventID">{{ event.id }}</span>
+                            <span class="jsRoute">{{ path("leave_event")}}</span>
+                        </button>
+                    {% else %}
+                        <button class="btn btn-default attendButton" type="button">
+                            Dalyvausiu
+                            <span class="glyphicon glyphicon-thumbs-up"></span>
+                            <span class="eventID">{{ event.id }}</span>
+                            <span class="jsRoute">{{ path("attend_event")}}</span>
+                        </button>
+                    {% endif %}
+                </div>
             {% endif %}
         </div><br>
         <b>Vieta žemėlapyje:</b><br><br>
         <div id="map-canvas"></div>
     </div>
     <div class="col-md-6">
-        <button class="btn btn-default" type="button">Dalyvauti</button><br><br>
+        <button class="btn btn-default" type="button">
+            Dalyvauti
+        </button>
+        <br><br>
         <div class="row">
             <div class="col-md-4"><b>Miestas: </b>{{ event.city }}</div>
             <div class="col-md-4"><b>Pradžia: </b>{{ event.startDate|date('Y-m-d H:i') }}</div>
@@ -58,6 +65,7 @@
 {% block javascripts %}
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
+    <script src="/javascripts/scripts.js"></script>
     <script src="{{ asset('javascripts/showMap.js') }}"></script>
     <script>
         onload=initialize{{ event.map }};

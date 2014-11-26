@@ -1,7 +1,6 @@
 <div class="col-md-8">
-    <div class="row">
-        <div class="col-md-6">
-            <div class="mainEventWrapper">
+    <div class="mainEventWrapper">
+        <div class="row">
                 <div class="mainEvent">
                     <img src="{{ asset('images/mainEvent2.jpg') }}" alt="alternative">
                     {% if is_granted('IS_AUTHENTICATED_FULLY') %}
@@ -24,36 +23,36 @@
                         </div>
                     {% endif %}
                 </div>
-            </div>
-        </div>
-        <div class="col-md-4">
-            <div class="row">
-                <h4 class="mainEventName">{{ event.name }}</h4>
-            </div>
-            <div class="row">
-                <div class="col-md-5">
-                    <p><b>Miestas:</b> {{ event.city }}</p>
+            <div class="mainEventLeftPos">
+                <div class="row">
+                    <h4 data-toggle="tooltip" data-placement="top" title="{{ event.name }}" class="mainEventName">
+                        {{ event.name }}
+                    </h4>
+                    <div class="row">
+                        <div class="col-md-4 mainEventDataNames">
+                           <small><span class="glyphicon glyphicon-time"></span> Nuo:</small><br>
+                           <small><span class="glyphicon glyphicon-time"></span> Iki:</small><br>
+                           <small><span class="glyphicon glyphicon-home"></span> Miestas:</small><br>
+                           <small><span class="glyphicon glyphicon-user"></span> Dalyvių:</small>
+                        </div>
+                        <div class="col-md-8">
+                            <small>{{ startDate[event.id] }}</small><br>
+                            <small>{{ endDate[event.id] }}</small><br>
+                            <small>{{ event.city }}</small><br>
+                            <small>{{ attending[event.id] }}</small>
+                        </div>
+                    </div>
+
                 </div>
-                <div class="col-md-7">
-                    <p><b>Pradžia:</b><br> {{ startDate[event.id] }}</p>
+                <div class="row mainEventDescription">
+                    <b>Aprašymas:</b>
+                    <p class="restricteDescription">{{ event.description }}</p>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-md-5">
-                    <p><b>Dalyvių:</b> {{ attending[event.id] }}</p>
-                </div>
-                <div class="col-md-7">
-                    <p><b>Pabaiga:</b><br> {{ endDate[event.id] }}</p>
-                </div>
+            <div class="mainEventRightPos">
+                <button type="button" class="btn-mainEvent btn btn-primary btn-circle"><p>Komentarai<br>(8000)</p><span class="glyphicon glyphicon-chevron-right"></span></button>
+                <a href="{{ path('_show_event', { 'eventId': event.id }) }}"><button type="button" class="btn-mainEvent btn btn-primary btn-circle"><p>Plačiau</p><span class="glyphicon glyphicon-chevron-right"></span></button></a>
             </div>
-            <div class="row">
-                <b>Aprašymas:</b>
-                <p>{{ event.description }}</p>
-            </div>
-        </div>
-        <div class="col-md-2">
-            <button type="button" class="btn-mainEvent btn btn-primary btn-circle"><p>Komentarai<br>(8000)</p><span class="glyphicon glyphicon-chevron-right"></span></button>
-            <a href="{{ path('_show_event', { 'eventId': event.id }) }}"><button type="button" class="btn-mainEvent btn btn-primary btn-circle"><p>Skaityti toliau</p><span class="glyphicon glyphicon-chevron-right"></span></button></a>
         </div>
     </div>
 </div>

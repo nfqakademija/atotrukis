@@ -3,7 +3,7 @@
 {% block topContent %}
 <div class="contentWrapper">
     <div class="page-header">
-        <h4>Pasiūlymai tau</h4>
+        <h3>Pasiūlymai tau</h3>
     </div>
 
 {% endblock %}
@@ -21,13 +21,11 @@
                     {{ include('AtotrukisMainBundle:Includes:mainEvent2.html.twig') }}
                 </div>
                 </div>
-                <hr>
             {% endif %}
         {% else %}
             <div class="row">
                 {{ include('AtotrukisMainBundle:Includes:mainEvent.html.twig') }}
             </div>
-            <hr>
         {% endif %}
 
         {% if loop.index0 > 2 %}
