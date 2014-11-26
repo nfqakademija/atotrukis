@@ -20,8 +20,18 @@
             <img src="{{ asset('images/mainEvent2.jpg') }}" alt="alternative">
             <div class="mainEvent2TitleWrapper">
                     <h5  data-toggle="tooltip" data-placement="top" title="{{ event.name }}">{{ event.name }}</h5>
-                    <p>Pradžia: {{ startDate[event.id] }}</p>
-                    <p>Pabaiga: {{ endDate[event.id] }}</p>
+                <div class="eventInfoSmall">
+                    <div class="row">
+                        <div class="col-md-3 mainEventDataNames">
+                            <small><span class="glyphicon glyphicon-time"></span> Nuo:</small><br>
+                            <small><span class="glyphicon glyphicon-time"></span> Iki:</small><br>
+                        </div>
+                        <div class="col-md-9 mainEventDataValues">
+                            <small>{{ startDate[event.id] }}</small><br>
+                            <small>{{ endDate[event.id] }}</small><br>
+                        </div>
+                    </div>
+                </div>
             </div>
     </div>
 </a>

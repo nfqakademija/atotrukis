@@ -7,14 +7,21 @@
 }
 .mainEvent{
     width: 300px;
-    height: 200px;
-    background-color: #dfdfdf;
+    height: 225px;
+    overflow:hidden;
+    background-color: #ff7400;
+    -webkit-border-top-left-radius: 50px;
+    -webkit-border-bottom-left-radius: 50px;
+    -moz-border-radius-topleft: 50px;
+    -moz-border-radius-bottomleft: 50px;
+    border-top-left-radius: 50px;
+    border-bottom-left-radius: 50px;
 }
 .mainEvent img{
     margin-left: auto;
     margin-right: auto;
     display: block;
-    max-height: 200px;
+    width: 250px;
 }
 .mainEventShow{
     width: 400px;
@@ -30,26 +37,29 @@
 .mainEvent2{
     width:100%;
     height: 240px;
-    background-color: #dfdfdf;
+    background-color: #ff7400;
+    position:relative;
 }
 .mainEvent2 img{
     margin-left: auto;
     margin-right: auto;
     display: block;
-    height: 240px;
+    width: 100%;
 }
 .mainEvent2:hover{
     -webkit-filter: grayscale(1);
     filter: grayscale(1);
 }
 .mainEvent2TitleWrapper{
-    width:92%;
-    height: 80px;
+    width:100%;
+    height: 85px;
     background-color:black;
-    margin-top:-80px;
-    position: absolute;
+    margin-top:-85px;
+    padding-top: 5px;
     opacity: 0.8;
     filter: alpha(opacity=80); /* For IE8 and earlier */
+    position: absolute;
+    bottom: 0px;
 }
 .mainEvent2TitleWrapper h5{
     margin-left: 20px;
@@ -74,28 +84,35 @@
     height: 150px;
     background-color: #dfdfdf;
     margin-bottom:20px;
+    overflow: hidden;
+    position: relative;
+    border-radius: 50px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: #ff7400;
 }
 .event img{
     margin-left: auto;
     margin-right: auto;
     display: block;
-    max-height: 150px;
+    width: 100%;
 }
 .event:hover{
     -webkit-filter: grayscale(1);
     filter: grayscale(1);
 }
 .eventTitleWrapper{
-    width:89%;
+    width:100%;
     height: 50px;
     background-color:black;
     margin-top:-50px;
     position: absolute;
+    bottom: 0px;
     opacity: 0.8;
     filter: alpha(opacity=80); /* For IE8 and earlier */
 }
 .eventTitleWrapper h5{
-    margin-left: 20px;
+    margin-left: 40px;
     color:white;
     font-weight: bold;
     margin-bottom: 0px;
