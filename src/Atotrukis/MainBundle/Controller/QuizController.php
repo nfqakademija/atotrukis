@@ -67,21 +67,7 @@ class QuizController extends Controller
             ->getForm();
         
         if ($request->getMethod() == 'POST') {
-            $form->handleRequest($request);
-            $usr = $this->getDoctrine()->getRepository('AtotrukisMainBundle:User')
-                ->findOneById($this->get('security.context')->getToken()->getUser());
-            foreach ($form->getData() as $data) {
-                if (is_array($data)) {
-                    foreach ($data as $k) {
-                        $this->get('userKeywordService')->addKeyword($k, $usr);
-                    }
-                } else {
-                    $keywords = preg_split("/[, ]/", $data);
-                    foreach ($keywords as $keys) {
-                        $this->get('userKeywordService')->addKeyword($keys, $usr);
-                    }
-                }
-            }
+            $this->get('quizService')->addKeywords($form, $request);
             $flashBag = $this->get('session')->getFlashBag();
             foreach ($flashBag->keys() as $type) {
                 $flashBag->set($type, array());

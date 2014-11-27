@@ -58,3 +58,7 @@ services:
             arguments: [@router]
             tags:
                 - { name: kernel.event_subscriber }
+
+    quizService:
+        class: Atotrukis\MainBundle\Service\QuizService
+        arguments: [ @doctrine.orm.entity_manager, @security.context, @userKeywordService ]
