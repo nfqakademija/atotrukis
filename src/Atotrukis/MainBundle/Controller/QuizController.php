@@ -7,6 +7,13 @@ use Symfony\Component\HttpFoundation\Request;
 
 class QuizController extends Controller
 {
+    /**
+     * creates quiz form and if user submits it when redirects to home page, removes unnecessary
+     * FosUserBundle flashBag and creates new flashBag with success message
+     *
+     * @param Request $request
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function quizAction(Request $request)
     {
         $form = $this->createFormBuilder()

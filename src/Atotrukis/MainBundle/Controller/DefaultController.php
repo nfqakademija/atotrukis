@@ -7,6 +7,11 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class DefaultController extends Controller
 {
 
+    /**
+     * shows all events
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function indexAction()
     {
         $events = $this->get('homePageService')->getEvents();
@@ -25,6 +30,12 @@ class DefaultController extends Controller
     }
 
 
+    /**
+     * shows details of event
+     *
+     * @param $eventId
+     * @return \Symfony\Component\HttpFoundation\Response
+     */
     public function showEventAction($eventId)
     {
         $attending = $this->get('eventService')->getAttending($eventId);

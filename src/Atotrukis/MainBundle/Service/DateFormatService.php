@@ -4,6 +4,13 @@ namespace Atotrukis\MainBundle\Service;
 
 class DateFormatService
 {
+    /**
+     * changes date format to lithuanian, shows only month and day if event takes place this year,
+     * shows what event takes place today or tomorrow if it is true
+     *
+     * @param $time
+     * @return string of date which format was changed
+     */
     public function changeDate($time)
     {
         $date = "";
@@ -25,6 +32,12 @@ class DateFormatService
         return $date;
     }
 
+    /**
+     * assigns changed event start date format for each event
+     *
+     * @param $events
+     * @return array of start dates
+     */
     public function startDate($events)
     {
         $date = [];
@@ -34,6 +47,12 @@ class DateFormatService
         return $date;
     }
 
+    /**
+     * assigns changed event end date format for each event
+     *
+     * @param $events
+     * @return array of end dates
+     */
     public function endDate($events)
     {
         $date = [];

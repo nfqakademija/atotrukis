@@ -12,6 +12,11 @@ class QuizService
     protected $securityContext;
     protected $userKeywordService;
 
+    /**
+     * @param EntityManager $entityManager
+     * @param SecurityContext $securityContext
+     * @param UserKeywordService $userKeywordService
+     */
     public function __construct(EntityManager $entityManager, SecurityContext $securityContext, UserKeywordService $userKeywordService)
     {
         $this->entityManager = $entityManager;
@@ -19,6 +24,12 @@ class QuizService
         $this->userKeywordService = $userKeywordService;
     }
 
+    /**
+     * adds keywords to database from quiz
+     *
+     * @param $form
+     * @param $request
+     */
     public function addKeywords($form, $request)
     {
         $form->handleRequest($request);
