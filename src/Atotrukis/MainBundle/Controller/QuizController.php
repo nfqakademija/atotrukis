@@ -15,7 +15,7 @@ class QuizController extends Controller
                 'required'  => false,
                 'choices' => array(
                     array('rokas' => 'Rokas'),
-                    array('elektroninė muzika' => 'Elektroninė muzika'),
+                    array('elektroninė' => 'Elektroninė muzika'),
                     array('pop' => 'Pop'),
                     array('repas' => 'Repas')
                 ),
@@ -24,24 +24,24 @@ class QuizController extends Controller
             ))
             ->add('t1', 'textarea', array(
                 'attr' => array('class' => 'col-md-12', 'style' => 'width: 100%'),
-                'label' => 'Įveskite savo mėgstamus nepaminėtus žanrus, atskirtus kableliais:',
+                'label' => 'Įveskite savo mėgstamus nepaminėtus žanrus:',
                 'required'  => false,
             ))
             ->add('q2', 'choice', array(
-                'label' => 'Sporto šakos, į kurių varžybas norėtum nueiti',
+                'label' => 'Sporto šakos, į kurių varžybas ar kitus renginius norėtum nueiti',
                 'required'  => false,
                 'choices' => array(
                     array('krepšinis' => 'Krepšinis'),
                     array('futbolas' => 'Futbolas'),
                     array('tinklinis' => 'Tinklinis'),
-                    array('ledo ritulys' => 'Ledo ritulys')
+                    array('ritulys' => 'Ledo ritulys')
                 ),
                 'expanded' => true,
                 'multiple' => true,
             ))
             ->add('t2', 'textarea', array(
                 'attr' => array('class' => 'col-md-12', 'style' => 'width: 100%'),
-                'label' => 'Įveskite kitas savo mėgstamas sporto šakas, atskirtas kableliais:',
+                'label' => 'Įveskite kitas savo mėgstamas sporto šakas:',
                 'required'  => false,
             ))
             ->add('q3', 'choice', array(
@@ -58,7 +58,7 @@ class QuizController extends Controller
             ))
             ->add('t3', 'textarea', array(
                 'attr' => array('class' => 'col-md-12', 'style' => 'width: 100%'),
-                'label' => 'Įveskite kitas renginių rūšis, įkurius norėtumėt nueiti, atskirtus kableliais:',
+                'label' => 'Įveskite kitas renginių rūšis:',
                 'required'  => false
             ))
             ->add('save', 'submit', array(

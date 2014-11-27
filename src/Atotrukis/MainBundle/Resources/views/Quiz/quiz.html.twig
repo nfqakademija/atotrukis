@@ -63,7 +63,7 @@
                 <button type="button" class="previous btn btn-default">
                     <span class="glyphicon glyphicon-chevron-left"></span>
                 </button>
-            {{ form_widget(form.save) }}
+                {{ form_widget(form.save) }}
             </div>
         </div>
 
@@ -74,20 +74,6 @@
 
 {% block javascripts %}
 
-    <script>
-        var current, next, previous;
-        $(".next").click(function() {
-            current = $(this).parent().parent();
-            next = $(this).parent().parent().next();
-            next.show();
-            current.hide();
-        });
-        $(".previous").click(function() {
-            current = $(this).parent().parent();
-            previous = $(this).parent().parent().prev();
-            previous.show();
-            current.hide();
-        });
-    </script>
+    <script src="{{ asset('javascripts/quiz.js') }}"></script>
 
 {% endblock %}

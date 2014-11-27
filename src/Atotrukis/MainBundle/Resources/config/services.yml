@@ -52,3 +52,9 @@ services:
         arguments: [ @router ]
         tags:
             - { name: form.type, alias: searchForm }
+
+    Atotrukis_user.registration:
+            class: Atotrukis\MainBundle\EventListener\RegistrationListener
+            arguments: [@router]
+            tags:
+                - { name: kernel.event_subscriber }
