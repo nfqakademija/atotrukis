@@ -44,7 +44,7 @@ class SearchService
                 if ($user) {
                     $this->processKeywords($form, $user);
                 }
-                $searchResult = $this->getResults($this->eventService->explodeKeywords($form));
+                $searchResult = $this->getResults($this->eventService->explodeKeywords($form['keywords']->getData()));
                 return array('formIsValid' => true, 'searchResult' => $searchResult);
             }
         }
@@ -58,7 +58,7 @@ class SearchService
      */
     public function processKeywords($form, $user)
     {
-        $keywords = $this->eventService->explodeKeywords($form);
+        $keywords = $this->eventService->explodeKeywords($form['keywords']->getData());
 
         foreach ($keywords as $keyword) {
             $keyword = trim($keyword);
@@ -98,7 +98,9 @@ class SearchService
             } else {
                 $matched = 0;
             }
-            array_push($searchResult, array("event" => $event, "matched" => $matched));
+            if ($matched > 0) {
+                array_push($searchResult, array("event" => $event, "matched" => $matched));
+            }
         }
 
         return $this->sortArray($searchResult);

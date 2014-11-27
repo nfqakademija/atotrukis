@@ -184,7 +184,10 @@ class EventService
      */
     public function processNewKeywords($form, $event)
     {
-        $keywords = $this->explodeKeywords($form);
+        $keywords = array_merge(
+            $this->explodeKeywords($form['keywords']->getData()),
+            $this->explodeKeywords($form['name']->getData())
+        );
 
         foreach ($keywords as $keyword) {
             $keyword = trim($keyword);
@@ -271,12 +274,11 @@ class EventService
 
     /**
      * @param $form \Atotrukis\MainBundle\Form\Type\CreateEventFormType
-     * @return array of keywords (String)
+     * @return array of keywords
      */
-    public function explodeKeywords($form)
+    public function explodeKeywords($keywordsString)
     {
-        $keywords = $form['keywords']->getData();
-        $keywords = explode(" ", $keywords);
+        $keywords = explode(" ", $keywordsString);
         return $keywords;
     }
 
