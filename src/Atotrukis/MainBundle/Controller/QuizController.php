@@ -82,8 +82,12 @@ class QuizController extends Controller
                     }
                 }
             }
-            return $this->render('AtotrukisMainBundle:Quiz:result.html.twig', array(
-            ));
+            $flashBag = $this->get('session')->getFlashBag();
+            foreach ($flashBag->keys() as $type) {
+                $flashBag->set($type, array());
+            }
+            $request->getSession()->getFlashBag()->add('success', 'Ačiū, kad atsakėte į klausimus. Dabar jau galite peržiūrėti jums rekomenduojamus renginius.');
+            return $this->redirect($this->generateUrl('atotrukis_hello_world'));
         }
 
         return $this->render('AtotrukisMainBundle:Quiz:quiz.html.twig', array(
