@@ -7,24 +7,34 @@
     <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
 {% endif %}
 <div class="loginFormWrapper mainContentWrapper">
-<form role="form" action="{{ path("fos_user_security_check") }}" method="post">
-    <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
-    <div class="form-group">
-        <label for="username">El. paštas</label>
-        <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
-    </div>
-    <div class="form-group">
-    <label for="password">Slaptažodis</label>
-    <input class="form-control" type="password" id="password" name="_password" required="required" />
-    </div>
-    <div class="form-group">
-    <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
-    <label for="remember_me">Prisiminti mane</label>
-    </div>
-    <input class="btn btn-default" type="submit" id="_submit" name="_submit" value="Prisijungti" />
+    <div class="row">
+        <div class="col-md-6 border-right">
+            <form role="form" action="{{ path("fos_user_security_check") }}" method="post" class="pull-right">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token }}" />
+                <div class="form-group">
+                    <label for="username">El. paštas</label>
+                    <input class="form-control" type="text" id="username" name="_username" value="{{ last_username }}" required="required" />
+                </div>
+                <div class="form-group">
+                <label for="password">Slaptažodis</label>
+                <input class="form-control" type="password" id="password" name="_password" required="required" />
+                </div>
+                <div class="form-group">
+                <input type="checkbox" id="remember_me" name="_remember_me" value="on" />
+                <label for="remember_me">Prisiminti mane</label>
+                </div>
+                <input class="btn btn-default" type="submit" id="_submit" name="_submit" value="Prisijungti" />
 
-</form>
-
-<a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook'}) }}">Prisijungti su Facebook</a>
+            </form>
+        </div>
+        <div class="col-md-6">
+            <label for="facebook">Prisijunkite su Facebook</label>
+            <div class="btn-group-vertical social-btns">
+                <div class="btn btn-default  fb-btn">
+                    <a href="{{ path('hwi_oauth_service_redirect', {'service': 'facebook'}) }}"><span class="fb-icon"></span>Facebook</a>
+                </div>
+            </div>
+        </div>
     </div>
+</div>
 {% endblock fos_user_content %}
