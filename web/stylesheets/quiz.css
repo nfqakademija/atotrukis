@@ -10,12 +10,13 @@
 #quizForm .label {
     font-size: 16px;
     color: #000;
+    white-space: normal;
+    text-align: left;
 }
 #quizForm .tlabel {
     width: 100%;
 }
 #quizForm {
-    margin-top: 50px;
     border-radius: 3px;
     box-sizing: border-box;
     box-shadow: 0 0 15px 1px rgba(0, 0, 0, 0.4);

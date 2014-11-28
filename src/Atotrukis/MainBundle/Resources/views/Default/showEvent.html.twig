@@ -12,7 +12,7 @@
 {% endblock %}
 
 {% block mainContent %}
-    <div class="col-md-6">
+    <div class="col-xs-12 col-md-6">
         <div class="mainEventShow">
             <img src="{{ asset('images/mainEvent2.jpg') }}" alt="alternative">
             {% if is_granted('IS_AUTHENTICATED_FULLY') %}
@@ -38,9 +38,9 @@
         <b>Vieta žemėlapyje:</b><br><br>
         <div id="map-canvas"></div>
     </div>
-    <div class="col-md-6">
+    <div class="col-xs-12 col-md-6">
 
-        <div class="showEventInfo">
+        <div class="showEventInfo col-xs-12">
             <div class="row">
                 <div class="col-md-3 showEventDataLeft">
                     <span class="glyphicon glyphicon-time"></span> Nuo:

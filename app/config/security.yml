@@ -72,4 +72,3 @@ security:
         - { path: ^/resetting, role: IS_AUTHENTICATED_ANONYMOUSLY }
         - { path: ^/admin/, role: ROLE_ADMIN }
         - { path: ^/apklausa, role: ROLE_USER }
-        - { path: ^/visi-renginiai, role: ROLE_USER }
