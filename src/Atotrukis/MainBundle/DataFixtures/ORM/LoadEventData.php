@@ -18,7 +18,7 @@ class LoadUserData extends AbstractFixture implements OrderedFixtureInterface
                 "Šokiai", "Paroda", "Karaoke", "Protmūšis", "Spektaklis", "Paskaita", "Festivalis", "Muzikos vakaras");
             $descriptions = array("Labai įdomus renginys", "Linksmas laiko praleidimas", "Įdomu", "Smagu",
                 "Čia toks labai įdomus renginys, kuriame pamatysite visokių įdomių dalykų, kurie bus labai linksmi.");
-            $cities = $entiTyManager->getRepository('AtotrukisMainBundle:City')->findAll();
+            $cities = array("Kaunas", "Vilnius", "Alytus", "Klaipėda", "Šiauliai", "Panevėžys");
             $dates = array("2014-11-30 23:00", "2014-12-18 18:00", "2014-12-04 22:00", "2015-01-01 15:00",
                 "2014-12-07 18:00", "2014-12-09 19:00", "2014-12-11 16:00", "2014-12-13 19:00", "2014-12-20 14:00");
             $event = new Event();
