@@ -42,6 +42,14 @@ admin_user_block:
   path:       /admin/vartotojai/block/{id}
   defaults: { _controller: AtotrukisMainBundle:Admin:blockUser}
 
+admin_manage_events:
+  path:     /admin/valdyti-renginius
+  defaults: { _controller: AtotrukisMainBundle:Admin:manageEvents }
+
+admin_update_events:
+  path:     /admin/update
+  defaults: { _controller: AtotrukisMainBundle:Admin:updateEvents }
+
 attend_event:
     path:     /attend
     defaults: { _controller: AtotrukisMainBundle:Event:attend }
