@@ -3,6 +3,7 @@ namespace Atotrukis\MainBundle\Service;
 
 use Atotrukis\MainBundle\Entity\UserInterest;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\DependencyInjection\ContainerInterface;
 
 class UserKeywordService
 {
@@ -10,13 +11,16 @@ class UserKeywordService
      * @var EntityManager
      */
     protected $entityManager;
+    protected $container;
 
     /**
      * @param EntityManager $entityManager
+     * @param ContainerInterface $container
      */
-    public function __construct(EntityManager $entityManager)
+    public function __construct(EntityManager $entityManager, ContainerInterface $container)
     {
         $this->entityManager = $entityManager;
+        $this->container = $container;
     }
 
     /**
@@ -159,5 +163,30 @@ class UserKeywordService
             $count = $key->getValue();
         }
         return $count;
+    }
+
+    /**
+     * adds keywords to database from quiz
+     *
+     * @param $form
+     * @param $request
+     */
+    public function addKeywordsFromQuiz($form, $request)
+    {
+        $form->handleRequest($request);
+        $usr = $this->entityManager->getRepository('AtotrukisMainBundle:User')
+            ->findOneById($this->container->get('security.context')->getToken()->getUser());
+        foreach ($form->getData() as $data) {
+            if (is_array($data)) {
+                foreach ($data as $k) {
+                    $this->addKeyword($k, $usr);
+                }
+            } else {
+                $keywords = preg_split("/[, ]/", $data);
+                foreach ($keywords as $keys) {
+                    $this->addKeyword($keys, $usr);
+                }
+            }
+        }
     }
 }

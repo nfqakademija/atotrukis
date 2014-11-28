@@ -23,7 +23,7 @@ services:
 
     userKeywordService:
         class: Atotrukis\MainBundle\Service\UserKeywordService
-        arguments: [ @doctrine.orm.entity_manager ]
+        arguments: [ @doctrine.orm.entity_manager, @service_container ]
 
     my_user_provider:
         class: "%my_user_provider.class%"
@@ -59,6 +59,3 @@ services:
             tags:
                 - { name: kernel.event_subscriber }
 
-    quizService:
-        class: Atotrukis\MainBundle\Service\QuizService
-        arguments: [ @doctrine.orm.entity_manager, @security.context, @userKeywordService ]

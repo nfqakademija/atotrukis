@@ -74,7 +74,7 @@ class QuizController extends Controller
             ->getForm();
         
         if ($request->getMethod() == 'POST') {
-            $this->get('quizService')->addKeywords($form, $request);
+            $this->get('userKeywordService')->addKeywordsFromQuiz($form, $request);
             $flashBag = $this->get('session')->getFlashBag();
             foreach ($flashBag->keys() as $type) {
                 $flashBag->set($type, array());
