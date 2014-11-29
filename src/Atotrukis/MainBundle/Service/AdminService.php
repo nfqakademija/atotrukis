@@ -88,7 +88,8 @@ class AdminService
             $name = preg_split($regexDate, $entry->title)[0];
 
             $startDate = $this->getStartDate($regexDate, $entry, $regexStartTime);
-            $endDate = $startDate;
+
+            $endDate = $this->getEndDate($regexDate, $entry, $regexStartTime);
 
             $description = $this->getDescription($entry);
             $this->getDescription($entry);
@@ -132,6 +133,38 @@ class AdminService
             $dateTime = $startYmd;
         }
         return new \DateTime($dateTime);
+    }
+
+    private function getEndDate($regexDate, $entry, $regexStartTime)
+    {
+        preg_match($regexDate, $entry->title, $regStartOriginal);
+        $exploded = explode($regStartOriginal[0], $entry->title);
+        $endDate = $regStartOriginal[0];
+        $dateWithDashes = $exploded[1];
+        if (preg_match($regexDate, $dateWithDashes, $matchEndDate)) {
+            $endDate = date('Y-m-d', strtotime($matchEndDate[0]));
+        } else {
+            $r = explode("Renginio trukmė:", $entry->description);
+            if (isset($r[1])) {
+                $r = explode("Pertraukos", $r[1]);
+                if (isset($r[1])) {
+                    $duration = str_replace('~', '', $r[0]);
+                    if (preg_match('/\d{1}:\d{2}/', $duration, $mathDuration)) {
+                        if (preg_match($regexStartTime, $entry->title, $regTimeMatch)) {
+                            $start = strtotime($regTimeMatch[0]);
+                            $dur = strtotime($mathDuration[0]);
+                            $today = strtotime("TODAY");
+                            $m_time1 = $start - $today;
+                            $m_time2 = $dur - $today;
+                            $endTime = $m_time1 + $m_time2 + $today;
+                            $endTimeDate = date('H:i', $endTime);
+                            $endDate = $regStartOriginal[0] . " " . $endTimeDate;
+                        }
+                    }
+                }
+            }
+        }
+        return new \DateTime($endDate);
     }
 
     private function getDescription($entry)
