@@ -92,7 +92,7 @@ class AdminService
             $endDate = $startDate;
 
             // Getting description
-            $description = strip_tags($entry->description);
+            $description = $entry->description;
 
             if ($title && $startDate && $endDate && $description) {
                 $this->addToDatabase($title, $startDate, $endDate, $description);
