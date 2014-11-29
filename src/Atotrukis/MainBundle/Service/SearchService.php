@@ -44,7 +44,7 @@ class SearchService
                 if ($user) {
                     $this->processKeywords($form, $user);
                 }
-                $searchResult = $this->getResults($this->eventService->explodeKeywords($form['keywords']->getData()));
+                $searchResult = $this->getResults($this->eventService->explodeKeywords($form['keywords']->getData()), $request);
                 return array('formIsValid' => true, 'searchResult' => $searchResult);
             }
         }
@@ -71,17 +71,16 @@ class SearchService
      * matching percent to the array and sorts it by matching percent DESC
      *
      * @param $searchKeywords
-     * @return array of $searchResult ($event and $matched)
+     * @param $request
+     * @return mixed
      */
-    public function getResults($searchKeywords)
+    public function getResults($searchKeywords, $request)
     {
         $events = $this->entityManager->getRepository('AtotrukisMainBundle:Event')->findAll();
         $searchKeywords = array_unique($searchKeywords);
         $searchResult = array();
         foreach ($events as $event) {
-            $eventKeywords = $this->entityManager
-                ->getRepository('AtotrukisMainBundle:EventKeywords')
-                ->findByEventId($event);
+            $eventKeywords = $this->getEventKeywordsByEvent($event);
             $eventKeywordCount = sizeof($eventKeywords);
             $matchedKeywordsCount = 0;
             foreach ($eventKeywords as $eventKeyword) {
@@ -102,7 +101,9 @@ class SearchService
                 array_push($searchResult, array("event" => $event, "matched" => $matched));
             }
         }
-
+        if (empty($searchResult)) {
+            $this->eventService->addFlash($request, 'Pagal jūsų paieškos žodžius renginių nerasta', 'warning');
+        }
         return $this->sortArray($searchResult);
     }
 
@@ -120,5 +121,17 @@ class SearchService
         }
         array_multisort($matchedPercent, SORT_DESC, $searchResult);
         return $searchResult;
+    }
+
+    /**
+     * @param $event
+     * @return mixed
+     */
+    public function getEventKeywordsByEvent($event)
+    {
+        $eventKeywords = $this->entityManager
+            ->getRepository('AtotrukisMainBundle:EventKeywords')
+            ->findByEventId($event);
+        return $eventKeywords;
     }
 }

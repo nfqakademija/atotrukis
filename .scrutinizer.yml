@@ -23,6 +23,8 @@ filter:
         - app/*
         - src/**/spec/*
         - src/**/DataFixtures/**/*
+        - web/javascripts/bootstrap.js
+        - web/javascripts/bootstrap/*
 
 changetracking:
     bug_patterns: ["\bfix(?:es|ed)?\b"]
