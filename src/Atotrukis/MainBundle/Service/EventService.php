@@ -312,8 +312,6 @@ class EventService
             ->getRepository('AtotrukisMainBundle:UserAttending')
             ->findByUserId($user);
 
-//        $event = $this->getEventById($eventId->getEventId());
-
         if (!$event) {
             $this->addFlash($request, 'Kol kas jus nedalyvaujate jokiuose renginiuose.', 'warning');
         }
