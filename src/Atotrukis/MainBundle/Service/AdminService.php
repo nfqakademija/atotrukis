@@ -96,7 +96,7 @@ class AdminService
 
             $keywords = explode(" ", $entry->title);
 
-            if ($name) {
+            if (!$this->isEventNameExists($name)) {
                 $this->addToDatabase($name, $startDate, $endDate, $description, $keywords);
             }
         }
@@ -135,6 +135,14 @@ class AdminService
         return new \DateTime($dateTime);
     }
 
+    /**
+     * gets end date
+     *
+     * @param $regexDate
+     * @param $entry
+     * @param $regexStartTime
+     * @return \DateTime
+     */
     private function getEndDate($regexDate, $entry, $regexStartTime)
     {
         preg_match($regexDate, $entry->title, $regStartOriginal);
@@ -176,6 +184,17 @@ class AdminService
         } else {
             return $exploded[0];
         }
+    }
+
+    private function isEventNameExists($name)
+    {
+        $events = $this->entityManager->getRepository('AtotrukisMainBundle:Event')->findAll();
+        foreach ($events as $event) {
+            if ($event->getName() == $name) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**
