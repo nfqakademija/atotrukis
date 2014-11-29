@@ -1,9 +1,7 @@
 {% extends "AtotrukisMainBundle::layout.html.twig" %}
 
 {% block title %}{{ event.name }}{% endblock %}
-{% block stylesheets %}
-    <link href="{{ asset('stylesheets/showEvent.css') }}" rel="stylesheet">
-{% endblock %}
+
 {% block topContent %}
 <div class="mainContentWrapper">
     <div class="page-header showEventName">
@@ -92,7 +90,6 @@
 
     <script src="https://maps.googleapis.com/maps/api/js?v=3.exp&libraries=places"></script>
     <script src="/javascripts/scripts.js"></script>
-    <script src="{{ asset('javascripts/showMap.js') }}"></script>
     <script>
         onload=initialize{{ event.map }};
     </script>
