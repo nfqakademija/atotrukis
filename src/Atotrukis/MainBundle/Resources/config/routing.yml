@@ -18,6 +18,10 @@ my_events:
     path:     /mano-renginiai
     defaults: { _controller: AtotrukisMainBundle:Event:readUserEvents }
 
+attending_to:
+    path:     /as-dalyvauju
+    defaults: { _controller: AtotrukisMainBundle:Event:readUserAttending }
+
 one_event:
     path:     /mano-renginiai/renginys/{id}
     defaults: { _controller: AtotrukisMainBundle:Event:getEvent }

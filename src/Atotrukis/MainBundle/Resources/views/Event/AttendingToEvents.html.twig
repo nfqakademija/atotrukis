@@ -1,0 +1,46 @@
+{% extends 'AtotrukisMainBundle::layout.html.twig' %}
+{% block content %}
+    {% for label, flashes in app.session.flashbag.all %}
+        {% for flash in flashes %}
+            <div class="alert alert-{{ label }}" style="margin: 0px 15px 15px 15px">
+                {{ flash }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+    {% for event in events %}
+        <div class="row">
+            <div class="col-md-5">
+                <div class="mainEventWrapper">
+                    <div class="mainEvent">
+                        <img src="{{ asset('images/mainEvent2.jpg') }}" alt="alternative">
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-7">
+                <div class="row">
+                    <h4  data-toggle="tooltip" data-placement="top" title="{{ event.name }}" class="myEventName">{{ event.name }}</h4>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <p><b>Miestas:</b> {{ event.city }}</p>
+                    </div>
+                    <div class="col-md-7">
+                        <p><b>Pradžia:</b>{{ event.startDate|date('Y-m-d H:i:s') }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-5">
+                        <p><b>Dalyvių:</b> 9,999,999</p>
+                    </div>
+                    <div class="col-md-7">
+                        <p><b>Pabaiga:</b> {{ event.endDate|date('Y-m-d H:i:s') }}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <b>Aprašymas:</b>
+                    <p>{{ event.description }}</p>
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+{% endblock %}
