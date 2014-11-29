@@ -57,7 +57,7 @@ class CommentsService
     {
         $comments = $this->entityManager
             ->getRepository('AtotrukisMainBundle:EventComments')
-            ->findByEventI($eventID);
+            ->findBy(array('eventId' => $eventID));
         if (!$comments) {
             $this->addFlash($request, 'Jūs neturite jokių renginių!', 'danger');
         }

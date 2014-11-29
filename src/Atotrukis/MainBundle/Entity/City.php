@@ -59,37 +59,6 @@ class City
     }
 
     /**
-     * Constructor
-     */
-    public function __construct()
-    {
-        $this->eventId = new ArrayCollection();
-    }
-
-    /**
-     * Add eventId
-     *
-     * @param Event $eventId
-     * @return City
-     */
-    public function addEventId(Event $eventId)
-    {
-        $this->eventId[] = $eventId;
-
-        return $this;
-    }
-
-    /**
-     * Remove eventId
-     *
-     * @param Event $eventId
-     */
-    public function removeEventId(Event $eventId)
-    {
-        $this->eventId->removeElement($eventId);
-    }
-
-    /**
      * Set priority
      *
      * @param integer $priority
