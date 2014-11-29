@@ -46,7 +46,7 @@ class EventService
 
         $event = $this->entityManager
             ->getRepository('AtotrukisMainBundle:Event')
-            ->findByCreatedBy($user);
+            ->findBy(array('createdBy' => $user));
         if (!$event) {
             $this->addFlash($request, 'Jūs neturite jokių renginių!', 'danger');
         }
@@ -64,7 +64,7 @@ class EventService
     {
         $this->checkEventOwner('edit', $eventId, $user);
 
-        $event = $this->entityManager->getRepository('AtotrukisMainBundle:Event')->findOneById($eventId);
+        $event = $this->getEventById($eventId);
         if (!$event) {
             $this->addFlash($request, 'Renginys nerastas!', 'danger');
         }
@@ -83,7 +83,7 @@ class EventService
      */
     public function updateUserEvent($eventId, $user)
     {
-        $event = $this->entityManager->getRepository('AtotrukisMainBundle:Event')->findOneById($eventId);
+        $event = $this->getEventById($eventId);
         self::checkEventOwner('edit', $eventId, $user);
 
         $event->setName($event->getName());
@@ -103,7 +103,7 @@ class EventService
      */
     public function checkEventOwner($action, $eventId, $user)
     {
-        $event = $this->entityManager->getRepository('AtotrukisMainBundle:Event')->findOneById($eventId);
+        $event = $this->getEventById($eventId);
 
         if ($event->getCreatedBy() != $user) {
             throw $this->createAccessDeniedException(
@@ -171,7 +171,7 @@ class EventService
     {
         $oldKeywords = $this->entityManager
             ->getRepository('AtotrukisMainBundle:EventKeywords')
-            ->findByEventId($eventId);
+            ->findBy(array('eventId' => $eventId));
 
         foreach ($oldKeywords as $oldKeyword) {
             $this->entityManager->remove($oldKeyword);
@@ -302,8 +302,9 @@ class EventService
 
     public function getEventById($eventId)
     {
-        $event = $this->entityManager->getRepository('AtotrukisMainBundle:Event')
-            ->findOneById($eventId);
+        $event = $this->entityManager
+            ->getRepository('AtotrukisMainBundle:Event')
+            ->findOneBy(array('id' => $eventId));
         return $event;
     }
 
