@@ -85,9 +85,7 @@ class UserKeywordService
         $rate = 0;
         foreach ($eventKeywords as $eventKey => $eventValue) {
             $userKey = $this->getKeyword($userId, $eventKey);
-            if (!$userKey) {
-
-            } else {
+            if ($userKey) {
                 $userAllKeyValues = $this->getAllKeywordsValueCount($userId);
                 $userKeyValue = $userKey->getValue() / $userAllKeyValues;
                 if (!$this->checkIfKeywordExpired($userKey, $userId)) {
@@ -95,7 +93,6 @@ class UserKeywordService
                 } else {
                     $rate = $rate + $userKeyValue / ($this->checkIfKeywordExpired($userKey, $userId) / 60);
                 }
-
             }
         }
         return $rate;
