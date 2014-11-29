@@ -85,14 +85,13 @@ class AdminService
     {
         foreach($x->channel->item as $entry) {
 
-            // Getting title
-            $splittedName = preg_split($regexDate, $entry->title);
-            $name = $splittedName[0];
+            $name = preg_split($regexDate, $entry->title)[0];
 
             $startDate = $this->getStartDate($regexDate, $entry, $regexStartTime);
             $endDate = $startDate;
 
             $description = $this->getDescription($entry);
+            $this->getDescription($entry);
 
             $keywords = explode(" ", $entry->title);
 
@@ -138,9 +137,12 @@ class AdminService
     private function getDescription($entry)
     {
         $exploded = explode("Durys atidaromos", $entry->description);
-        $exploded2 = $exploded[0];
-        $exploded3 = explode("Renginio organizatorius prisiima", $exploded2);
-        return $exploded3[0];
+        if (preg_match('#<span style=\"(.*)\">(.*?)</span>#', $exploded[0], $match)) {
+            $withoutColored = preg_replace('#<span style=\"(.*)\">(.*?)</span>#', '', $exploded[0]);
+            return $withoutColored;
+        } else {
+            return $exploded[0];
+        }
     }
 
     /**
