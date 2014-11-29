@@ -110,8 +110,16 @@ class EventController extends Controller
         return $this->render('AtotrukisMainBundle:Event:searchEvents.html.twig', array(
             'search' => $form->createView(),
         ));
+    }
 
-
+    public function readUserAttendingAction(Request $request) {
+        $userAttending = $this->get('eventService')->readUserAttendingEvents($this->getUser(), $request);
+        return $this->render(
+            'AtotrukisMainBundle:Event:AttendingToEvents.html.twig',
+            array(
+                'events' => $userAttending,
+            )
+        );
     }
 
     /**
