@@ -70,7 +70,7 @@ class CommentsService
         $entityManager = $this->entityManager;
         if ($form->isValid()) {
             if ($request->isMethod('POST')) {
-                $this->setEventValues($form, $comment, $user, $entityManager);
+                $this->setEventValues($form, $comment, $user);
 
                 $entityManager->flush();
 

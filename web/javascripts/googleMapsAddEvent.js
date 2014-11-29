@@ -1,7 +1,3 @@
-// This example adds a search box to a map, using the Google Place Autocomplete
-// feature. People can enter geographical searches. The search box will return a
-// pick list containing a mix of places and predicted search terms.
-
 function initialize() {
 
     var markers = [];
@@ -28,7 +24,7 @@ function initialize() {
     google.maps.event.addListener(searchBox, 'places_changed', function() {
         var places = searchBox.getPlaces();
 
-        if (places.length == 0) {
+        if (places.length === 0) {
             return;
         }
         for (var i = 0, marker; marker = markers[i]; i++) {
@@ -100,7 +96,7 @@ function displayLocation(latitude,longitude){
         }
     };
     request.send();
-};
+}
 
 
 google.maps.event.addDomListener(window, 'load', initialize);

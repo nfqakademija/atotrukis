@@ -44,11 +44,6 @@ class User extends BaseUser
      */
     protected $attendingTo;
 
-    public function __construct()
-    {
-        parent::__construct();
-    }
-
     /**
      * Get id
      *

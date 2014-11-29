@@ -128,9 +128,9 @@ class EventService
         if ($form->isValid()) {
             if ($request->isMethod('POST')) {
 
-                $this->setEventValues($form, $event, $user, $entityManager);
-                $this->removeOldKeywords($event, $entityManager);
-                $this->processNewKeywords($form, $event, $entityManager);
+                $this->setEventValues($form, $event, $user);
+                $this->removeOldKeywords($event);
+                $this->processNewKeywords($form, $event);
 
                 $entityManager->flush();
 
