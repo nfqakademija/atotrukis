@@ -92,8 +92,7 @@ class AdminService
             $startDate = $this->getStartDate($regexDate, $entry, $regexStartTime);
             $endDate = $startDate;
 
-            // Getting description
-            $description = $entry->description;
+            $description = $this->getDescription($entry);
 
             $keywords = explode(" ", $entry->title);
 
@@ -113,8 +112,6 @@ class AdminService
     private function getStartDateYmd($regexDate, $entry)
     {
         preg_match($regexDate, $entry->title, $regDateMatch);
-//        $explodedStartDate = explode('.', $regDateMatch[1]);
-//        $startYmd = $explodedStartDate[2] . "-" . $explodedStartDate[1] . "-" . $explodedStartDate[0];
         $startYmd = date('Y-m-d', strtotime($regDateMatch[1]));
         return $startYmd;
     }
@@ -136,6 +133,14 @@ class AdminService
             $dateTime = $startYmd;
         }
         return new \DateTime($dateTime);
+    }
+
+    private function getDescription($entry)
+    {
+        $exploded = explode("Durys atidaromos", $entry->description);
+        $exploded2 = $exploded[0];
+        $exploded3 = explode("Renginio organizatorius prisiima", $exploded2);
+        return $exploded3[0];
     }
 
     /**
