@@ -2,19 +2,25 @@
 
 namespace Atotrukis\MainBundle\Service;
 
+use Atotrukis\MainBundle\Entity\EventKeywords;
 use Doctrine\ORM\EntityManager;
+use Symfony\Component\DependencyInjection\ContainerInterface;
+use Atotrukis\MainBundle\Entity\Event;
 
 class AdminService
 {
 
     protected $entityManager;
+    protected $container;
 
     /**
      * @param EntityManager $entityManager
+     * @param ContainerInterface $container
      */
-    public function __construct(EntityManager $entityManager)
+    public function __construct(EntityManager $entityManager, ContainerInterface $container)
     {
         $this->entityManager = $entityManager;
+        $this->container = $container;
     }
 
     /**
@@ -66,5 +72,161 @@ class AdminService
     public function addFlash($request, $message, $status)
     {
         $request->getSession()->getFlashBag()->add($status, $message);
+    }
+
+    /**
+     * gets information from rss feed
+     *
+     * @param $x
+     * @param $regexDate
+     * @param $regexStartTime
+     */
+    public function updateEvents($x, $regexDate, $regexStartTime)
+    {
+        foreach($x->channel->item as $entry) {
+
+            $name = preg_split($regexDate, $entry->title)[0];
+
+            $startDate = $this->getStartDate($regexDate, $entry, $regexStartTime);
+
+            $endDate = $this->getEndDate($regexDate, $entry, $regexStartTime);
+
+            $description = $this->getDescription($entry);
+            $this->getDescription($entry);
+
+            $keywords = explode(" ", $entry->title);
+
+            if (!$this->isEventNameExists($name)) {
+                $this->addToDatabase($name, $startDate, $endDate, $description, $keywords);
+            }
+        }
+    }
+
+    /**
+     * changes date format from dd.mm.yyyy to yyyy.mm.dd
+     *
+     * @param $regexDate
+     * @param $entry
+     * @return string of date in yyyy.mm.dd format
+     */
+    private function getStartDateYmd($regexDate, $entry)
+    {
+        preg_match($regexDate, $entry->title, $regDateMatch);
+        $startYmd = date('Y-m-d', strtotime($regDateMatch[1]));
+        return $startYmd;
+    }
+
+    /**
+     * joins date, hour and minutes to one datetime object
+     *
+     * @param $regexDate
+     * @param $entry
+     * @param $regexStartTime
+     * @return \DateTime of start date
+     */
+    private function getStartDate($regexDate, $entry, $regexStartTime)
+    {
+        $startYmd = $this->getStartDateYmd($regexDate, $entry);
+        if (preg_match($regexStartTime, $entry->title, $regTimeMatch)) {
+            $dateTime = $startYmd . " " . $regTimeMatch[1];
+        } else {
+            $dateTime = $startYmd;
+        }
+        return new \DateTime($dateTime);
+    }
+
+    /**
+     * gets end date
+     *
+     * @param $regexDate
+     * @param $entry
+     * @param $regexStartTime
+     * @return \DateTime
+     */
+    private function getEndDate($regexDate, $entry, $regexStartTime)
+    {
+        preg_match($regexDate, $entry->title, $regStartOriginal);
+        $exploded = explode($regStartOriginal[0], $entry->title);
+        $endDate = $regStartOriginal[0];
+        $dateWithDashes = $exploded[1];
+        if (preg_match($regexDate, $dateWithDashes, $matchEndDate)) {
+            $endDate = date('Y-m-d', strtotime($matchEndDate[0]));
+        } else {
+            $r = explode("Renginio trukmė:", $entry->description);
+            if (isset($r[1])) {
+                $r = explode("Pertraukos", $r[1]);
+                if (isset($r[1])) {
+                    $duration = str_replace('~', '', $r[0]);
+                    if (preg_match('/\d{1}:\d{2}/', $duration, $mathDuration)) {
+                        if (preg_match($regexStartTime, $entry->title, $regTimeMatch)) {
+                            $start = strtotime($regTimeMatch[0]);
+                            $dur = strtotime($mathDuration[0]);
+                            $today = strtotime("TODAY");
+                            $m_time1 = $start - $today;
+                            $m_time2 = $dur - $today;
+                            $endTime = $m_time1 + $m_time2 + $today;
+                            $endTimeDate = date('H:i', $endTime);
+                            $endDate = $regStartOriginal[0] . " " . $endTimeDate;
+                        }
+                    }
+                }
+            }
+        }
+        return new \DateTime($endDate);
+    }
+
+    private function getDescription($entry)
+    {
+        $exploded = explode("Durys atidaromos", $entry->description);
+        if (preg_match('#<span style=\"(.*)\">(.*?)</span>#', $exploded[0], $match)) {
+            $withoutColored = preg_replace('#<span style=\"(.*)\">(.*?)</span>#', '', $exploded[0]);
+            return $withoutColored;
+        } else {
+            return $exploded[0];
+        }
+    }
+
+    private function isEventNameExists($name)
+    {
+        $events = $this->entityManager->getRepository('AtotrukisMainBundle:Event')->findAll();
+        foreach ($events as $event) {
+            if ($event->getName() == $name) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /**
+     * adds new events and their keywords to database
+     *
+     * @param $name
+     * @param $startDate
+     * @param $endDate
+     * @param $description
+     * @param $keywords
+     * @internal param $title
+     */
+    private function addToDatabase($name, $startDate, $endDate, $description, $keywords)
+    {
+        $event = new Event();
+        $event->setName($name);
+        $event->setDescription($description);
+        $event->setStartDate($startDate);
+        $event->setEndDate($endDate);
+        $event->setCity("Kaunas");
+        $event->setMap("(54.8985207, 23.90359650000005)");
+        $user = $this->entityManager->getRepository('AtotrukisMainBundle:User')
+            ->findOneById($this->container->get('security.context')->getToken()->getUser()->getId());
+        $event->setCreatedBy($user);
+        $this->entityManager->persist($event);
+        $this->entityManager->flush();
+        foreach ($keywords as $kwd) {
+            $keyword = new EventKeywords();
+            $keyword->setEventId($event);
+            $keyword->setKeyword($kwd);
+            $this->entityManager->persist($keyword);
+            $this->entityManager->flush();
+        }
     }
 }

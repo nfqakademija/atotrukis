@@ -45,6 +45,10 @@ class DefaultController extends Controller
         if (!$event) {
             throw $this->createNotFoundException();
         }
+
+        $startDate = $this->get('dateFormatService')->changeDate($event->getStartDate());
+        $endDate = $this->get('dateFormatService')->changeDate($event->getEndDate());
+
         if ($this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
             $user = $this->get('security.context')->getToken()->getUser()->getId();
             $amIAttending = $this->get('eventService')->isUserAttendingEvent($eventId, $user);
@@ -52,7 +56,9 @@ class DefaultController extends Controller
             $amIAttending = null;
         }
         return $this->render('AtotrukisMainBundle:Default:showEvent.html.twig', array(
-            'event' => $event, 'attending'=> $attending, 'userRegistered' => $amIAttending,
+            'event' => $event,
+            'attending'=> $attending, 'userRegistered' => $amIAttending,
+            'startDate' => $startDate, 'endDate' => $endDate
         ));
     }
 

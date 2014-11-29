@@ -38,7 +38,9 @@
             </div>
             <div class="row">
                 <b>Aprašymas:</b>
-                <p>{{ event.description }}</p>
+                {% autoescape false %}
+                    <p class="restricteDescription">{{ event.description|striptags() }}</p>
+                {% endautoescape %}
             </div>
         </div>
         <div class="col-md-2">

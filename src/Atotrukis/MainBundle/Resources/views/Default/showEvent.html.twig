@@ -44,7 +44,7 @@
                     <span class="glyphicon glyphicon-time"></span> Nuo:
                 </div>
                 <div class="col-md-9 showEventDataRight">
-                    <span>{{ event.startDate|date("Y-m-d h:i") }}</span>
+                    <span>{{ startDate }}</span>
                 </div>
             </div>
             <div class="row">
@@ -52,7 +52,7 @@
                     <span class="glyphicon glyphicon-time"></span> Iki:
                 </div>
                 <div class="col-md-9 showEventDataRight">
-                    <span>{{ event.endDate|date("Y-m-d h:i") }}</span>
+                    <span>{{ endDate }}</span>
                 </div>
             </div>
             <div class="row">
@@ -75,7 +75,7 @@
         <hr><div class="row col-md-12">&nbsp;</div>
         <b>Aprašymas:</b><br>
         <div class="showEventDescription">
-            {{ event.description }}
+            {{ event.description|raw }}
         </div>
         <hr>
         <h3>Komentarai</h3>
