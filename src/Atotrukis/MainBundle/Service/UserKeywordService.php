@@ -93,7 +93,7 @@ class UserKeywordService
                 } else {
                     $rate = $rate + $userKeyValue / ($this->checkIfKeywordExpired($userKey, $userId) / 60);
                 }
-            }
+            } 
         }
         return $rate;
     }
