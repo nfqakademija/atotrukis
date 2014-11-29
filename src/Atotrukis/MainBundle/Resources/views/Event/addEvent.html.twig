@@ -22,12 +22,21 @@
     {{ form_widget(form.description, { 'attr': {'class': "form-control", 'placeholder': "Aprašymas"} }) }}
 
     {{ form_label(form.startDate, 'Pradžios laikas') }}
-    {{ form_errors(form.startDate) }}
-    {{ form_widget(form.startDate, { 'attr': {'class': "form-control", 'placeholder': "Pradžios laikas"} }) }}
-
+    {{ form_errors(form.startDate) }}<br/>
+    {{ form_widget(form.startDate.date.year, { 'attr': {'class': "form-control datetime", 'placeholder': "Pradžios laikas"} }) }}
+    {{ form_widget(form.startDate.date.month, { 'attr': {'class': "form-control datetime", 'placeholder': "Pradžios laikas"} }) }}
+    {{ form_widget(form.startDate.date.day, { 'attr': {'class': "form-control datetime", 'placeholder': "Pradžios laikas"} }) }}
+    {{ form_widget(form.startDate.time.hour, { 'attr': {'class': "form-control datetime", 'placeholder': "Pradžios laikas"} }) }} :
+    {{ form_widget(form.startDate.time.minute, { 'attr': {'class': "form-control datetime", 'placeholder': "Pradžios laikas"} }) }}
+    <br/>
     {{ form_label(form.endDate, 'Pabaigos laikas') }}
-    {{ form_errors(form.endDate) }}
-    {{ form_widget(form.endDate, { 'attr': {'class': "form-control", 'placeholder': "Pabaigos laikas"} }) }}
+    {{ form_errors(form.endDate) }}<br/>
+    {{ form_widget(form.endDate.date.year, { 'attr': {'class': "form-control datetime", 'placeholder': "Pradžios laikas"} }) }}
+    {{ form_widget(form.endDate.date.month, { 'attr': {'class': "form-control datetime", 'placeholder': "Pradžios laikas"} }) }}
+    {{ form_widget(form.endDate.date.day, { 'attr': {'class': "form-control datetime", 'placeholder': "Pradžios laikas"} }) }}
+    {{ form_widget(form.endDate.time.hour, { 'attr': {'class': "form-control datetime", 'placeholder': "Pradžios laikas"} }) }} :
+    {{ form_widget(form.endDate.time.minute, { 'attr': {'class': "form-control datetime", 'placeholder': "Pradžios laikas"} }) }}
+    <br/>
 
     {{ form_widget(form.map, { 'attr': {'class': "form-control", 'placeholder': "Adresas"} }) }}
 
