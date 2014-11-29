@@ -129,7 +129,7 @@ class EventController extends Controller
     {
         if ($this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
             $user = $this->getDoctrine()->getRepository('AtotrukisMainBundle:User')
-                ->findOneById($this->get('security.context')->getToken()->getUser()->getId());
+                ->findOneBy(array('id' => $this->get('security.context')->getToken()->getUser()->getId()));
             return $user;
         }
         return null;
