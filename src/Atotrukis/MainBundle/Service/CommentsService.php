@@ -59,7 +59,7 @@ class CommentsService
             ->getRepository('AtotrukisMainBundle:EventComments')
             ->findBy(array('eventId' => $eventID));
         if (!$comments) {
-            $this->addFlash($request, 'Jūs neturite jokių renginių!', 'danger');
+            $this->addFlash($request, 'Komentarų dar nėra.', 'danger');
         }
         return $comments;
     }
