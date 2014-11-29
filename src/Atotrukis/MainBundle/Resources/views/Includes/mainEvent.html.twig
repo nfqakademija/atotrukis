@@ -45,7 +45,9 @@
                 </div>
                 <div class="row mainEventDescription">
                     <b>Aprašymas:</b>
-                    <p class="restricteDescription">{{ event.description }}</p>
+                    {% autoescape false %}
+                        <p class="restricteDescription">{{ event.description|striptags() }}</p>
+                    {% endautoescape %}
                 </div>
             </div>
             <div class="mainEventRightPos">

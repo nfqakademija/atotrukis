@@ -2,6 +2,7 @@
 
 namespace Atotrukis\MainBundle\Service;
 
+use Atotrukis\MainBundle\Entity\EventKeywords;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Atotrukis\MainBundle\Entity\Event;
@@ -85,8 +86,8 @@ class AdminService
         foreach($x->channel->item as $entry) {
 
             // Getting title
-            $splittedTitle = preg_split($regexDate, $entry->title);
-            $title = $splittedTitle[0];
+            $splittedName = preg_split($regexDate, $entry->title);
+            $name = $splittedName[0];
 
             $startDate = $this->getStartDate($regexDate, $entry, $regexStartTime);
             $endDate = $startDate;
@@ -94,8 +95,10 @@ class AdminService
             // Getting description
             $description = $entry->description;
 
-            if ($title && $startDate && $endDate && $description) {
-                $this->addToDatabase($title, $startDate, $endDate, $description);
+            $keywords = explode(" ", $entry->title);
+
+            if ($name) {
+                $this->addToDatabase($name, $startDate, $endDate, $description, $keywords);
             }
         }
     }
@@ -110,8 +113,9 @@ class AdminService
     private function getStartDateYmd($regexDate, $entry)
     {
         preg_match($regexDate, $entry->title, $regDateMatch);
-        $explodedStartDate = explode('.', $regDateMatch[1]);
-        $startYmd = $explodedStartDate[2] . "-" . $explodedStartDate[1] . "-" . $explodedStartDate[0];
+//        $explodedStartDate = explode('.', $regDateMatch[1]);
+//        $startYmd = $explodedStartDate[2] . "-" . $explodedStartDate[1] . "-" . $explodedStartDate[0];
+        $startYmd = date('Y-m-d', strtotime($regDateMatch[1]));
         return $startYmd;
     }
 
@@ -135,17 +139,19 @@ class AdminService
     }
 
     /**
-     * adds new events to database
+     * adds new events and their keywords to database
      *
-     * @param $title
+     * @param $name
      * @param $startDate
      * @param $endDate
      * @param $description
+     * @param $keywords
+     * @internal param $title
      */
-    private function addToDatabase($title, $startDate, $endDate, $description)
+    private function addToDatabase($name, $startDate, $endDate, $description, $keywords)
     {
         $event = new Event();
-        $event->setName($title);
+        $event->setName($name);
         $event->setDescription($description);
         $event->setStartDate($startDate);
         $event->setEndDate($endDate);
@@ -156,5 +162,12 @@ class AdminService
         $event->setCreatedBy($user);
         $this->entityManager->persist($event);
         $this->entityManager->flush();
+        foreach ($keywords as $kwd) {
+            $keyword = new EventKeywords();
+            $keyword->setEventId($event);
+            $keyword->setKeyword($kwd);
+            $this->entityManager->persist($keyword);
+            $this->entityManager->flush();
+        }
     }
 }
