@@ -14,13 +14,19 @@ class AdminService
     protected $container;
 
     /**
+     * @param EventService $eventService
      * @param EntityManager $entityManager
      * @param ContainerInterface $container
      */
-    public function __construct(EntityManager $entityManager, ContainerInterface $container)
+    public function __construct(
+        EntityManager $entityManager,
+        ContainerInterface $container,
+        EventService $eventService
+    )
     {
         $this->entityManager = $entityManager;
         $this->container = $container;
+        $this->eventService = $eventService;
     }
 
     /**
@@ -220,13 +226,10 @@ class AdminService
             ->findOneById($this->container->get('security.context')->getToken()->getUser()->getId());
         $event->setCreatedBy($user);
         $this->entityManager->persist($event);
+//        $this->entityManager->flush();
+
+        $this->eventService->trimKeywords($event, $keywords);
+
         $this->entityManager->flush();
-        foreach ($keywords as $kwd) {
-            $keyword = new EventKeywords();
-            $keyword->setEventId($event);
-            $keyword->setKeyword($kwd);
-            $this->entityManager->persist($keyword);
-            $this->entityManager->flush();
-        }
     }
 }
