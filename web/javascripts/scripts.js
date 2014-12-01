@@ -1,3 +1,12 @@
+    $.ajax({
+        type: "POST",
+        url: "/app_dev.php/setCity",
+        data: {},
+        dataType: 'json',
+        success: function (data) {
+            alert(data.data);
+        }
+    });
 $("#menu-toggle").click(function(e) {
     e.preventDefault();
     $("#wrapper").toggleClass("toggled");

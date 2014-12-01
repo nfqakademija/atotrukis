@@ -21,7 +21,8 @@
         "friendsofsymfony/user-bundle": "~2.0@dev",
         "knplabs/knp-paginator-bundle": "~2.4",
         "doctrine/doctrine-fixtures-bundle": "2.2.*",
-        "hwi/oauth-bundle": "0.4.*@dev"
+        "hwi/oauth-bundle": "0.4.*@dev",
+        "maxmind/geoip": "dev-master"
     },
     "require-dev": {
         "sensio/generator-bundle": "~2.3"

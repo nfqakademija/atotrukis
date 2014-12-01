@@ -46,6 +46,9 @@ services:
       class: Atotrukis\MainBundle\Service\CommentsService
       arguments: [@doctrine.orm.entity_manager, @eventService, @templating]
 
+    cityService:
+      class: Atotrukis\MainBundle\Service\CityService
+      arguments: [@doctrine.orm.entity_manager, @templating]
 
     atotrukis_search.form.type.createCommentForm:
         class: Atotrukis\MainBundle\Form\Type\SearchFormType

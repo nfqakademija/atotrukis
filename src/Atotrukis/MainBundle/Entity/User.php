@@ -45,6 +45,27 @@ class User extends BaseUser
     protected $attendingTo;
 
     /**
+     * @ORM\Column(type="string", length=255)
+     */
+    protected $city;
+
+    /**
+     * @return mixed
+     */
+    public function getCity()
+    {
+        return $this->city;
+    }
+
+    /**
+     * @param mixed $city
+     */
+    public function setCity($city)
+    {
+        $this->city = $city;
+    }
+
+    /**
      * Get id
      *
      * @return integer
