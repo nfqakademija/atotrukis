@@ -111,6 +111,7 @@ class UserKeywordService
     {
         $key = $this->entityManager->getRepository("AtotrukisMainBundle:UserInterest")->
         findOneBy(array('keyword' => $keyword, 'userId' => $userID));
+        if ($key == null) return false;
         $lastUpdateDate = $key->getUpdateDate();
         $diffInSeconds = strtotime(date('Y-m-d')) - strtotime($lastUpdateDate);
         $diffInDays = $diffInSeconds / (60 * 60 * 24);

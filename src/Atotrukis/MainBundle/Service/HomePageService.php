@@ -13,6 +13,8 @@ class HomePageService
     protected $requestStack;
     protected $securityContext;
     protected $eventService;
+    protected $userKeywordService;
+    protected $searchService;
 
     /**
      * @param EntityManager $entityManager
@@ -20,12 +22,21 @@ class HomePageService
      * @param SecurityContext $securityContext
      * @param EventService $eventService
      */
-    public function __construct(EntityManager $entityManager, RequestStack $requestStack, SecurityContext $securityContext, EventService $eventService)
+    public function __construct(
+        EntityManager $entityManager,
+        RequestStack $requestStack,
+        SecurityContext $securityContext,
+        EventService $eventService,
+        UserKeywordService $userKeywordService,
+        SearchService $searchService
+    )
     {
         $this->entityManager = $entityManager;
         $this->requestStack = $requestStack;
         $this->securityContext = $securityContext;
         $this->eventService = $eventService;
+        $this->userKeywordService = $userKeywordService;
+        $this->searchService = $searchService;
     }
 
     /**
@@ -38,8 +49,33 @@ class HomePageService
             ->from('AtotrukisMainBundle:Event', 'event')
             ->where('event.endDate >= :today')
             ->setParameter('today', new \DateTime());
-        return $queryBuilder->getQuery()->getResult();
+        $results = $queryBuilder->getQuery()->getResult();
+        foreach($results as $event) {
+            $eventKeywords = $this->searchService->getEventKeywordsByEvent($event->getId());
+            //transform keyword array to appropriate keyword => value
+            $keywordArray = array();
+            foreach ($eventKeywords as $key) {
+                $keyw = $key->getKeyword();
+                $keywordArray[$key->getKeyword()] = 1;
+                $test = 't';
+            }
+            if ($this->securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
+                $user = $this->securityContext->getToken()->getUser()->getId();
+                $rate = $this->userKeywordService->getEventRate($keywordArray, $user);
+                $event->setRate($rate);
+            }
+
+
+        }
+        usort($results, array($this, "cmpEvents"));
+        return $results;
     }
+
+    private function cmpEvents($a, $b)
+    {
+        return strcmp($b->getRate(), $a->getRate());
+    }
+
 
     /**
      * @return array amIAttending of boolean values which shows registered user is attending in event or

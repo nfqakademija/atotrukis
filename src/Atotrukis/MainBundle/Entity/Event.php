@@ -76,6 +76,24 @@ class Event
     protected $city;
 
 
+    private $rate;
+
+    /**
+     * @return mixed
+     */
+    public function getRate()
+    {
+        return $this->rate;
+    }
+
+    /**
+     * @param mixed $rate
+     */
+    public function setRate($rate)
+    {
+        $this->rate = $rate;
+    }
+
     public function __construct()
     {
         $this->createdOn = new \DateTime();
@@ -375,4 +393,5 @@ class Event
     {
         return $this->keywords;
     }
+
 }
