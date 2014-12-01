@@ -96,12 +96,12 @@ class AdminService
                 if (strip_tags($this->getDescription($entry))) {
                     $description = $this->getDescription($entry);
 
-                    $city = $this->getCity($entry);
+                    list($city, $coords) = $this->getCity($entry);
 
-                    if ($city) {
+                    if ($city && $coords) {
                         $keywords = explode(" ", $entry->title);
 
-                        $this->addToDatabase($name, $startDate, $endDate, $description, $city, $keywords);
+                        $this->addToDatabase($name, $startDate, $endDate, $description, $city, $coords, $keywords);
                     }
                 }
             }
@@ -210,10 +210,36 @@ class AdminService
         $crawler = new Crawler($html);
         if ($crawler->filterXPath('//div[@class="info_sidebar_venue_detail"]')) {
             if ($crawler->filterXPath('//div[@class="info_sidebar_venue_detail"]')->getNode(1)) {
-                return $crawler->filterXPath('//div[@class="info_sidebar_venue_detail"]')->getNode(1)->textContent;
+                $city = $crawler->filterXPath('//div[@class="info_sidebar_venue_detail"]')->getNode(1)->textContent;
+                $coords = $this->getCoordinates($crawler, $city);
+                return array($city, $coords);
             }
         }
-        return "";
+        return array("", "");
+    }
+
+    /**
+     * getting google maps coordinates
+     *
+     * @param $crawler
+     * @return string
+     */
+    private function getCoordinates($crawler, $city)
+    {
+        $addr = $crawler->filterXPath('//div[@class="info_sidebar_venue_detail"]')->text() . ", " . $city;
+        $address = urlencode($addr);
+        $url = "http://maps.google.com/maps/api/geocode/json?sensor=false&address=" . $address;
+        $response = file_get_contents($url);
+        $json = json_decode($response,true);
+
+        if ($json['results']) {
+            $lat = $json['results'][0]['geometry']['location']['lat'];
+            $lng = $json['results'][0]['geometry']['location']['lng'];
+
+            return "(" . $lat . ", " . $lng . ")";
+        } else {
+            return "";
+        }
     }
 
     /**
@@ -240,10 +266,12 @@ class AdminService
      * @param $startDate
      * @param $endDate
      * @param $description
+     * @param $city
+     * @param $coords
      * @param $keywords
      * @internal param $title
      */
-    private function addToDatabase($name, $startDate, $endDate, $description, $city, $keywords)
+    private function addToDatabase($name, $startDate, $endDate, $description, $city, $coords, $keywords)
     {
         $event = new Event();
         $event->setName($name);
@@ -251,7 +279,7 @@ class AdminService
         $event->setStartDate($startDate);
         $event->setEndDate($endDate);
         $event->setCity($city);
-        $event->setMap("(54.8985207, 23.90359650000005)");
+        $event->setMap($coords);
         $user = $this->entityManager->getRepository('AtotrukisMainBundle:User')
             ->findOneById($this->container->get('security.context')->getToken()->getUser()->getId());
         $event->setCreatedBy($user);
