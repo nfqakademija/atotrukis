@@ -54,7 +54,7 @@ class AdminController extends Controller
 
         $this->get('adminService')->updateEvents($x, $regexDate, $regexStartTime);
 
-        return $this->redirect($this->generateUrl('admin_manage_events'));
+//        return $this->redirect($this->generateUrl('admin_manage_events'));
     }
 
 }

@@ -4,7 +4,7 @@
         "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
         "This file is @generated automatically"
     ],
-    "hash": "85d61fe59cef72121d3d1bf7f17c27eb",
+    "hash": "05b9b822593dad669660ba43ec9372af",
     "packages": [
         {
             "name": "doctrine/annotations",
@@ -1640,6 +1640,53 @@
                 "minification"
             ],
             "time": "2014-10-15 12:03:38"
+        },
+        {
+            "name": "symfony/finder",
+            "version": "v2.6.0",
+            "target-dir": "Symfony/Component/Finder",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/symfony/Finder.git",
+                "reference": "d574347c652a14cfee0349f744c7880e1d9029fd"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/symfony/Finder/zipball/d574347c652a14cfee0349f744c7880e1d9029fd",
+                "reference": "d574347c652a14cfee0349f744c7880e1d9029fd",
+                "shasum": ""
+            },
+            "require": {
+                "php": ">=5.3.3"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "2.6-dev"
+                }
+            },
+            "autoload": {
+                "psr-0": {
+                    "Symfony\\Component\\Finder\\": ""
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Symfony Community",
+                    "homepage": "http://symfony.com/contributors"
+                },
+                {
+                    "name": "Fabien Potencier",
+                    "email": "fabien@symfony.com"
+                }
+            ],
+            "description": "Symfony Finder Component",
+            "homepage": "http://symfony.com",
+            "time": "2014-11-28 10:00:40"
         },
         {
             "name": "symfony/monolog-bundle",

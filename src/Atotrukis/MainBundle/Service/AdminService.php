@@ -6,6 +6,7 @@ use Atotrukis\MainBundle\Entity\EventKeywords;
 use Doctrine\ORM\EntityManager;
 use Symfony\Component\DependencyInjection\ContainerInterface;
 use Atotrukis\MainBundle\Entity\Event;
+use Symfony\Component\DomCrawler\Crawler;
 
 class AdminService
 {
@@ -87,17 +88,22 @@ class AdminService
 
             $name = preg_split($regexDate, $entry->title)[0];
 
-            $startDate = $this->getStartDate($regexDate, $entry, $regexStartTime);
-
-            $endDate = $this->getEndDate($regexDate, $entry, $regexStartTime);
-
-            $description = $this->getDescription($entry);
-            $this->getDescription($entry);
-
-            $keywords = explode(" ", $entry->title);
-
             if (!$this->isEventNameExists($name)) {
-                $this->addToDatabase($name, $startDate, $endDate, $description, $keywords);
+                $startDate = $this->getStartDate($regexDate, $entry, $regexStartTime);
+
+                $endDate = $this->getEndDate($regexDate, $entry, $regexStartTime);
+
+                if (strip_tags($this->getDescription($entry))) {
+                    $description = $this->getDescription($entry);
+
+                    $city = $this->getCity($entry);
+
+                    if ($city) {
+                        $keywords = explode(" ", $entry->title);
+
+                        $this->addToDatabase($name, $startDate, $endDate, $description, $city, $keywords);
+                    }
+                }
             }
         }
     }
@@ -175,6 +181,12 @@ class AdminService
         return new \DateTime($endDate);
     }
 
+    /**
+     * getting description from rss without red colored text which was in span tag
+     *
+     * @param $entry
+     * @return mixed
+     */
     private function getDescription($entry)
     {
         $exploded = explode("Durys atidaromos", $entry->description);
@@ -186,6 +198,30 @@ class AdminService
         }
     }
 
+    /**
+     * getting city from rss link with crawler
+     *
+     * @param $entry
+     * @return string
+     */
+    private function getCity($entry)
+    {
+        $html = file_get_contents($entry->link);
+        $crawler = new Crawler($html);
+        if ($crawler->filterXPath('//div[@class="info_sidebar_venue_detail"]')) {
+            if ($crawler->filterXPath('//div[@class="info_sidebar_venue_detail"]')->getNode(1)) {
+                return $crawler->filterXPath('//div[@class="info_sidebar_venue_detail"]')->getNode(1)->textContent;
+            }
+        }
+        return "";
+    }
+
+    /**
+     * check if event name exists for getting only unique events
+     *
+     * @param $name
+     * @return bool
+     */
     private function isEventNameExists($name)
     {
         $events = $this->entityManager->getRepository('AtotrukisMainBundle:Event')->findAll();
@@ -207,14 +243,14 @@ class AdminService
      * @param $keywords
      * @internal param $title
      */
-    private function addToDatabase($name, $startDate, $endDate, $description, $keywords)
+    private function addToDatabase($name, $startDate, $endDate, $description, $city, $keywords)
     {
         $event = new Event();
         $event->setName($name);
         $event->setDescription($description);
         $event->setStartDate($startDate);
         $event->setEndDate($endDate);
-        $event->setCity("Kaunas");
+        $event->setCity($city);
         $event->setMap("(54.8985207, 23.90359650000005)");
         $user = $this->entityManager->getRepository('AtotrukisMainBundle:User')
             ->findOneById($this->container->get('security.context')->getToken()->getUser()->getId());
