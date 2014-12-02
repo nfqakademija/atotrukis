@@ -74,6 +74,11 @@ leave_event_sml:
     defaults: { _controller: AtotrukisMainBundle:Event:leaveSmall }
     methods:  [POST]
 
+set_city:
+    pattern:  /setCity
+    defaults: { _controller: AtotrukisMainBundle:City:setCity }
+    methods:  [POST]
+
 get_news:
     pattern:   /news
     defaults:  { _controller: AtotrukisMainBundle:Event:getNewestEvents }
@@ -85,3 +90,4 @@ comment_form:
 only_comments:
     pattern:   /comments/{eventId}
     defaults:  { _controller: AtotrukisMainBundle:Comments:showOnlyComments }
+
