@@ -176,113 +176,15 @@ class UserKeywordService
             ->findOneById($this->container->get('security.context')->getToken()->getUser());
         foreach ($form->getData() as $data) {
             if (is_array($data)) {
-                foreach ($data as $key => $value) {
-                    $this->addKeyword($value, $usr);
-                    if ($value == "rokas" || $value == "elektroninė" || $value == "pop" || $value == "repas") {
-                        $this->addMusicKeywords($usr, $value);
-                    }
-                    if ($value == "krepšinis" || $value == "futbolas" || $value == "tinklinis" || $value == "ritulys") {
-                        $this->addSportKeywords($usr, $value);
-                    }
+                foreach ($data as $k) {
+                    $this->addKeyword($k, $usr);
                 }
             } else {
                 $keywords = preg_split("/[, ]/", $data);
-                $previousValue = null;
-                foreach ($keywords as $key => $value) {
-                    if ($value) {
-                        $this->addKeyword($value, $usr);
-                        if (!$previousValue && $key == 0) {
-                            $this->addAbstractMusicKeywords($usr);
-                        }
-                        if ($previousValue && $key == 0) {
-                            $this->addAbstractSportKeywords($usr);
-                        }
-                        $previousValue = $value;
-                    }
+                foreach ($keywords as $keys) {
+                    $this->addKeyword($keys, $usr);
                 }
             }
-        }
-    }
-
-    /**
-     * adds keywords related with music if user chosen at least one music genre in quiz
-     *
-     * @param $usr
-     */
-    private function addAbstractMusicKeywords($usr)
-    {
-        $keyw = $this->entityManager->getRepository("AtotrukisMainBundle:UserInterest")->
-            findOneBy(array('keyword' => 'muzika', 'userId' => $usr));
-        if (!$keyw) {
-            $this->addKeyword("muzika", $usr);
-            $this->addKeyword("muzikos", $usr);
-            $this->addKeyword("koncertas", $usr);
-        }
-    }
-
-    /**
-     * adds keywords related with sport if user chosen at least one favorite sport in quiz
-     *
-     * @param $usr
-     */
-    private function addAbstractSportKeywords($usr)
-    {
-        $keyw = $this->entityManager->getRepository("AtotrukisMainBundle:UserInterest")->
-            findOneBy(array('keyword' => 'varžybos', 'userId' => $usr));
-        if (!$keyw) {
-            $this->addKeyword("varžybos", $usr);
-            $this->addKeyword("rungtynės", $usr);
-            $this->addKeyword("sportas", $usr);
-            $this->addKeyword("sporto", $usr);
-        }
-    }
-
-    /**
-     * adds similar music keywords by quiz values
-     *
-     * @param $usr
-     * @param $value
-     */
-    private function addMusicKeywords($usr, $value)
-    {
-        $this->addAbstractMusicKeywords($usr);
-        if ($value == "rokas") {
-            $this->addKeyword("rock", $usr);
-            $this->addKeyword("roko", $usr);
-        }
-        if ($value == "elektroninė") {
-            $this->addKeyword("electro", $usr);
-        }
-        if ($value == "pop") {
-            $this->addKeyword("popsas", $usr);
-            $this->addKeyword("populiarioji", $usr);
-        }
-        if ($value == "repas") {
-            $this->addKeyword("repo", $usr);
-        }
-    }
-
-    /**
-     * adds similar sport keywords by quiz values
-     *
-     * @param $usr
-     * @param $value
-     */
-    private function addSportKeywords($usr, $value)
-    {
-        $this->addAbstractSportKeywords($usr);
-        if ($value == "krepšinis") {
-            $this->addKeyword("krepšinio", $usr);
-        }
-        if ($value == "futbolas") {
-            $this->addKeyword("futbolo", $usr);
-        }
-        if ($value == "tinklinis") {
-            $this->addKeyword("tinklinio", $usr);
-        }
-        if ($value == "ritulys") {
-            $this->addKeyword("ledo", $usr);
-            $this->addKeyword("ritulio", $usr);
         }
     }
 }
