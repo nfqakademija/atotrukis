@@ -84,8 +84,6 @@ class AdminService
      */
     public function updateEvents($x, $regexDate, $regexStartTime)
     {
-        $user = $this->entityManager->getRepository('AtotrukisMainBundle:User')
-            ->findOneById($this->container->get('security.context')->getToken()->getUser()->getId());
         $query = $this->entityManager->createQuery(
             'SELECT max(e.createdOn)
             FROM AtotrukisMainBundle:Event e
@@ -107,7 +105,7 @@ class AdminService
                     if ($city && $coords) {
                         $keywords = explode(" ", $name);
 
-                        $this->addToDatabase($name, $startDate, $endDate, $description, $city, $coords, $keywords, $user);
+                        $this->addToDatabase($name, $startDate, $endDate, $description, $city, $coords, $keywords, $entry->pubDate);
                     }
                 }
             }
@@ -260,9 +258,10 @@ class AdminService
      * @param $city
      * @param $coords
      * @param $keywords
+     * @param $pubDate
      * @internal param $title
      */
-    private function addToDatabase($name, $startDate, $endDate, $description, $city, $coords, $keywords)
+    private function addToDatabase($name, $startDate, $endDate, $description, $city, $coords, $keywords, $pubDate)
     {
         $event = new Event();
         $event->setName($name);
@@ -271,6 +270,7 @@ class AdminService
         $event->setEndDate($endDate);
         $event->setCity($city);
         $event->setMap($coords);
+        $event->setCreatedOn(new \DateTime($pubDate));
         $this->entityManager->persist($event);
         foreach ($keywords as $kwd) {
             $keyword = new EventKeywords();
