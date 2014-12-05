@@ -189,10 +189,7 @@ class EventService
             $this->explodeKeywords($form['name']->getData())
         );
 
-        foreach ($keywords as $keyword) {
-            $keyword = trim($keyword);
-            $this->persistKeywords($event, $keyword);
-        }
+        $this->trimKeywords($event, $keywords);
     }
 
     /**
@@ -320,5 +317,22 @@ class EventService
         return $event;
 
 
+    }
+
+    /**
+     * @param $event
+     * @param $keywords
+     */
+    public function trimKeywords($event, $keywords)
+    {
+        foreach ($keywords as $keyword) {
+            $keyword = trim($keyword);
+            $keyword = preg_replace('/[^\p{L}\s]+$/', '', $keyword);
+            $keyword = preg_replace('/^[^\p{L}\s]+/', '', $keyword);
+            $keyword = strtolower($keyword);
+            if (strlen($keyword) > 1) {
+                $this->persistKeywords($event, $keyword);
+            }
+        }
     }
 }

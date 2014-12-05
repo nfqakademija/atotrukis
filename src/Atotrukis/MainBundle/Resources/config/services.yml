@@ -19,7 +19,7 @@ services:
 
     adminService:
         class: Atotrukis\MainBundle\Service\AdminService
-        arguments: [ @doctrine.orm.entity_manager, @service_container ]
+        arguments: [ @doctrine.orm.entity_manager, @service_container, @eventService ]
 
     userKeywordService:
         class: Atotrukis\MainBundle\Service\UserKeywordService
