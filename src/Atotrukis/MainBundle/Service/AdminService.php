@@ -84,13 +84,19 @@ class AdminService
      */
     public function updateEvents($x, $regexDate, $regexStartTime)
     {
+        $user = $this->entityManager->getRepository('AtotrukisMainBundle:User')
+            ->findOneById($this->container->get('security.context')->getToken()->getUser()->getId());
+        $query = $this->entityManager->createQuery(
+            'SELECT max(e.createdOn)
+            FROM AtotrukisMainBundle:Event e
+            WHERE e.createdBy IS NULL'
+        );
+        $latest = $query->getOneOrNullResult();
         foreach($x->channel->item as $entry) {
 
-            $name = preg_split($regexDate, $entry->title)[0];
-
-            if (!$this->isEventNameExists($name)) {
+            if ($latest[1] < $entry->pubDate) {
+                $name = preg_split($regexDate, $entry->title)[0];
                 $startDate = $this->getStartDate($regexDate, $entry, $regexStartTime);
-
                 $endDate = $this->getEndDate($regexDate, $entry, $regexStartTime);
 
                 if (strip_tags($this->getDescription($entry))) {
@@ -99,13 +105,14 @@ class AdminService
                     list($city, $coords) = $this->getCity($entry);
 
                     if ($city && $coords) {
-                        $keywords = explode(" ", $entry->title);
+                        $keywords = explode(" ", $name);
 
-                        $this->addToDatabase($name, $startDate, $endDate, $description, $city, $coords, $keywords);
+                        $this->addToDatabase($name, $startDate, $endDate, $description, $city, $coords, $keywords, $user);
                     }
                 }
             }
         }
+        $this->entityManager->flush();
     }
 
     /**
@@ -222,6 +229,7 @@ class AdminService
      * getting google maps coordinates
      *
      * @param $crawler
+     * @param $city
      * @return string
      */
     private function getCoordinates($crawler, $city)
@@ -240,23 +248,6 @@ class AdminService
         } else {
             return "";
         }
-    }
-
-    /**
-     * check if event name exists for getting only unique events
-     *
-     * @param $name
-     * @return bool
-     */
-    private function isEventNameExists($name)
-    {
-        $events = $this->entityManager->getRepository('AtotrukisMainBundle:Event')->findAll();
-        foreach ($events as $event) {
-            if ($event->getName() == $name) {
-                return true;
-            }
-        }
-        return false;
     }
 
     /**
@@ -280,17 +271,12 @@ class AdminService
         $event->setEndDate($endDate);
         $event->setCity($city);
         $event->setMap($coords);
-        $user = $this->entityManager->getRepository('AtotrukisMainBundle:User')
-            ->findOneById($this->container->get('security.context')->getToken()->getUser()->getId());
-        $event->setCreatedBy($user);
         $this->entityManager->persist($event);
-        $this->entityManager->flush();
         foreach ($keywords as $kwd) {
             $keyword = new EventKeywords();
             $keyword->setEventId($event);
             $keyword->setKeyword($kwd);
             $this->entityManager->persist($keyword);
-            $this->entityManager->flush();
         }
     }
 }
