@@ -326,11 +326,11 @@ class EventService
     public function trimKeywords($event, $keywords)
     {
         foreach ($keywords as $keyword) {
+
             $keyword = trim($keyword);
-            $keyword = preg_replace('/[^\p{L}\s]+$/', '', $keyword);
-            $keyword = preg_replace('/^[^\p{L}\s]+/', '', $keyword);
-            $keyword = strtolower($keyword);
-            if (strlen($keyword) > 1) {
+            $keyword = preg_replace('/(?:^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$)/u', '', $keyword);
+            $keyword = mb_strtolower($keyword);
+            if (strlen($keyword) > 0) {
                 $this->persistKeywords($event, $keyword);
             }
         }
