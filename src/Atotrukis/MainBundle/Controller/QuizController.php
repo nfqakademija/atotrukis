@@ -58,7 +58,8 @@ class QuizController extends Controller
                     array('paroda' => 'Paroda'),
                     array('spektaklis' => 'Spektaklis'),
                     array('seminaras' => 'Seminaras'),
-                    array('vakarėlis' => 'Vakarėlis')
+                    array('vakarėlis' => 'Vakarėlis'),
+                    array('festivalis' => 'Festivalis')
                 ),
                 'expanded' => true,
                 'multiple' => true,

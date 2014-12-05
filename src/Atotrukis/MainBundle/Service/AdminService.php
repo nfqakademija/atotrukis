@@ -90,11 +90,18 @@ class AdminService
      */
     public function updateEvents($x, $regexDate, $regexStartTime)
     {
+        $user = $this->entityManager->getRepository('AtotrukisMainBundle:User')
+             ->findOneById($this->container->get('security.context')->getToken()->getUser()->getId());
+        $query = $this->entityManager->createQuery(
+            'SELECT max(e.createdOn)
+             FROM AtotrukisMainBundle:Event e
+             WHERE e.createdBy IS NULL'
+        );
+        $latest = $query->getOneOrNullResult();
         foreach($x->channel->item as $entry) {
 
-            $name = preg_split($regexDate, $entry->title)[0];
-
-            if (!$this->isEventNameExists($name)) {
+            if ($latest[1] < $entry->pubDate) {
+                $name = preg_split($regexDate, $entry->title)[0];
                 $startDate = $this->getStartDate($regexDate, $entry, $regexStartTime);
 
                 $endDate = $this->getEndDate($regexDate, $entry, $regexStartTime);
@@ -105,9 +112,9 @@ class AdminService
                     list($city, $coords) = $this->getCity($entry);
 
                     if ($city && $coords) {
-                        $keywords = explode(" ", $entry->title);
+                        $keywords = explode(" ", $name);
 
-                        $this->addToDatabase($name, $startDate, $endDate, $description, $city, $coords, $keywords);
+                        $this->addToDatabase($name, $startDate, $endDate, $description, $city, $coords, $keywords, $user);
                     }
                 }
             }
@@ -183,6 +190,7 @@ class AdminService
                     }
                 }
             }
+            $this->entityManager->flush();
         }
         return new \DateTime($endDate);
     }
@@ -228,6 +236,7 @@ class AdminService
      * getting google maps coordinates
      *
      * @param $crawler
+     * @param $city
      * @return string
      */
     private function getCoordinates($crawler, $city)
@@ -286,14 +295,7 @@ class AdminService
         $event->setEndDate($endDate);
         $event->setCity($city);
         $event->setMap($coords);
-        $user = $this->entityManager->getRepository('AtotrukisMainBundle:User')
-            ->findOneById($this->container->get('security.context')->getToken()->getUser()->getId());
-        $event->setCreatedBy($user);
         $this->entityManager->persist($event);
-//        $this->entityManager->flush();
-
         $this->eventService->trimKeywords($event, $keywords);
-
-        $this->entityManager->flush();
     }
 }
