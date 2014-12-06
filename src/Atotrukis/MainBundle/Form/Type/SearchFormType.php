@@ -28,18 +28,6 @@ class SearchFormType extends AbstractType
                 'attr' =>[
                     'placeholder' => 'Įveskite paieškos žodžius'
                 ],
-
-                'constraints' =>[
-                    new Assert\NotBlank([
-                        'message' => "Įveskite paieškos žodžius"
-                    ]),
-                    new Assert\Length([
-                        'min' => "2",
-                        'max' => "255",
-                        'minMessage' => "Minimalus paieškos simbolių kiekis {{ limit }} simboliai",
-                        'maxMessage' => "Maksimalus paieškos simbolių kiekis  {{ limit }} simboliai"
-                    ])
-                ]
             ]);
 
     }
