@@ -5,7 +5,7 @@
 
         <!-- Brand and toggle get grouped for better mobile display -->
         <div class="navbar-header">
-            <a class="navbar-brand" id="logo" href="#">Atotrūkis</a>
+            <a class="navbar-brand" id="logo" href="{{ path('atotrukis_hello_world') }}">Atotrūkis</a>
         </div>
 
         <!-- Collect the nav links, forms, and other content for toggling -->
@@ -37,7 +37,7 @@
                     <b>Valdymo panelė</b>
             </li>
             <li>
-                <a href="/app_dev.php">Pradinis</a>
+                <a href="{{ path('atotrukis_hello_world') }}">Pradinis</a>
             </li>
             <li>
                 <a href="{{ path('attending_to') }}">Kur aš dalyvauju?</a>
