@@ -31,24 +31,18 @@ class CityController extends Controller
     //TODO: throw code to service
     public function setCityAction()
     {
-        $geoip = $this->get('maxmind.geoip')->lookup('87.247.118.209');
-        $currCity = $geoip->getCity();
+        $cityService = $this->get('cityService');
+        $currCity = $cityService->getCity();
 
         if ($this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY')) {
             $userCity = $this->get('security.context')->getToken()->getUser()->getCity();
             if ($userCity == null) {
                 //set database user city
                 $userId = $this->get('security.context')->getToken()->getUser()->getId();
-                $this->get('cityService')->setCity($currCity, $userId);
+                $cityService->setCity($currCity, $userId);
             }
         } else {
-           //check cookie
-            if (!isset($_COOKIE['userCity'])) {
-                return new JsonResponse(array('data' => 'not set'));
-                $cookie_name = "userCity";
-                $cookie_value = $currCity;
-                setcookie($cookie_name, $cookie_value, time() + (86400 * 30), "/"); // 86400 = 1 day
-            }
+            $cityService->setCityCookie($currCity);
         }
     }
 }
