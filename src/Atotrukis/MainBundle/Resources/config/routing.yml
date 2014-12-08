@@ -91,3 +91,6 @@ only_comments:
     pattern:   /comments/{eventId}
     defaults:  { _controller: AtotrukisMainBundle:Comments:showOnlyComments }
 
+setFacebookCity:
+    pattern:   /miesto-parinkimas
+    defaults:  { _controller: AtotrukisMainBundle:Default:locateCity }

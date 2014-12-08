@@ -47,7 +47,7 @@ security:
                     facebook:           "/login/check-facebook"
                 login_path:        /login
                 failure_path:      /login
-
+                default_target_path: /miesto-parinkimas
                 oauth_user_provider:
                     #this is my custom user provider, created from FOSUBUserProvider - will manage the
                     #automatic user registration on your site, with data from the provider (facebook. google, etc.)

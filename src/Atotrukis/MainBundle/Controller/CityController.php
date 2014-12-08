@@ -8,7 +8,6 @@ use Symfony\Component\HttpFoundation\JsonResponse;
 class CityController extends Controller
 {
 
-    //TODO: throw code to service
     public function setCityAction()
     {
         $cityService = $this->get('cityService');
