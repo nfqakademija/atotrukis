@@ -3,7 +3,7 @@
 <div class="contentWrapper">
 {% for label, flashes in app.session.flashbag.all %}
     {% for flash in flashes %}
-        <div class="alert alert-{{ label }}" style="margin: 0px 15px 15px 15px">
+        <div class="alert alert-{{ label }} flashAlert">
             {{ flash }}
         </div>
     {% endfor %}
