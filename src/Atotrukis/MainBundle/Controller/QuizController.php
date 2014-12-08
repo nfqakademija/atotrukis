@@ -16,6 +16,12 @@ class QuizController extends Controller
      */
     public function quizAction(Request $request)
     {
+        //set user city
+        $cityService = $this->get('cityService');
+        $city = $this->get('maxmind.geoip')->lookup('87.247.118.209')->getCity();
+        $user = $this->get('security.context')->getToken()->getUser()->getId();
+        $cityService->setCity($city, $user);
+
         $form = $this->createFormBuilder()
             ->add('q1', 'choice', array(
                 'label' => 'Pasirink muzikos žanrus, kuriuos mėgsti',
