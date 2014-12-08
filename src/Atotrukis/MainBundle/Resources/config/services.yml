@@ -25,10 +25,14 @@ services:
         class: Atotrukis\MainBundle\Service\UserKeywordService
         arguments: [ @doctrine.orm.entity_manager, @service_container ]
 
+    cityService:
+      class: Atotrukis\MainBundle\Service\CityService
+      arguments: [@doctrine.orm.entity_manager]
+
     my_user_provider:
         class: "%my_user_provider.class%"
         #this is the place where the properties are passed to the UserProvider - see config.yml
-        arguments: [@fos_user.user_manager,{facebook: facebook_id}, @userKeywordService]
+        arguments: [@fos_user.user_manager,{facebook: facebook_id}, @userKeywordService,  @cityService ]
 
     dateFormatService:
       class: Atotrukis\MainBundle\Service\DateFormatService
@@ -45,10 +49,6 @@ services:
     commentsService:
       class: Atotrukis\MainBundle\Service\CommentsService
       arguments: [@doctrine.orm.entity_manager, @eventService, @templating]
-
-    cityService:
-      class: Atotrukis\MainBundle\Service\CityService
-      arguments: [@doctrine.orm.entity_manager, @templating]
 
     atotrukis_search.form.type.createCommentForm:
         class: Atotrukis\MainBundle\Form\Type\SearchFormType
