@@ -1,19 +1,18 @@
 {% extends 'AtotrukisMainBundle::layout.html.twig' %}
 {% block content %}
-    {% for label, flashes in app.session.flashbag.all %}
-        {% for flash in flashes %}
-            <div class="alert alert-{{ label }}" style="margin: 0px 15px 15px 15px">
-                {{ flash }}
-            </div>
+    <div class="contentWrapper">
+        {% for label, flashes in app.session.flashbag.all %}
+            {% for flash in flashes %}
+                <div class="alert alert-{{ label }}" style="margin: 0px 15px 15px 15px">
+                    {{ flash }}
+                </div>
+            {% endfor %}
         {% endfor %}
-    {% endfor %}
     {% for event in events %}
-        <div class="row">
+        <div class="row attendingRow">
             <div class="col-md-5">
-                <div class="mainEventWrapper">
-                    <div class="mainEvent">
-                        <img src="{{ asset('images/mainEvent2.jpg') }}" alt="alternative">
-                    </div>
+                <div class="mainEvent">
+                    <img src="{{ asset('images/mainEvent2.jpg') }}" alt="alternative">
                 </div>
             </div>
             <div class="col-md-5">
@@ -49,4 +48,5 @@
             </div>
         </div>
     {% endfor %}
+    </div>
 {% endblock %}
