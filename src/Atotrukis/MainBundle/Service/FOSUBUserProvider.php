@@ -95,10 +95,11 @@ class FOSUBUserProvider extends BaseClass
             foreach ($like as $item) {
                 $words = explode(" ", $item['name']);
                 foreach ($words as $word) {
-                    $word = preg_replace('/[^\p{L}\s]+$/', '', $word);
-                    $word = preg_replace('/^[^\p{L}\s]+/', '', $word);
-                    if (!empty($word)) {
-                        $this->userKeywordService->addKeyword($word, $user);
+                    $keyword = trim($word);
+                    $keyword = preg_replace('/(?:^[^\p{L}\p{N}]+|[^\p{L}\p{N}]+$)/u', '', $keyword);
+                    $keyword = mb_strtolower($keyword);
+                    if (strlen($keyword) > 0) {
+                        $this->userKeywordService->addKeyword($keyword, $user);
                     }
                 }
             }
