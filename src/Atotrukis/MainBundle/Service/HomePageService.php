@@ -15,6 +15,7 @@ class HomePageService
     protected $eventService;
     protected $userKeywordService;
     protected $searchService;
+    protected $geoip;
 
     /**
      * @param EntityManager $entityManager
@@ -39,25 +40,38 @@ class HomePageService
         $this->searchService = $searchService;
     }
 
+    public function setGeoIp($geoip)
+    {
+        $this->geoip = $geoip;
+    }
+
     /**
      * @return array of events which takes place later than current time
      */
     public function getEvents()
     {
+
+        if ($this->securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
+            $city = $this->securityContext->getToken()->getUser()->getCity();
+        } else {
+            $city = $this->geoip->getCity();
+        }
         $queryBuilder = $this->entityManager->createQueryBuilder()
             ->select('event')
             ->from('AtotrukisMainBundle:Event', 'event')
-            ->where('event.endDate >= :today')
-            ->setParameter('today', new \DateTime());
+            ->where(
+                'event.endDate >= :today',
+                'event.city = :city'
+                    )
+            ->setParameter('today', new \DateTime())
+            ->setParameter('city', $city);
         $results = $queryBuilder->getQuery()->getResult();
         foreach($results as $event) {
             $eventKeywords = $this->searchService->getEventKeywordsByEvent($event->getId());
             //transform keyword array to appropriate keyword => value
             $keywordArray = array();
             foreach ($eventKeywords as $key) {
-                $keyw = $key->getKeyword();
                 $keywordArray[$key->getKeyword()] = 1;
-                $test = 't';
             }
             if ($this->securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
                 $user = $this->securityContext->getToken()->getUser()->getId();

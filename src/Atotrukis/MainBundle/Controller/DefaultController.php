@@ -14,7 +14,9 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $events = $this->get('homePageService')->getEvents();
+        $geoip = $this->get('maxmind.geoip')->lookup('87.247.118.209');
+        $this->get('homePageService')->setGeoIp($geoip);
+        $events = $this->get('homePageService')->getEvents($geoip);
 
         $startDate = $this->get('dateFormatService')->startDate($events);
         $endDate = $this->get('dateFormatService')->endDate($events);
