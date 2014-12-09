@@ -144,14 +144,15 @@ class EventController extends Controller
         $user = $this->getUser();
         $this->get('eventService')->attendEvent($event, $user);
         $newUrl = $this->generateUrl('leave_event');
-        $newButton = '
-            <button class="btn btn-default attendingButton" type="button">
-                Dalyauju
-                <span class="glyphicon glyphicon-ok"></span>
-                <span class="eventID">'.$eventId.'</span>
-                <span class="jsRoute">'.$newUrl.'</span></button>';
+        $data = $this->render(
+            'AtotrukisMainBundle:Includes:buttonAttend.html.twig',
+            array(
+                'eventId' => $eventId,
+                'newUrl' => $newUrl
+            )
+        )->getContent();
         if ($request->isXMLHttpRequest()) {
-            return new JsonResponse(array('data' => $newButton));
+            return new JsonResponse(array('data' => $data));
         }
     }
 
@@ -163,32 +164,36 @@ class EventController extends Controller
         $user = $this->getUser();
         $this->get('eventService')->leaveEvent($eventId, $user->getId());
         $newUrl = $this->generateUrl('attend_event');
-        $newButton = '
-            <button class="btn btn-default attendButton" type="button">
-                Dalyausiu
-                <span class="glyphicon glyphicon-thumbs-up"></span>
-                <span class="eventID">'.$eventId.'</span>
-                <span class="jsRoute">'.$newUrl.'</span></button>';
+        $data = $this->render(
+            'AtotrukisMainBundle:Includes:buttonLeave.html.twig',
+            array(
+                'eventId' => $eventId,
+                'newUrl' => $newUrl
+            )
+        )->getContent();
         if ($request->isXMLHttpRequest()) {
-            return new JsonResponse(array('data' => $newButton));
+            return new JsonResponse(array('data' => $data));
         }
     }
     //ajax request method for attending small buttons
     //TODO: need to move logic to service
-    public function attendSmallAction(Request $request){
+    public function attendSmallAction(Request $request)
+    {
         $eventId = $request->request->get('eventId', 'error');
         $event = $this->getDoctrine()->getRepository('AtotrukisMainBundle:Event')
             ->findOneBy(array('id' => $eventId));
         $user = $this->getUser();
         $this->get('eventService')->attendEvent($event, $user);
         $newUrl = $this->generateUrl('leave_event_sml');
-        $newButton = '
-            <button class="btn btn-default attendingButton-sml eventBtn" type="button">
-                <span class="glyphicon glyphicon-ok"></span>
-                <span class="eventID">'.$eventId.'</span>
-                <span class="jsRoute">'.$newUrl.'</span></button>';
+        $data = $this->render(
+            'AtotrukisMainBundle:Includes:buttonAttendSmall.html.twig',
+            array(
+                'eventId' => $eventId,
+                'newUrl' => $newUrl
+            )
+        )->getContent();;
         if ($request->isXMLHttpRequest()) {
-            return new JsonResponse(array('data' => $newButton));
+            return new JsonResponse(array('data' => $data));
         }
     }
 
@@ -200,13 +205,15 @@ class EventController extends Controller
         $user = $this->getUser();
         $this->get('eventService')->leaveEvent($eventId, $user->getId());
         $newUrl = $this->generateUrl('attend_event_sml');
-        $newButton = '
-            <button class="btn btn-default attendButton-sml eventBtn" type="button">
-                <span class="glyphicon glyphicon-thumbs-up"></span>
-                <span class="eventID">'.$eventId.'</span>
-                <span class="jsRoute">'.$newUrl.'</span></button>';
+        $data = $this->render(
+            'AtotrukisMainBundle:Includes:buttonLeaveSmall.html.twig',
+            array(
+                'eventId' => $eventId,
+                'newUrl' => $newUrl
+            )
+        )->getContent();;
         if ($request->isXMLHttpRequest()) {
-            return new JsonResponse(array('data' => $newButton));
+            return new JsonResponse(array('data' => $data));
         }
     }
 
