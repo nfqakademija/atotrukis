@@ -39,7 +39,7 @@ class CityService
     public function getUserIP($testServer = false)
     {
         if (!$testServer) {
-            return $_SERVER['REMOTE_ADDR'];
+            return $_SERVER['HTTP_CLIENT_IP'];
         } else {
             return '87.247.118.209';
         }
