@@ -104,11 +104,13 @@ class EventController extends Controller
     public function getSearchResultAction(Request $request)
     {
         $form = $this->createForm('searchForm');
-
+        $events = $this->get('eventService')->getAllEvents();
+        $allAttending = $this->get('eventService')->getAllAttending($events);
         $response = $this->get('searchService')->handleFormRequest($form, $request, $this->getUser());
         if ($response['formIsValid']) {
             return $this->render('AtotrukisMainBundle:Event:searchResults.html.twig', array(
-                'events' => $response['searchResult']
+                'events' => $response['searchResult'],
+                'allAttending' => $allAttending,
             ));
         }
         return $this->render('AtotrukisMainBundle:Event:searchEvents.html.twig', array(

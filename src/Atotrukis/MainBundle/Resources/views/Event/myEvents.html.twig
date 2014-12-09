@@ -24,7 +24,7 @@
                     <p><b>Miestas:</b> {{ event.city }}</p>
                 </div>
                 <div class="col-md-7">
-                    <p><b>Pradžia: </b>{{ event.startDate|date('Y-m-d H:i:s') }}</p>
+                    <p><b>Pradžia: </b>{{ event.startDate|date('Y-m-d H:i') }}</p>
                 </div>
             </div>
             <div class="row">
@@ -32,7 +32,7 @@
                     <p><b>Dalyvių:</b> {{ allAttending[event.id] }}</p>
                 </div>
                 <div class="col-md-7">
-                    <p><b>Pabaiga:</b> {{ event.endDate|date('Y-m-d H:i:s') }}</p>
+                    <p><b>Pabaiga:</b> {{ event.endDate|date('Y-m-d H:i') }}</p>
                 </div>
             </div>
             <div class="row">
