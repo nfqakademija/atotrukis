@@ -36,7 +36,7 @@ class CityService
     }
 
     // when in server runs in virtual box this function wont get correct ip
-    private function getUserIP($testServer = false)
+    public function getUserIP($testServer = false)
     {
         if (!$testServer) {
             $client = @$_SERVER['HTTP_CLIENT_IP'];
