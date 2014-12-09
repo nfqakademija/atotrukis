@@ -43,8 +43,8 @@
                 </div>
             </div>
             <div class="col-md-2">
-                <a href="{{ path('only_comments', { 'eventId': event.id}) }}"><button type="button" class="btn-mainEvent btn btn-primary btn-circle"><p>Komentarai</p><span class="glyphicon glyphicon-chevron-right"></span></button></a>
-                <a href="{{ path('_show_event', { 'eventId': event.id }) }}"><button type="button" class="btn-mainEvent btn btn-primary btn-circle"><p>Plačiau</p><span class="glyphicon glyphicon-chevron-right"></span></button></a>
+                <a href="{{ path('only_comments', { 'eventId': event.eventId.id}) }}"><button type="button" class="btn-mainEvent btn btn-primary btn-circle"><p>Komentarai</p><span class="glyphicon glyphicon-chevron-right"></span></button></a>
+                <a href="{{ path('_show_event', { 'eventId': event.eventId.id }) }}"><button type="button" class="btn-mainEvent btn btn-primary btn-circle"><p>Plačiau</p><span class="glyphicon glyphicon-chevron-right"></span></button></a>
             </div>
         </div>
     {% endfor %}
