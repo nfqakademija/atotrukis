@@ -22,7 +22,8 @@ class DefaultController extends Controller
      */
     public function indexAction()
     {
-        $geoip = $this->get('maxmind.geoip')->lookup('87.247.118.209');
+        $userIp = $this->get('cityService')->getUserIP();
+        $geoip = $this->get('maxmind.geoip')->lookup($userIp);
         $this->get('homePageService')->setGeoIp($geoip);
         $events = $this->get('homePageService')->getEvents($geoip);
 
