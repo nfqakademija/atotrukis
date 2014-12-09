@@ -136,7 +136,6 @@ class EventController extends Controller
     }
 
     //ajax request method for attending buttons
-    //TODO: need to move logic to service
     public function attendAction(Request $request){
         $eventId = $request->request->get('eventId', 'error');
         $event = $this->getDoctrine()->getRepository('AtotrukisMainBundle:Event')
@@ -157,7 +156,6 @@ class EventController extends Controller
     }
 
     //ajax request method for leaving buttons
-    //TODO: need to move logic to service
     public function leaveAction(Request $request)
     {
         $eventId = $request->request->get('eventId', 'error');
@@ -176,7 +174,6 @@ class EventController extends Controller
         }
     }
     //ajax request method for attending small buttons
-    //TODO: need to move logic to service
     public function attendSmallAction(Request $request)
     {
         $eventId = $request->request->get('eventId', 'error');
@@ -198,7 +195,6 @@ class EventController extends Controller
     }
 
     //ajax request method for leaving small buttons
-    //TODO: need to move logic to service
     public function leaveSmallAction(Request $request)
     {
         $eventId = $request->request->get('eventId', 'error');

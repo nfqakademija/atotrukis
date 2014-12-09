@@ -88,9 +88,16 @@ class FOSUBUserProvider extends BaseClass
     {
         $data = $response->getResponse();
         $likes = array();
-        $likes[] = $data['favorite_athletes'];
-        $likes[] = $data['favorite_teams'];
-        $likes[] = $data['inspirational_people'];
+        $likesTypes = array(
+            'favorite_athletes',
+            'favorite_teams',
+            'inspirational_people',
+        );
+        foreach($likesTypes as $like){
+            if(isset($data[$like])){
+                $likes[] = $data[$like];
+            }
+        }
         foreach ($likes as $like) {
             foreach ($like as $item) {
                 $words = explode(" ", $item['name']);
