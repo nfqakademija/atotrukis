@@ -86,7 +86,7 @@ class SearchService
             foreach ($eventKeywords as $eventKeyword) {
                 $keyword = $eventKeyword->getKeyword();
                 foreach ($searchKeywords as $searchKeyword) {
-                    $searchKeyword = trim($searchKeyword);
+                    $searchKeyword = trim(strtolower($searchKeyword));
                     if ($keyword == $searchKeyword) {
                         $matchedKeywordsCount++;
                     }
