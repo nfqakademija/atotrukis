@@ -54,7 +54,7 @@ class HomePageService
         if ($this->securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
             $city = $this->securityContext->getToken()->getUser()->getCity();
         } else {
-            $city = $this->geoip->getCity();
+            $city = '';
         }
         $city='%'.$city.'%';
         $queryBuilder = $this->entityManager->createQueryBuilder()
