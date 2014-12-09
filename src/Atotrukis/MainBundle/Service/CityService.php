@@ -36,10 +36,11 @@ class CityService
     }
 
     // when in server runs in virtual box this function wont get correct ip
-    public function getUserIP($testServer = false)
+    //set $testServer to false to get visitor ip
+    public function getUserIP($testServer = true)
     {
         if (!$testServer) {
-            return $_SERVER['HTTP_CLIENT_IP'];
+            return $_SERVER['REMOTE_ADDR'];
         } else {
             return '87.247.118.209';
         }

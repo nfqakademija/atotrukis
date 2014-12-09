@@ -42,8 +42,7 @@ class DefaultController extends Controller
             'startDate' => $startDate,
             'endDate' => $endDate,
             'attending' => $attending,
-            'userRegistered' => $amIAttending,
-            'ip' => $userIp
+            'userRegistered' => $amIAttending
         ));
     }
 
