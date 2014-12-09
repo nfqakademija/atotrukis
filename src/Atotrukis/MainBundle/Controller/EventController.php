@@ -42,7 +42,7 @@ class EventController extends Controller
     {
 
         $userEvents = $this->get('eventService')->readUserEvents($this->getUser(), $request);
-        $events = $this->get('homePageService')->getEvents();
+        $events = $this->get('eventService')->getAllEvents();
         $allAttending = $this->get('eventService')->getAllAttending($events);
         return $this->render('AtotrukisMainBundle:Event:myEvents.html.twig', array(
             'events' => $userEvents,
@@ -118,7 +118,7 @@ class EventController extends Controller
 
     public function readUserAttendingAction(Request $request) {
         $userAttending = $this->get('eventService')->readUserAttendingEvents($this->getUser(), $request);
-        $events = $this->get('homePageService')->getEvents();
+        $events = $this->get('eventService')->getAllEvents();
         $allAttending = $this->get('eventService')->getAllAttending($events);
         return $this->render(
             'AtotrukisMainBundle:Event:AttendingToEvents.html.twig',

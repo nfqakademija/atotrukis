@@ -246,6 +246,11 @@ class EventService
         return $attending;
     }
 
+    public function getAllEvents()
+    {
+        return $this->entityManager->getRepository('AtotrukisMainBundle:Event')->findAll();
+    }
+
     /**
      * set user as attending event
      * @param $eventId
