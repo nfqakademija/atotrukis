@@ -24,7 +24,7 @@
                     <p><b>Miestas:</b> {{ event.city }}</p>
                 </div>
                 <div class="col-md-7">
-                    <p><b>Pradžia:</b>{{ event.startDate|date('Y-m-d H:i:s') }}</p>
+                    <p><b>Pradžia: </b>{{ event.startDate|date('Y-m-d H:i:s') }}</p>
                 </div>
             </div>
             <div class="row">
@@ -43,8 +43,9 @@
             </div>
         </div>
         <div class="col-md-2">
-            <a href="{{ path('_show_event', { 'eventId': event.id }) }}"><button type="button" class="btn-mainEvent btn btn-primary">Skaityti toliau ></button></a>
-            <a href="{{ path('delete_event', { 'eventId': event.id }) }}"><button type="button" class="btn-mainEvent btn btn-danger">Ištrinti ></button></a>
+            <a href="{{ path('_show_event', { 'eventId': event.id }) }}"><button type="button" class="btn-smaller btn btn-primary">Skaityti toliau ></button></a>
+            <a href="{{ path('edit_event', { 'eventId': event.id }) }}"><button type="button" class="btn-smaller btn btn-primary">Redaguoti ></button> </a>
+            <a href="{{ path('delete_event', { 'eventId': event.id }) }}"><button type="button" class="btn-smaller btn btn-danger">Ištrinti ></button></a>
         </div>
     </div>
 {% endfor %}
