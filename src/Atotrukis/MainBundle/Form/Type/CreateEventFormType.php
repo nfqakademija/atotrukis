@@ -67,7 +67,13 @@ class CreateEventFormType extends AbstractType
                     ])
                 ]
             ])
-            ->add('map', 'hidden')
+            ->add('map', 'hidden', [
+                'constraints' =>[
+                    new Assert\NotBlank([
+                        'message' => "Įveskite adresą."
+                    ])
+                ]
+            ])
             ->add('city', 'hidden');
     }
     public function getName()

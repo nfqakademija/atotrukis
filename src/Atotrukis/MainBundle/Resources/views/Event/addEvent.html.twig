@@ -37,7 +37,7 @@
     {{ form_widget(form.endDate.time.hour, { 'attr': {'class': "form-control datetime", 'placeholder': "Pradžios laikas"} }) }} :
     {{ form_widget(form.endDate.time.minute, { 'attr': {'class': "form-control datetime", 'placeholder': "Pradžios laikas"} }) }}
     <br/>
-
+    {{ form_errors(form.map) }}<br/>
     {{ form_widget(form.map, { 'attr': {'class': "form-control", 'placeholder': "Adresas"} }) }}
 
     <div id="inputField">
