@@ -19,7 +19,7 @@ class QuizController extends Controller
         //set user city
         $cityService = $this->get('cityService');
         $userIp = $_SERVER['REMOTE_ADDR'];
-        $city = $this->get('maxmind.geoip')->lookup($userIp)->getCity();
+        $city = $this->get('maxmind.geoip')->lookup('87.247.118.209')->getCity();
         $user = $this->get('security.context')->getToken()->getUser()->getId();
         $cityService->setCity($city, $user);
 
