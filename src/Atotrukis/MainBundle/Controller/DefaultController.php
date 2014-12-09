@@ -9,7 +9,8 @@ class DefaultController extends Controller
 
     public function locateCityAction()
     {
-        $city = $this->get('maxmind.geoip')->lookup('87.247.118.209')->getCity();
+        $userIp = $this->get('cityService')->getUserIP();
+        $city = $this->get('maxmind.geoip')->lookup($userIp)->getCity();
         $user = $this->get('security.context')->getToken()->getUser()->getId();
         $this->get('cityService')->setCity($city, $user);
         return $this->redirect($this->generateUrl('atotrukis_hello_world'));
