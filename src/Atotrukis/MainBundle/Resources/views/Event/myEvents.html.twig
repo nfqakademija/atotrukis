@@ -29,7 +29,7 @@
             </div>
             <div class="row">
                 <div class="col-md-5">
-                    <p><b>Dalyvių:</b> 9,999,999</p>
+                    <p><b>Dalyvių:</b> {{ allAttending[event.id] }}</p>
                 </div>
                 <div class="col-md-7">
                     <p><b>Pabaiga:</b> {{ event.endDate|date('Y-m-d H:i:s') }}</p>

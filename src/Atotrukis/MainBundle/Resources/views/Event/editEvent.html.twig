@@ -9,7 +9,6 @@
      <script>
          onload=initialize{{ event.map }};
      </script>
-     {{ parent() }}
  {% endblock %}
 
 {% block content %}
@@ -49,7 +48,7 @@
     <div id="map-canvas"></div>
 
     {{ form_widget(form.city) }}
-    
+
     {{ form_label(form.keywords, 'Raktažodžiai') }}
     {{ form_errors(form.keywords) }}
     {{ form_widget(form.keywords, { 'attr': {'class': "form-control"} }) }}

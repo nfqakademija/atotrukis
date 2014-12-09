@@ -214,6 +214,12 @@ class EventService
         $request->getSession()->getFlashBag()->add($status, $message);
     }
 
+    /**
+     * gets count of attending people in one event
+     *
+     * @param $id
+     * @return mixed
+     */
     public function getAttending($id){
         $rep = $this->entityManager->getRepository('AtotrukisMainBundle:Event');
         $qb = $rep->createQueryBuilder('e')
@@ -223,6 +229,21 @@ class EventService
             ->setParameter('id', $id)
         ;
         return $qb->getQuery()->getSingleScalarResult();
+    }
+
+    /**
+     * gets count of attending people in many events
+     *
+     * @param $events
+     * @return array
+     */
+    public function getAllAttending($events)
+    {
+        $attending = [];
+        foreach ($events as $event) {
+            $attending[$event->getId()] = $this->getAttending($event->getId());
+        }
+        return $attending;
     }
 
     /**

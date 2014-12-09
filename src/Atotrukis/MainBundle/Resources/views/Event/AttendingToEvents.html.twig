@@ -24,12 +24,12 @@
                         <p><b>Miestas:</b> {{ event.eventId.city }}</p>
                     </div>
                     <div class="col-md-7">
-                        <p><b>Pradžia:</b>{{ event.eventId.startDate|date('Y-m-d H:i:s') }}</p>
+                        <p><b>Pradžia: </b>{{ event.eventId.startDate|date('Y-m-d H:i:s') }}</p>
                     </div>
                 </div>
                 <div class="row">
                     <div class="col-md-5">
-                        <p><b>Dalyvių:</b> 9,999,999</p>
+                        <p><b>Dalyvių:</b> {{ allAttending[event.eventId.id] }}</p>
                     </div>
                     <div class="col-md-7">
                         <p><b>Pabaiga:</b> {{ event.eventId.endDate|date('Y-m-d H:i:s') }}</p>
