@@ -56,17 +56,22 @@ class HomePageService
         } else {
             $city = $this->geoip->getCity();
         }
+        $city='%'.$city.'%';
         $queryBuilder = $this->entityManager->createQueryBuilder()
             ->select('event')
             ->from('AtotrukisMainBundle:Event', 'event')
             ->where(
-                'event.endDate >= :today',
-                'event.city = :city'
-                    )
-            ->setParameter('today', new \DateTime())
-            ->setParameter('city', $city);
+                "event.city LIKE :city",
+                'event.endDate >= :today'
+            )
+            ->setParameters(
+                array(
+                    'today' => new \DateTime(),
+                    'city'=> $city
+                )
+            );
         $results = $queryBuilder->getQuery()->getResult();
-        foreach($results as $event) {
+        foreach ($results as $event) {
             $eventKeywords = $this->searchService->getEventKeywordsByEvent($event->getId());
             //transform keyword array to appropriate keyword => value
             $keywordArray = array();
