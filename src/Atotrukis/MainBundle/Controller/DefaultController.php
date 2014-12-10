@@ -31,7 +31,15 @@ class DefaultController extends Controller
         $userIp = $this->get('cityService')->getUserIP();
         $geoip = $this->get('maxmind.geoip')->lookup($userIp);
         $this->get('homePageService')->setGeoIp($geoip);
-        $events = $this->get('homePageService')->getEvents($geoip);
+        $isGranted = $this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY');
+        if ($isGranted) {
+            $city = $this->container->get('security.context')->getToken()->getUser()->getCity();
+            $user = $this->securityContext->getToken()->getUser()->getId();
+            $events = $this->get('homePageService')->getEvents($isGranted, $city, $user);
+        } else {
+            $events = $this->get('homePageService')->getEvents($isGranted);
+        }
+
 
         $startDate = $this->get('dateFormatService')->startDate($events);
         $endDate = $this->get('dateFormatService')->endDate($events);

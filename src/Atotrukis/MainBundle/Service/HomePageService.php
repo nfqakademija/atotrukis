@@ -48,14 +48,8 @@ class HomePageService
     /**
      * @return array of events which takes place later than current time
      */
-    public function getEvents()
+    public function getEvents($isGranted, $city='', $user = null)
     {
-
-        if ($this->securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
-            $city = $this->securityContext->getToken()->getUser()->getCity();
-        } else {
-            $city = '';
-        }
         $city='%'.$city.'%';
         $queryBuilder = $this->entityManager->createQueryBuilder()
             ->select('event')
@@ -78,8 +72,7 @@ class HomePageService
             foreach ($eventKeywords as $key) {
                 $keywordArray[$key->getKeyword()] = 1;
             }
-            if ($this->securityContext->isGranted('IS_AUTHENTICATED_FULLY')) {
-                $user = $this->securityContext->getToken()->getUser()->getId();
+            if ($isGranted) {
                 $rate = $this->userKeywordService->getEventRate($keywordArray, $user);
                 $event->setRate($rate);
             }
