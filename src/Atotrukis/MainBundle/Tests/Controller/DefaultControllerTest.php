@@ -51,18 +51,27 @@ class DefaultControllerTest extends WebTestCase
 
     public function testFirstIsBest()
     {
-        $eventKeywords = array(
-            'albumo' => 1,
-            'mysteria' => 1,
-            'pristatymas' => 1,
-        );
         $userId =  $this->getKernel()->get('userService')->getUserById(3);
-        $this->addKeyword('test');
-        $this->addKeyword('test2');
-        $eventRate = $this->getKernel()->get('userKeywordService')->getEventRate($eventKeywords, $userId);
-        $this->deleteKeyword('test');
-        $this->deleteKeyword('test2');
-        $this->assertEquals($eventRate, 2);
+        $userIp = $this->getKernel()->get('cityService')->getUserIP();
+        $geoip = $this->getKernel()->get('maxmind.geoip')->lookup($userIp);
+        $this->getKernel()->get('homePageService')->setGeoIp($geoip);
+        $events = $this->getKernel()->get('homePageService')->getEvents(true, 'Kaunas');
+        $bestValue = 0;
+        $bestId = 0;
+        foreach ($events as $event) {
+            $eventKeywords = $this->getKernel()->get('searchService')->getEventKeywordsByEvent($event->getId());
+            //transform keyword array to appropriate keyword => value
+            $keywordArray = array();
+            foreach ($eventKeywords as $key) {
+                $keywordArray[$key->getKeyword()] = 1;
+            }
+            $eventRate = $this->getKernel()->get('userKeywordService')->getEventRate($keywordArray, $userId);
+            if ($eventRate > $bestValue) {
+                $bestValue = $eventRate;
+                $bestId = $event->getId();
+            }
+        }
+        $this->assertEquals($bestId, 18);
     }
 
     private function getKernel()
