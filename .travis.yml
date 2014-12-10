@@ -13,4 +13,5 @@ before_script:
     - "sed -i 's/database_password: 123/database_password: ~/g' app/config/parameters.yml"
     - app/console doctrine:database:create -e test
     - app/console doctrine:schema:update --force
+    - pwd
     - mysql -u root -p atotrukis < /SQL/atotrukis.sql
