@@ -25,6 +25,10 @@ services:
         class: Atotrukis\MainBundle\Service\UserKeywordService
         arguments: [ @doctrine.orm.entity_manager, @service_container ]
 
+    userService:
+            class: Atotrukis\MainBundle\Service\UserService
+            arguments: [ @doctrine.orm.entity_manager, @service_container ]
+
     cityService:
       class: Atotrukis\MainBundle\Service\CityService
       arguments: [@doctrine.orm.entity_manager]

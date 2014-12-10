@@ -69,7 +69,20 @@ class UserKeywordService
         $key->setKeyword($keyword);
         $key->setValue(1);
         $key->setUserId($userID);
-        $this->entityManager->persist($key);
+        $this->entityManager->merge($key);
+        $this->entityManager->flush();
+    }
+
+    /* Delete keyword
+    *
+    * @param $keyword   keyword name
+    * @param $userID    /Atotrukis/MainBundle/Entity/User of user
+    */
+    public function keywordDelete($keyword, $userID)
+    {
+        $key = $this->entityManager->getRepository("AtotrukisMainBundle:UserInterest")->
+        findOneBy(array('keyword' => $keyword, 'userId' => $userID));
+        $this->entityManager->remove($key);
         $this->entityManager->flush();
     }
 
@@ -111,7 +124,9 @@ class UserKeywordService
     {
         $key = $this->entityManager->getRepository("AtotrukisMainBundle:UserInterest")->
         findOneBy(array('keyword' => $keyword, 'userId' => $userID));
-        if ($key == null) return false;
+        if ($key == null) {
+            return false;
+        }
         $lastUpdateDate = $key->getUpdateDate();
         $diffInSeconds = strtotime(date('Y-m-d')) - strtotime($lastUpdateDate);
         $diffInDays = $diffInSeconds / (60 * 60 * 24);
@@ -140,7 +155,7 @@ class UserKeywordService
      * @param $keyword    keyword to find
      * @return String keyword or false
      */
-    private function getKeyword($userID, $keyword)
+    public function getKeyword($userID, $keyword)
     {
         $key = $this->entityManager->getRepository("AtotrukisMainBundle:UserInterest")->
         findOneBy(array('keyword' => $keyword, 'userId' => $userID));
