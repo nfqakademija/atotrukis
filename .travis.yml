@@ -14,4 +14,5 @@ before_script:
     - app/console doctrine:database:create -e test
     - app/console doctrine:schema:update --force
     - cat SQL/atotrukis.sql | mysql -u root --password=
+    - cp IP2CityDB/GeoLiteCity.dat vendor/maxmind/geoip/data
 
