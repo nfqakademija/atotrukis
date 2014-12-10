@@ -1,3 +1,5 @@
+CREATE DATABASE atotrukis;
+USE atotrukis;
 -- phpMyAdmin SQL Dump
 -- version 3.4.11.1deb2+deb7u1
 -- http://www.phpmyadmin.net
