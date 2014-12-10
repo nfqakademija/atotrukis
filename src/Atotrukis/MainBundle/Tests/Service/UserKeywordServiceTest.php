@@ -3,6 +3,7 @@
 namespace Atotrukis\MainBundle\Tests\Service;
 
 use Symfony\Bundle\FrameworkBundle\Test\WebTestCase;
+use Atotrukis\MainBundle\Entity\User;
 
 class UserKeywordServiceTest extends WebTestCase
 {
@@ -82,4 +83,5 @@ class UserKeywordServiceTest extends WebTestCase
         $kernel->boot();
         return $kernel->getContainer();
     }
+
 }

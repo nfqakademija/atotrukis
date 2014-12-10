@@ -28,5 +28,11 @@ class UserService
             findOneBy(array('id' => $userId));
         return $user;
     }
+
+    public function createUser($user)
+    {
+        $this->entityManager->persist($user);
+        $this->entityManager->flush();
+    }
 }
 

@@ -76,6 +76,15 @@ class User extends BaseUser
     }
 
     /**
+     * Set id
+     *
+     */
+    public function setId($userId)
+    {
+        $this->id = $userId;
+    }
+
+    /**
      * Add events
      *
      * @param Event $events
