@@ -34,7 +34,7 @@ class DefaultController extends Controller
         $isGranted = $this->container->get('security.context')->isGranted('IS_AUTHENTICATED_FULLY');
         if ($isGranted) {
             $city = $this->container->get('security.context')->getToken()->getUser()->getCity();
-            $user = $this->securityContext->getToken()->getUser()->getId();
+            $user = $this->container->get('security.context')->getToken()->getUser()->getId();
             $events = $this->get('homePageService')->getEvents($isGranted, $city, $user);
         } else {
             $events = $this->get('homePageService')->getEvents($isGranted);

@@ -48,7 +48,7 @@ class HomePageService
     /**
      * @return array of events which takes place later than current time
      */
-    public function getEvents($isGranted, $city='', $user = null)
+    public function getEvents($isGranted=false, $city='', $user = null)
     {
         $city='%'.$city.'%';
         $queryBuilder = $this->entityManager->createQueryBuilder()

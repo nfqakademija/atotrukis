@@ -16,15 +16,14 @@
 
         {% block mainContent %}
         {% for event in events %}
-
             {% if loop.length > 1 %}
-                {% if loop.index0 == 1 %}
+                {% if loop.index0 == 0 %}
                     {#<div class="row">#}
                         <div class="col-xs-12 col-md-8">
                             {{ include('AtotrukisMainBundle:Includes:mainEvent.html.twig') }}
                         </div>
                 {% endif %}
-                {% if loop.index0 == 2 %}
+                {% if loop.index0 == 1 %}
                     <div class="col-xs-12 col-md-4">
                         {{ include('AtotrukisMainBundle:Includes:mainEvent2.html.twig') }}
                     </div>
@@ -37,7 +36,7 @@
                 </div>
             {% endif %}
 
-            {% if loop.index0 > 2 %}
+            {% if loop.index0 > 1 %}
                 <div class="col-xs-12 col-md-6 col-lg-3">{{ include('AtotrukisMainBundle:Includes:event.html.twig') }}</div>
             {% endif %}
 

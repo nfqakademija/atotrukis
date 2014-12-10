@@ -49,6 +49,22 @@ class DefaultControllerTest extends WebTestCase
         $this->assertTrue($allFromKaunas);
     }
 
+    public function testFirstIsBest()
+    {
+        $eventKeywords = array(
+            'albumo' => 1,
+            'mysteria' => 1,
+            'pristatymas' => 1,
+        );
+        $userId =  $this->getKernel()->get('userService')->getUserById(3);
+        $this->addKeyword('test');
+        $this->addKeyword('test2');
+        $eventRate = $this->getKernel()->get('userKeywordService')->getEventRate($eventKeywords, $userId);
+        $this->deleteKeyword('test');
+        $this->deleteKeyword('test2');
+        $this->assertEquals($eventRate, 2);
+    }
+
     private function getKernel()
     {
         $kernel = static::createKernel();
