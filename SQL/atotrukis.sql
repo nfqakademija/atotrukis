@@ -1,3 +1,4 @@
+DROP DATABASE IF EXISTS atotrukis;
 CREATE DATABASE atotrukis;
 USE atotrukis;
 -- phpMyAdmin SQL Dump
