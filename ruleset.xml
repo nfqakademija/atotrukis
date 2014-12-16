@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<ruleset name="codeSize"
+         xmlns="http://pmd.sf.net/ruleset/1.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://pmd.sf.net/ruleset/1.0.0 http://pmd.sf.net/ruleset_xml_schema.xsd"
+         xsi:noNamespaceSchemaLocation="http://pmd.sf.net/ruleset_xml_schema.xsd">
+    <description>
+        Function parameters
+    </description>
+
+    <rule ref="rulesets/unusedcode.xml" />
+
+
+    <rule ref="rulesets/codesize.xml/ExcessiveClassLength">
+        <priority>1</priority>
+        <properties>
+            <property name="minimum" value="300" />
+        </properties>
+    </rule>
+
+
+    <rule ref="rulesets/codesize.xml/ExcessiveParameterList">
+        <priority>2</priority>
+        <properties>
+            <property name="minimum" value="4" />
+        </properties>
+    </rule>
+
+    <rule ref="rulesets/codesize.xml/ExcessiveClassComplexity">
+        <priority>3</priority>
+        <properties>
+            <property name="maximum" value="50" />
+        </properties>
+    </rule>
+
+
+</ruleset>

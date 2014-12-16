@@ -24,22 +24,22 @@ class CommentsService
 
     /**
      * checks if honeypot is empty
-     * @param $pot
+     * @param String $pot
      * @return bool
      */
     public function validateHoneyPot($pot)
     {
-        if(!empty($pot)) {
+        if (!empty($pot)) {
             return false;
         }
         return true;
     }
     /**
      * creates comment in event
-     * @param $comment
-     * @param $form
-     * @param $request
-     * @param $user
+     * @param String $comment
+     * @param Form $form
+     * @param Request $request
+     * @param User $user
      * @return mixed
      */
     public function createComment($comment, $form, $request, $user)
@@ -49,8 +49,8 @@ class CommentsService
 
     /**
      * gets comments in event
-     * @param $eventID
-     * @param $request
+     * @param Event $eventID
+     * @param Request $request
      * @return mixed
      */
     public function readEventComments($eventID, $request)
@@ -64,6 +64,13 @@ class CommentsService
         return $comments;
     }
 
+    /**
+     * @param Form $form
+     * @param String $comment
+     * @param Request $request
+     * @param User $user
+     * @return bool
+     */
     public function handleFormRequest($form, $comment, $request, $user)
     {
         $form->handleRequest($request);
@@ -82,9 +89,9 @@ class CommentsService
     }
 
     /**
-     * @param $form
-     * @param $comment
-     * @param $user
+     * @param Form $form
+     * @param String $comment
+     * @param User $user
      */
     public function setEventValues($form, $comment, $user)
     {
@@ -98,15 +105,15 @@ class CommentsService
     }
 
     /**
-     * @param $eventId
+     * @param Event $eventId
      * @return array
      */
     public function getEventComments($eventId)
     {
         $results = $this->entityManager->getRepository("AtotrukisMainBundle:EventComments")->
-            findBy(array('eventId' => $eventId),array('createdOn' => 'DESC'));
+            findBy(array('eventId' => $eventId), array('createdOn' => 'DESC'));
         $comments = array();
-        foreach($results as $result){
+        foreach ($results as $result) {
             $comment = $result->getComment();
             $createdDate = $result->getCreatedOn();
             $user = $result->getUserId()->getName();
@@ -115,8 +122,6 @@ class CommentsService
                 'date' => $createdDate,
                 'comment' => $comment,
             );
-           /* $user = $this->entityManager->getRepository("AtotrukisMainBundle:User")->
-            findOneBy(array('id' => $, 'eventId' => $eventId));*/
         }
         return $comments;
     }

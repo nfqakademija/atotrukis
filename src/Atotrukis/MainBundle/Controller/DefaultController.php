@@ -7,6 +7,9 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 class DefaultController extends Controller
 {
 
+    /**Locates city from IP
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
     public function locateCityAction()
     {
         $userIp = $this->get('cityService')->getUserIP();
@@ -58,7 +61,7 @@ class DefaultController extends Controller
     /**
      * shows details of event
      *
-     * @param $eventId
+     * @param Event $eventId
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showEventAction($eventId)

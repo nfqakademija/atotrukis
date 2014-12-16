@@ -26,8 +26,8 @@ class UserKeywordService
     /**
      * Add keyword to user base
      *
-     * @param $keyword   keyword name
-     * @param $userID    id of user
+     * @param String $keyword   keyword name
+     * @param User $userID    id of user
      */
     public function addKeyword($keyword, $userID)
     {
@@ -43,8 +43,8 @@ class UserKeywordService
     /**
      * Update keyword
      *
-     * @param $keyword   keyword name
-     * @param $userID    id of user
+     * @param String $keyword   keyword name
+     * @param User $userID    id of user
      */
     private function keywordUpdate($keyword)
     {
@@ -59,7 +59,7 @@ class UserKeywordService
     /**
      * Create keyword
      *
-     * @param $keyword   keyword name
+     * @param String $keyword   keyword name
      * @param $userID    /Atotrukis/MainBundle/Entity/User of user
      */
     private function keywordCreate($keyword, $userID)
@@ -75,22 +75,22 @@ class UserKeywordService
 
     /* Delete keyword
     *
-    * @param $keyword   keyword name
-    * @param $userID    /Atotrukis/MainBundle/Entity/User of user
+    * @param String $keyword   keyword name
+    * @param User $userID    /Atotrukis/MainBundle/Entity/User of user
     */
     public function keywordDelete($keyword, $userID)
     {
         $key = $this->entityManager->getRepository("AtotrukisMainBundle:UserInterest")->
         findOneBy(array('keyword' => $keyword, 'userId' => $userID));
         $this->entityManager->remove($key);
-        $this->entityManager->flush();
+        $this->entityManager->flustah();
     }
 
     /**
      * Rate event by keywords
      *
-     * @param $eventKeywords   event keywor array key=>keywordName, value=>keywordValue
-     * @param $userID    id of user
+     * @param String $eventKeywords   event keywor array key=>keywordName, value=>keywordValue
+     * @param User $userID    id of user
      * @return Int rate value
      */
     public function getEventRate($eventKeywords, $userId)
@@ -106,7 +106,7 @@ class UserKeywordService
                 } else {
                     $rate = $rate + $userKeyValue / ($this->checkIfKeywordExpired($userKey, $userId) / 60);
                 }
-            } 
+            }
         }
         return $rate;
     }
@@ -116,8 +116,8 @@ class UserKeywordService
      * if true, the value of keyword should become
      * value * differenceInDays/60
      *
-     * @param $keyword   keyword name
-     * @param $userID    id of user
+     * @param String $keyword   keyword name
+     * @param User $userID    id of user
      * @return difference in days if updateDate is older than 60 days, or false
      */
     private function checkIfKeywordExpired($keyword, $userID)
@@ -139,7 +139,7 @@ class UserKeywordService
     /**
      * get user keywords
      *
-     * @param $userID    id of user
+     * @param User $userID    id of user
      * @return Array of keywords user has
      */
     private function getKeywords($userID)
@@ -151,8 +151,8 @@ class UserKeywordService
     /**
      * get user keyword
      *
-     * @param $userID    id of user
-     * @param $keyword    keyword to find
+     * @param User $userID    id of user
+     * @param String $keyword    keyword to find
      * @return String keyword or false
      */
     public function getKeyword($userID, $keyword)
@@ -165,7 +165,7 @@ class UserKeywordService
     /**
      * gets user all keywords value
      *
-     * @param $userID    id of user
+     * @param User $userID    id of user
      * @return Int count
      */
     private function getAllKeywordsValueCount($userId)
@@ -181,7 +181,7 @@ class UserKeywordService
     /**
      * adds keywords to database from quiz
      *
-     * @param $form
+     * @param Form $form
      * @param $request
      */
     public function addKeywordsFromQuiz($form, $request)
@@ -280,8 +280,8 @@ class UserKeywordService
      /**
      * adds similar sport keywords by quiz values
      *
-     * @param $usr
-     * @param $value
+     * @param User $usr
+     * @param Int $value
      */
     private function addSportKeywords($usr, $value)
     {
