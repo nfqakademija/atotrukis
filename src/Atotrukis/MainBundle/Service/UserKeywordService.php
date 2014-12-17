@@ -83,7 +83,7 @@ class UserKeywordService
         $key = $this->entityManager->getRepository("AtotrukisMainBundle:UserInterest")->
         findOneBy(array('keyword' => $keyword, 'userId' => $userID));
         $this->entityManager->remove($key);
-        $this->entityManager->flustah();
+        $this->entityManager->flush();
     }
 
     /**
