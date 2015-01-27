@@ -11,6 +11,11 @@ use Atotrukis\MainBundle\Entity\Event;
 class CommentsController extends Controller
 {
     //TODO: create default event with 0 id
+    /**
+     * @param Request $request
+     * @param int $eventId
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse|\Symfony\Component\HttpFoundation\Response
+     */
     public function createCommentAction(Request $request, $eventId = 0)
     {
         $comment = new EventComments();
@@ -52,7 +57,7 @@ class CommentsController extends Controller
     }
 
     /**
-     * @param $eventId
+     * @param Event $eventId
      * @return \Symfony\Component\HttpFoundation\Response
      */
     public function showOnlyCommentsAction($eventId)
